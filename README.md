@@ -45,19 +45,34 @@ npm run build
 
 ## Деплой на GitHub Pages
 
-### Вариант A: GitHub Actions (рекомендуется)
+### Первый запуск (обязательно один раз)
 
-1. Создайте репозиторий `LumenArt` на GitHub и запушьте код.
-2. В **Settings → Secrets → Actions** добавьте `NEXT_PUBLIC_WEBHOOK_URL`.
-3. В **Settings → Pages → Build and deployment** выберите **GitHub Actions**.
-4. При push в `main`/`master` workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) соберёт и опубликует сайт.
-5. Сайт будет доступен по адресу: `https://<username>.github.io/LumenArt/`
+1. Запушьте код в репозиторий на GitHub.
+2. Откройте **Settings → Pages → Build and deployment**.
+3. В поле **Source** выберите **GitHub Actions** (не «Deploy from a branch»).
+4. Сохраните настройки.
+5. В **Settings → Secrets → Actions** добавьте `NEXT_PUBLIC_WEBHOOK_URL` (можно пустую строку, если webhook пока не нужен).
+6. Запустите workflow вручную: **Actions → Deploy to GitHub Pages → Run workflow**  
+   или сделайте push в `main`/`master`.
 
-### Вариант B: Ручной деплой
+> Если шаг «Setup Pages» падает с `Not Found`, значит пункт 3 ещё не выполнен — GitHub Pages нужно включить вручную.
+
+### Автоматический деплой
+
+При каждом push в `main`/`master` workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
+
+- собирает статику в `out/`
+- публикует через GitHub Actions
+- `basePath` берётся из имени репозитория автоматически
+
+Сайт будет доступен по адресу: `https://<username>.github.io/<имя-репозитория>/`
+
+### Ручной деплой (альтернатива)
 
 ```bash
 npm run build
-# Залейте содержимое папки out/ в ветку gh-pages
+touch out/.nojekyll
+# Залейте содержимое out/ в ветку gh-pages
 ```
 
 Затем в **Settings → Pages** укажите ветку `gh-pages`, папку `/ (root)`.
