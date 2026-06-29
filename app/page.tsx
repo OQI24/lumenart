@@ -34,7 +34,7 @@ export default function Home() {
             <section
               key={id}
               id={id}
-              className={`snap-section ${id === "styles" ? "!p-0 !justify-stretch overflow-hidden" : ""}`}
+              className={`snap-section ${id === "hero" ? "snap-section-hero" : ""} ${id === "styles" ? "!p-0 !justify-stretch overflow-hidden" : ""}`}
             >
               <Component />
             </section>

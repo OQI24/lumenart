@@ -52,13 +52,36 @@
   }
 
   .snap-container {
-    @apply h-screen overflow-y-auto overflow-x-hidden;
+    @apply h-[100dvh] h-screen overflow-y-auto overflow-x-hidden bg-background;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
 
   .snap-section {
-    @apply flex min-h-screen snap-start snap-always flex-col justify-center py-20 lg:py-24;
+    @apply flex min-h-[100dvh] min-h-screen snap-start snap-always flex-col justify-center py-20 lg:py-24;
+  }
+
+  .snap-section-hero {
+    @apply relative justify-start overflow-hidden pt-[calc(3.5rem+env(safe-area-inset-top,0px))] pb-6 sm:justify-center sm:py-20 lg:py-24;
+    background-color: #1a1a1a;
+  }
+
+  .snap-section-hero::before {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 bottom-0 top-[calc(-3.5rem-env(safe-area-inset-top,0px))] -z-0;
+    background:
+      radial-gradient(ellipse 130% 90% at 50% -15%, rgba(198, 161, 91, 0.16), transparent 58%),
+      radial-gradient(ellipse 80% 55% at 85% 105%, rgba(198, 161, 91, 0.07), transparent 52%);
+  }
+
+  .snap-section-hero::after {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 bottom-0 -z-0 h-20 sm:h-28;
+    background: linear-gradient(to top, #1a1a1a 10%, rgba(26, 26, 26, 0.85) 45%, transparent);
+  }
+
+  .snap-section-hero > * {
+    @apply relative z-10;
   }
 
   .bento-card {

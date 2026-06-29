@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 
 function HeroVisual() {
   return (
-    <div className="dashed-placeholder relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-2xl lg:aspect-square">
+    <div className="dashed-placeholder relative flex aspect-[16/10] max-h-[11rem] w-full items-center justify-center overflow-hidden rounded-2xl sm:max-h-none sm:aspect-[4/3] lg:aspect-square">
       <svg
         viewBox="0 0 400 400"
         className="absolute inset-0 h-full w-full"
@@ -41,7 +41,7 @@ function HeroVisual() {
           />
         ))}
       </svg>
-      <span className="relative z-10 text-sm font-medium uppercase tracking-widest text-gold/80">
+      <span className="relative z-10 text-xs font-medium uppercase tracking-widest text-gold/80 sm:text-sm">
         Ваш арт-объект
       </span>
     </div>
@@ -50,23 +50,18 @@ function HeroVisual() {
 
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden">
-      <div
-        className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-gold/5 blur-3xl"
-        aria-hidden="true"
-      />
-
-      <div className="container-main">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <div className="relative flex min-h-0 flex-1 flex-col">
+      <div className="container-main relative flex min-h-0 flex-1 flex-col justify-center">
+        <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="animate-fade-in-up">
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-gold">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-gold sm:mb-4">
               LumenArt — дизайнерский свет
             </p>
-            <h1 className="mb-6 text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
+            <h1 className="mb-4 text-[1.65rem] font-bold leading-tight text-foreground sm:mb-6 sm:text-4xl lg:text-5xl xl:text-6xl">
               Индивидуальный свет.{" "}
               <span className="text-gold">Без компромиссов.</span>
             </h1>
-            <p className="mb-8 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
+            <p className="mb-6 max-w-lg text-sm leading-relaxed text-muted sm:mb-8 sm:text-base lg:text-lg">
               Разработка, изготовление и монтаж дизайнерского освещения любой
               сложности. Быстро, качественно, в срок.
             </p>
