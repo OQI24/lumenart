@@ -10,6 +10,40 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+
+  /* Magistral (ParaType) — woff2 в public/fonts/, см. public/fonts/README.md */
+  @font-face {
+    font-family: "Magistral";
+    src:
+      local("Magistral Book"),
+      local("Magistral-Book"),
+      url("/fonts/Magistral-Book.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Magistral";
+    src:
+      local("Magistral Medium"),
+      local("Magistral-Medium"),
+      url("/fonts/Magistral-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Magistral";
+    src:
+      local("Magistral Bold"),
+      local("Magistral-Bold"),
+      url("/fonts/Magistral-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
 }
 
 @layer components {

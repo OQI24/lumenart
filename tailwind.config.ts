@@ -22,7 +22,7 @@ const config: Config = {
         muted: "#B0B0B0",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["Magistral", "var(--font-exo)", "system-ui", "sans-serif"],
       },
       animation: {
         "pulse-gold": "pulse-gold 2s ease-in-out infinite",

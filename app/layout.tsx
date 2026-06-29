@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Exo_2 } from "next/font/google";
 import { SITE, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
-const inter = Inter({
+/** Запасной гротеск, пока не добавлены woff2 Magistral в public/fonts/ */
+const exo2 = Exo_2({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
+  variable: "--font-exo",
   display: "swap",
 });
 
@@ -74,7 +75,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${exo2.variable} font-sans`}>
         {children}
       </body>
     </html>
