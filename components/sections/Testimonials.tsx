@@ -25,7 +25,7 @@ export default function Testimonials() {
               >
                 <path d="M0 24V14.4C0 6.4 4.8 0 12 0v4.8C8 4.8 4.8 8 4.8 12H12V24H0zm20 0V14.4C20 6.4 24.8 0 32 0v4.8C28 4.8 24.8 8 24.8 12H32V24H20z" />
               </svg>
-              <p className="text-lg leading-relaxed text-muted lg:text-xl lg:leading-relaxed">
+              <p className="text-lg leading-relaxed text-muted-foreground lg:text-xl lg:leading-relaxed">
                 {item.quote}
               </p>
             </div>

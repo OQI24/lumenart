@@ -8,7 +8,7 @@ export default function About() {
           <h2 className="mb-8 text-2xl font-bold text-foreground sm:text-3xl lg:text-4xl">
             Мы — <span className="text-gold">LumenArt</span>
           </h2>
-          <div className="space-y-5 text-sm leading-relaxed text-muted sm:text-base">
+          <div className="space-y-5 text-sm leading-relaxed text-muted-foreground sm:text-base">
             {ABOUT_PARAGRAPHS.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}

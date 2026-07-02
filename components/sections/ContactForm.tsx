@@ -3,10 +3,23 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Link from "next/link";
-import Modal from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import SocialLinks from "@/components/ui/SocialLinks";
 import { SITE } from "@/lib/constants";
 import { formatPhoneInput, validatePhone, PHONE_PLACEHOLDER } from "@/lib/validation";
+import { cn } from "@/lib/utils";
 
 interface FormData {
   name: string;
@@ -15,8 +28,11 @@ interface FormData {
   consent: boolean;
 }
 
+const fieldInputClass =
+  "h-11 border-border bg-background px-4 text-sm sm:text-base focus-visible:border-gold/50 focus-visible:ring-gold/30";
+
 export default function ContactForm() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const year = new Date().getFullYear();
 
@@ -54,7 +70,7 @@ export default function ContactForm() {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       reset();
-      setIsModalOpen(true);
+      setIsDialogOpen(true);
     } catch {
       setSubmitError("Не удалось отправить заявку. Попробуйте позже или позвоните нам.");
     }
@@ -83,32 +99,33 @@ export default function ContactForm() {
             <h2 className="mb-2 pr-16 text-2xl font-bold text-foreground sm:text-3xl">
               Получите расчёт за 1 день и сэкономьте 5%
             </h2>
-            <p className="mb-8 text-sm leading-relaxed text-muted sm:text-base">
+            <p className="mb-8 text-sm leading-relaxed text-muted-foreground sm:text-base">
               Заполните форму — мы подготовим смету с учётом всех ваших пожеланий. При
               старте проекта скидка 5% автоматически заморозится.
             </p>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
-              <div>
-                <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-foreground">
+              <div className="space-y-2">
+                <Label htmlFor="name">
                   Имя <span className="text-gold">*</span>
-                </label>
-                <input
+                </Label>
+                <Input
                   id="name"
                   type="text"
                   placeholder="Как к вам обращаться?"
-                  className="form-input"
+                  aria-invalid={!!errors.name}
+                  className={fieldInputClass}
                   {...register("name", { required: "Введите ваше имя" })}
                 />
                 {errors.name && (
-                  <p className="mt-1 text-xs text-red-400">{errors.name.message}</p>
+                  <p className="text-xs text-destructive">{errors.name.message}</p>
                 )}
               </div>
 
-              <div>
-                <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-foreground">
+              <div className="space-y-2">
+                <Label htmlFor="phone">
                   Телефон <span className="text-gold">*</span>
-                </label>
+                </Label>
                 <Controller
                   name="phone"
                   control={control}
@@ -117,11 +134,12 @@ export default function ContactForm() {
                     validate: (v) => validatePhone(v) || "Формат: +7 (XXX) XXX-XX-XX",
                   }}
                   render={({ field }) => (
-                    <input
+                    <Input
                       id="phone"
                       type="tel"
                       placeholder={PHONE_PLACEHOLDER}
-                      className="form-input"
+                      aria-invalid={!!errors.phone}
+                      className={fieldInputClass}
                       value={field.value}
                       onChange={(e) => field.onChange(formatPhoneInput(e.target.value))}
                       onBlur={field.onBlur}
@@ -129,67 +147,78 @@ export default function ContactForm() {
                   )}
                 />
                 {errors.phone && (
-                  <p className="mt-1 text-xs text-red-400">{errors.phone.message}</p>
+                  <p className="text-xs text-destructive">{errors.phone.message}</p>
                 )}
               </div>
 
-              <div>
-                <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-foreground">
-                  Кратко опишите задачу
-                </label>
-                <textarea
+              <div className="space-y-2">
+                <Label htmlFor="message">Кратко опишите задачу</Label>
+                <Textarea
                   id="message"
                   rows={3}
                   placeholder="Тип помещения, пожелания по стилю..."
-                  className="form-input resize-none"
+                  className={cn(fieldInputClass, "min-h-24 resize-none py-3")}
                   {...register("message")}
                 />
               </div>
 
-              <div className="flex items-start gap-3">
-                <input
-                  id="consent"
-                  type="checkbox"
-                  className="mt-1 h-4 w-4 shrink-0 rounded border-gold/40 bg-background accent-gold"
-                  {...register("consent", {
-                    required: "Необходимо согласие на обработку данных",
-                  })}
-                />
-                <label htmlFor="consent" className="text-xs leading-relaxed text-muted sm:text-sm">
-                  Согласен на{" "}
-                  <Link href="/privacy" className="text-gold underline hover:text-gold-light">
-                    обработку персональных данных
-                  </Link>{" "}
-                  <span className="text-gold">*</span>
-                </label>
+              <div className="space-y-2">
+                <div className="flex items-start gap-3">
+                  <Controller
+                    name="consent"
+                    control={control}
+                    rules={{ required: "Необходимо согласие на обработку данных" }}
+                    render={({ field }) => (
+                      <Checkbox
+                        id="consent"
+                        checked={field.value}
+                        onCheckedChange={(checked) => field.onChange(checked === true)}
+                        onBlur={field.onBlur}
+                        aria-invalid={!!errors.consent}
+                        className="mt-0.5 border-gold/40 data-checked:border-primary data-checked:bg-primary"
+                      />
+                    )}
+                  />
+                  <Label
+                    htmlFor="consent"
+                    className="text-xs font-normal leading-relaxed text-muted-foreground sm:text-sm"
+                  >
+                    Согласен на{" "}
+                    <Link href="/privacy" className="text-gold underline hover:text-gold-light">
+                      обработку персональных данных
+                    </Link>{" "}
+                    <span className="text-gold">*</span>
+                  </Label>
+                </div>
+                {errors.consent && (
+                  <p className="text-xs text-destructive">{errors.consent.message}</p>
+                )}
               </div>
-              {errors.consent && (
-                <p className="text-xs text-red-400">{errors.consent.message}</p>
-              )}
 
               {submitError && (
-                <p className="rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-400">
+                <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
                   {submitError}
                 </p>
               )}
 
-              <button
+              <Button
                 type="submit"
+                variant="gold"
+                size="cta"
                 disabled={isSubmitting}
-                className="w-full rounded-lg bg-gradient-gold py-4 text-base font-semibold text-background transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full"
               >
                 {isSubmitting ? "Отправляем..." : "Рассчитать стоимость со скидкой"}
-              </button>
+              </Button>
             </form>
           </div>
         </div>
 
-        {/* Contacts block */}
         <div className="mx-auto mt-12 max-w-2xl border-t border-white/5 pt-10">
           <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between">
             <div className="text-center sm:text-left">
               <p className="mb-3 text-lg font-bold text-gold">LumenArt</p>
-              <div className="space-y-1 text-sm text-muted">
+              <div className="space-y-1 text-sm text-muted-foreground">
                 <p>
                   <a href={`tel:${SITE.phoneRaw}`} className="transition-colors hover:text-foreground">
                     {SITE.phone}
@@ -204,7 +233,7 @@ export default function ContactForm() {
             </div>
             <SocialLinks />
           </div>
-          <div className="mt-8 flex flex-col items-center gap-3 text-xs text-muted sm:flex-row sm:justify-between">
+          <div className="mt-8 flex flex-col items-center gap-3 text-xs text-muted-foreground sm:flex-row sm:justify-between">
             <p>© {year} LumenArt. Все права защищены.</p>
             <Link href="/privacy" className="transition-colors hover:text-gold">
               Политика конфиденциальности
@@ -213,14 +242,27 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Заявка отправлена!"
-      >
-        Спасибо! Мы свяжемся с вами в течение 30 минут и применим скидку 5% к вашему
-        проекту.
-      </Modal>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="border-gold/30 bg-background-card text-foreground sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Заявка отправлена!</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              Спасибо! Мы свяжемся с вами в течение 30 минут и применим скидку 5% к вашему
+              проекту.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="border-0 bg-transparent p-0 sm:justify-stretch">
+            <Button
+              variant="gold"
+              size="cta"
+              className="w-full"
+              onClick={() => setIsDialogOpen(false)}
+            >
+              Отлично
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

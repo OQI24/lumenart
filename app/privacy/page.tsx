@@ -22,7 +22,7 @@ export default function PrivacyPage() {
           Политика конфиденциальности
         </h1>
 
-        <div className="prose prose-invert max-w-3xl space-y-6 text-muted leading-relaxed">
+        <div className="prose prose-invert max-w-3xl space-y-6 text-muted-foreground leading-relaxed">
           <p>
             Настоящая Политика конфиденциальности определяет порядок обработки и
             защиты персональных данных пользователей сайта LumenArt (далее —
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
             </a>
           </p>
 
-          <p className="text-sm text-muted/60">
+          <p className="text-sm text-muted-foreground/60">
             Дата последнего обновления: 30 июня 2026 г.
           </p>
         </div>

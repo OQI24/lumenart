@@ -44,7 +44,7 @@ export default function Technologies() {
             </div>
             <div>
               <h3 className="mb-2 text-lg font-bold text-foreground">{tech.title}</h3>
-              <p className="text-sm leading-relaxed text-muted sm:text-base">{tech.description}</p>
+              <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{tech.description}</p>
             </div>
           </article>
         ))}

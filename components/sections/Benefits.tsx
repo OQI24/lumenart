@@ -70,7 +70,7 @@ function BenefitCard({
         <Icon />
       </div>
       <h3 className="mb-2 text-lg font-bold text-foreground sm:text-xl">{benefit.title}</h3>
-      <p className="text-sm leading-relaxed text-muted sm:text-base">{benefit.description}</p>
+      <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{benefit.description}</p>
     </article>
   );
 }

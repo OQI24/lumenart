@@ -1,9 +1,18 @@
 "use client";
 
 import { useEffect, useState, useCallback, MouseEvent } from "react";
+import { Menu } from "lucide-react";
 import { sections } from "@/config/sections";
 import type { SectionId } from "@/config/sections";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { Button } from "@/components/ui/Button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   scrollContainerId?: string;
@@ -58,26 +67,21 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
     return () => observers.forEach((o) => o.disconnect());
   }, [scrollContainerId]);
 
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMenuOpen]);
-
   const navLinkClass = (id: SectionId) =>
-    `text-sm transition-colors ${
-      activeSection === id ? "text-gold" : "text-muted hover:text-foreground"
-    }`;
+    cn(
+      "text-sm transition-colors",
+      activeSection === id ? "text-gold" : "text-muted-foreground hover:text-foreground"
+    );
 
   return (
     <>
       <header
-        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+        className={cn(
+          "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
           isHeroVisible
             ? "border-transparent bg-transparent"
             : "border-b border-white/5 bg-background/90 backdrop-blur-md"
-        }`}
+        )}
       >
         <div className="container-main flex h-14 items-center justify-between sm:h-16">
           <a
@@ -101,45 +105,41 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
             ))}
           </nav>
 
-          <button
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-foreground lg:hidden"
-            onClick={() => setIsMenuOpen((v) => !v)}
-            aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
-            aria-expanded={isMenuOpen}
+          <Button
+            variant="outline"
+            size="icon"
+            className="border-white/10 text-foreground lg:hidden"
+            onClick={() => setIsMenuOpen(true)}
+            aria-label="Открыть меню"
           >
-            {isMenuOpen ? (
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            )}
-          </button>
+            <Menu className="size-5" />
+          </Button>
         </div>
       </header>
 
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={closeMenu} aria-hidden="true" />
-          <nav
-            className="absolute right-0 top-0 flex h-full w-72 flex-col gap-1 bg-background p-6 pt-20 shadow-2xl"
-            aria-label="Мобильная навигация"
-          >
+      <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+        <SheetContent
+          side="right"
+          className="w-72 border-white/10 bg-background p-0 sm:max-w-xs"
+          aria-label="Мобильная навигация"
+        >
+          <SheetHeader className="border-b border-white/5 p-6 pb-4">
+            <SheetTitle className="text-left text-lg font-bold text-gold">LumenArt</SheetTitle>
+          </SheetHeader>
+          <nav className="flex flex-col gap-1 p-4" aria-label="Мобильная навигация">
             {sections.map(({ id, label }) => (
               <a
                 key={id}
                 href={`#${id}`}
-                className={`rounded-lg px-4 py-3 text-base ${navLinkClass(id)}`}
+                className={cn("rounded-lg px-4 py-3 text-base", navLinkClass(id))}
                 onClick={(e) => handleNavClick(e, id)}
               >
                 {label}
               </a>
             ))}
           </nav>
-        </div>
-      )}
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

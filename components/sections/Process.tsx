@@ -91,7 +91,7 @@ function StepCard({
       <p
         className={`flex-1 leading-relaxed ${
           horizontal ? "text-sm xl:text-base 2xl:text-lg" : "text-base"
-        } ${step.highlight ? "text-background/80" : "text-muted"}`}
+        } ${step.highlight ? "text-background/80" : "text-muted-foreground"}`}
       >
         {step.description}
       </p>

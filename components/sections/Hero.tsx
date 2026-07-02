@@ -1,4 +1,4 @@
-import Button from "@/components/ui/Button";
+import CtaButton from "@/components/ui/CtaButton";
 
 function HeroVisual() {
   return (
@@ -61,11 +61,11 @@ export default function Hero() {
               Индивидуальный свет.{" "}
               <span className="text-gold">Без компромиссов.</span>
             </h1>
-            <p className="mb-6 max-w-lg text-sm leading-relaxed text-muted sm:mb-8 sm:text-base lg:text-lg">
+            <p className="mb-6 max-w-lg text-sm leading-relaxed text-muted-foreground sm:mb-8 sm:text-base lg:text-lg">
               Разработка, изготовление и монтаж дизайнерского освещения любой
               сложности. Быстро, качественно, в срок.
             </p>
-            <Button href="#contacts">Получить расчёт со скидкой 5%</Button>
+            <CtaButton href="#contacts">Получить расчёт со скидкой 5%</CtaButton>
           </div>
           <HeroVisual />
         </div>

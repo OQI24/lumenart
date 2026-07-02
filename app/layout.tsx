@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Exo_2 } from "next/font/google";
 import { SITE, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
 /** Запасной гротеск, пока не добавлены woff2 Magistral в public/fonts/ */
@@ -68,16 +69,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" className={cn("dark", exo2.variable)}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${exo2.variable} font-sans`}>
-        {children}
-      </body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }
