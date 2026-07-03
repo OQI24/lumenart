@@ -12,7 +12,7 @@ export const SITE = {
 } as const;
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://username.github.io/LumenArt";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://lumenart.pro";
 
 export const SITE_DESCRIPTION =
   "Разработка, производство и монтаж индивидуального дизайнерского освещения. Соблюдение сроков, гарантия качества. Рассчитайте проект со скидкой 5%.";
