@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Exo_2 } from "next/font/google";
+import ViewportHeightSync from "@/components/ViewportHeightSync";
 import { SITE, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import "./globals.css";
@@ -72,11 +73,19 @@ export default function RootLayout({
     <html lang="ru" className={cn("dark", exo2.variable)}>
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var h=window.visualViewport&&window.visualViewport.height||window.innerHeight;document.documentElement.style.setProperty("--app-vh",h+"px")})();`,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <ViewportHeightSync />
+        {children}
+      </body>
     </html>
   );
 }

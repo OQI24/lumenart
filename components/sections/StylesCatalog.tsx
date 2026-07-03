@@ -122,7 +122,7 @@ export default function StylesCatalog() {
   }, []);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div className="relative flex min-h-0 flex-1 w-full overflow-hidden">
       <div className="absolute inset-0">
         <CurtainBackground
           style={activeStyle}
