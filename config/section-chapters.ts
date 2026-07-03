@@ -1,13 +1,19 @@
 import type { SectionId } from "@/config/sections";
+import type { SectionShapeId } from "@/config/section-shapes";
 
+/** Маркеры чередуются: нечётные контент-слайды (1, 3, 5, 7) — с фигурами, чётные — только подпись */
 export const SECTION_CHAPTERS: Partial<
-  Record<SectionId, { number: number; label: string }>
+  Record<SectionId, { label: string; shape?: SectionShapeId }>
 > = {
-  benefits: { number: 1, label: "Преимущества" },
-  styles: { number: 2, label: "Стили" },
-  technologies: { number: 3, label: "Технологии" },
-  process: { number: 4, label: "Процесс" },
-  portfolio: { number: 5, label: "Проекты" },
-  testimonials: { number: 6, label: "Отзывы" },
-  contacts: { number: 7, label: "Контакты" },
+  benefits: { label: "Преимущества", shape: "benefits" },
+  styles: { label: "Стили" },
+  technologies: { label: "Технологии", shape: "technologies" },
+  process: { label: "Процесс" },
+  portfolio: { label: "Проекты", shape: "portfolio" },
+  testimonials: { label: "Отзывы" },
+  contacts: { label: "Контакты", shape: "contacts" },
 };
+
+export function sectionHasMarker(sectionId: SectionId): boolean {
+  return Boolean(SECTION_CHAPTERS[sectionId]?.shape);
+}

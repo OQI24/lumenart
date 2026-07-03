@@ -1,17 +1,14 @@
 import { ABOUT_PARAGRAPHS } from "@/lib/constants";
 import FadeUp from "@/components/ui/FadeUp";
+import SectionBackdropText from "@/components/ui/SectionBackdropText";
 
 export default function About() {
   return (
-    <div className="container-main relative">
-      <p
-        className="pointer-events-none absolute -right-4 top-0 select-none text-[clamp(4rem,18vw,12rem)] font-bold leading-none text-foreground/[0.03] lg:-right-8"
-        aria-hidden="true"
-      >
-        ART
-      </p>
+    <div className="relative flex min-h-0 w-full flex-1 flex-col justify-center">
+      <SectionBackdropText>ART</SectionBackdropText>
 
-      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20 xl:gap-28">
+      <div className="container-main relative z-10">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20 xl:gap-28">
         <div>
           <FadeUp>
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-gold">
@@ -63,6 +60,7 @@ export default function About() {
             </span>
           </div>
         </FadeUp>
+        </div>
       </div>
     </div>
   );

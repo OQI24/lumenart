@@ -1,6 +1,7 @@
 import { BENEFITS } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import FadeUp from "@/components/ui/FadeUp";
+import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 const GOLD = "#C6A15B";
@@ -43,12 +44,12 @@ export default function Benefits() {
   const [card1, card2, card3] = BENEFITS;
 
   return (
-    <div className="container-main">
+    <SectionFrame>
       <SectionHeading
         title="Почему LumenArt"
         subtitle="Три ключевых преимущества, которые отличают нас от конкурентов"
-        sectionNumber={chapter.number}
         sectionLabel={chapter.label}
+        sectionShape={chapter.shape}
         align="left"
       />
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:grid-rows-2 md:gap-6 lg:gap-7">
@@ -65,7 +66,7 @@ export default function Benefits() {
           />
         </FadeUp>
       </div>
-    </div>
+    </SectionFrame>
   );
 }
 

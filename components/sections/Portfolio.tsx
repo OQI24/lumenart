@@ -5,6 +5,7 @@ import { BLUR_DATA_URL } from "@/lib/blur-data";
 import Counter from "@/components/ui/Counter";
 import FadeUp from "@/components/ui/FadeUp";
 import Marquee from "@/components/ui/Marquee";
+import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 function ComingSoonIcon() {
@@ -26,12 +27,12 @@ const chapter = SECTION_CHAPTERS.portfolio!;
 
 export default function Portfolio() {
   return (
-    <div className="container-main">
+    <SectionFrame>
       <SectionHeading
         title="Портфолио"
         subtitle="Примеры реализованных проектов — скоро здесь появятся фотографии"
-        sectionNumber={chapter.number}
         sectionLabel={chapter.label}
+        sectionShape={chapter.shape}
         align="left"
       />
 
@@ -79,6 +80,6 @@ export default function Portfolio() {
           </FadeUp>
         ))}
       </div>
-    </div>
+    </SectionFrame>
   );
 }

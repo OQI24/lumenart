@@ -74,7 +74,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var h=window.visualViewport&&window.visualViewport.height||window.innerHeight;document.documentElement.style.setProperty("--app-vh",h+"px")})();`,
+            __html: `(function(){var h=window.visualViewport&&window.visualViewport.height||window.innerHeight;var id="app-layout-vars";var el=document.getElementById(id);if(!el){el=document.createElement("style");el.id=id;document.head.appendChild(el)}el.textContent=":root{--app-vh:"+h+"px}"})();`,
           }}
         />
         <script

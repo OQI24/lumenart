@@ -1,18 +1,19 @@
 import { TESTIMONIALS } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import FadeUp from "@/components/ui/FadeUp";
+import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 const chapter = SECTION_CHAPTERS.testimonials!;
 
 export default function Testimonials() {
   return (
-    <div className="container-main">
+    <SectionFrame>
       <SectionHeading
         title="Отзывы клиентов"
         subtitle="Что говорят о нас архитекторы, дизайнеры и владельцы объектов"
-        sectionNumber={chapter.number}
         sectionLabel={chapter.label}
+        sectionShape={chapter.shape}
         align="left"
       />
 
@@ -51,6 +52,6 @@ export default function Testimonials() {
           </FadeUp>
         ))}
       </div>
-    </div>
+    </SectionFrame>
   );
 }

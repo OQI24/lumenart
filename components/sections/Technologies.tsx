@@ -3,6 +3,7 @@ import { TECHNOLOGIES } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import FadeUp from "@/components/ui/FadeUp";
 import Marquee from "@/components/ui/Marquee";
+import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 function TechIcon({ type }: { type: string }) {
@@ -39,11 +40,11 @@ const chapter = SECTION_CHAPTERS.technologies!;
 
 export default function Technologies() {
   return (
-    <div className="container-main">
+    <SectionFrame>
       <SectionHeading
         title="Технологии, которым мы доверяем"
-        sectionNumber={chapter.number}
         sectionLabel={chapter.label}
+        sectionShape={chapter.shape}
         align="left"
       />
 
@@ -70,6 +71,6 @@ export default function Technologies() {
           </FadeUp>
         ))}
       </div>
-    </div>
+    </SectionFrame>
   );
 }

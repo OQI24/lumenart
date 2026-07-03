@@ -10,6 +10,9 @@ const nextConfig = {
   basePath,
   assetPrefix: basePath,
   trailingSlash: true,
+  env: {
+    FORM_EMAIL: process.env.FORM_EMAIL,
+  },
   images: {
     unoptimized: true,
   },

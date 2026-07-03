@@ -2,6 +2,7 @@ import CtaButton from "@/components/ui/CtaButton";
 import FadeUp from "@/components/ui/FadeUp";
 import HeroRotatingText from "@/components/ui/HeroRotatingText";
 import Marquee from "@/components/ui/Marquee";
+import SectionBackdropText from "@/components/ui/SectionBackdropText";
 
 function HeroVisual() {
   return (
@@ -54,14 +55,9 @@ function HeroVisual() {
 export default function Hero() {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col">
-      <p
-        className="pointer-events-none absolute -left-[5%] top-[12%] select-none display-text text-foreground/[0.03] sm:-left-[2%] sm:top-[8%]"
-        aria-hidden="true"
-      >
-        СВЕТ
-      </p>
+      <SectionBackdropText>СВЕТ</SectionBackdropText>
 
-      <div className="container-main relative flex min-h-0 flex-1 flex-col justify-center">
+      <div className="container-main relative z-10 flex min-h-0 flex-1 flex-col justify-center">
         <div className="grid items-center gap-10 sm:gap-14 lg:grid-cols-2 lg:gap-20 xl:gap-24">
           <div>
             <FadeUp>

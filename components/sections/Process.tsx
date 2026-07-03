@@ -3,6 +3,7 @@ import { TIMELINE_STEPS } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import Counter from "@/components/ui/Counter";
 import FadeUp from "@/components/ui/FadeUp";
+import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 type Step = (typeof TIMELINE_STEPS)[number];
@@ -173,12 +174,12 @@ const chapter = SECTION_CHAPTERS.process!;
 
 export default function Process() {
   return (
-    <div className="container-main">
+    <SectionFrame>
       <SectionHeading
         title="Этапы работы"
         subtitle="От идеи до монтажа — полный цикл под ключ"
-        sectionNumber={chapter.number}
         sectionLabel={chapter.label}
+        sectionShape={chapter.shape}
         align="left"
       />
 
@@ -192,6 +193,6 @@ export default function Process() {
         <ProcessVertical />
       </div>
       <ProcessHorizontal />
-    </div>
+    </SectionFrame>
   );
 }

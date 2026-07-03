@@ -17,9 +17,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import SocialLinks from "@/components/ui/SocialLinks";
+import SectionBackdropText from "@/components/ui/SectionBackdropText";
+import SectionFrame from "@/components/ui/SectionFrame";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import { SITE } from "@/lib/constants";
+import { submitContactForm } from "@/lib/submit-contact-form";
 import { formatPhoneInput, validatePhone, PHONE_PLACEHOLDER } from "@/lib/validation";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +39,7 @@ const fieldInputClass =
 export default function ContactForm() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
   const year = new Date().getFullYear();
   const chapter = SECTION_CHAPTERS.contacts!;
 
@@ -51,38 +55,28 @@ export default function ContactForm() {
 
   const onSubmit = async (data: FormData) => {
     setSubmitError(null);
-    const webhookUrl = process.env.NEXT_PUBLIC_WEBHOOK_URL;
-    if (!webhookUrl) {
-      setSubmitError("Webhook URL не настроен. Обратитесь к администратору сайта.");
+
+    const result = await submitContactForm({
+      name: data.name,
+      phone: data.phone,
+      message: data.message ?? "",
+      consent: data.consent,
+      honeypot,
+    });
+
+    if (!result.ok) {
+      setSubmitError(result.error);
       return;
     }
 
-    try {
-      const res = await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          phone: data.phone,
-          message: data.message || "",
-          consent: data.consent,
-          discount: "5%",
-          source: "landing",
-          submittedAt: new Date().toISOString(),
-        }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      reset();
-      setIsDialogOpen(true);
-    } catch {
-      setSubmitError("Не удалось отправить заявку. Попробуйте позже или позвоните нам.");
-    }
+    reset();
+    setIsDialogOpen(true);
   };
 
   return (
     <>
-      <div className="container-main relative">
-        <SectionLabel number={chapter.number} label={chapter.label} />
+      <SectionFrame>
+        <SectionLabel label={chapter.label} shape={chapter.shape} />
 
         <div className="relative mx-auto max-w-2xl">
           <div
@@ -110,6 +104,17 @@ export default function ContactForm() {
             </p>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
+              <input
+                type="text"
+                name="_honey"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
+              />
+
               <div className="space-y-2">
                 <Label htmlFor="name">
                   Имя <span className="text-gold">*</span>
@@ -246,13 +251,8 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <p
-          className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 select-none whitespace-nowrap text-[clamp(4rem,20vw,14rem)] font-bold leading-none text-foreground/[0.03]"
-          aria-hidden="true"
-        >
-          LUMENART
-        </p>
-      </div>
+        <SectionBackdropText align="bottom">LUMENART</SectionBackdropText>
+      </SectionFrame>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="border-gold/30 bg-background-card text-foreground sm:max-w-md">

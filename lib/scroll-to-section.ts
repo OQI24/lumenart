@@ -8,7 +8,9 @@ export function scrollToSection(
   if (!section) return;
 
   if (container) {
-    const top = section.offsetTop;
+    const scrollPaddingTop =
+      parseFloat(getComputedStyle(container).scrollPaddingTop) || 0;
+    const top = Math.max(0, section.offsetTop - scrollPaddingTop);
     container.scrollTo({ top, behavior: "smooth" });
     return;
   }

@@ -127,6 +127,8 @@
 
   :root {
     --app-vh: 100dvh;
+    --header-height: calc(3.5rem + env(safe-area-inset-top, 0px));
+    --app-content-vh: calc(var(--app-vh) - var(--header-height));
     --background: #1a1a1a;
     --foreground: #f5f5f5;
     --card: #222222;
@@ -160,6 +162,12 @@
     --sidebar-accent-foreground: #f5f5f5;
     --sidebar-border: rgba(255, 255, 255, 0.1);
     --sidebar-ring: rgba(198, 161, 91, 0.5);
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --header-height: calc(4rem + env(safe-area-inset-top, 0px));
+    }
   }
 
   .dark {
@@ -212,31 +220,28 @@
     @apply overflow-y-auto overflow-x-hidden bg-background;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    scroll-padding-top: calc(3.5rem + env(safe-area-inset-top, 0px));
-  }
-
-  @media (min-width: 640px) {
-    .snap-container {
-      scroll-padding-top: calc(4rem + env(safe-area-inset-top, 0px));
-    }
+    scroll-padding-top: var(--header-height);
   }
 
   .snap-section {
-    min-height: var(--app-vh, 100dvh);
-    @apply relative flex snap-start snap-always flex-col justify-center py-16 lg:py-20;
+    min-height: var(--app-content-vh);
+    @apply relative box-border flex snap-start snap-always flex-col justify-center pb-16 lg:pb-20;
     scroll-snap-stop: always;
   }
 
   .snap-section-hero {
     min-height: var(--app-vh, 100dvh);
-    @apply relative snap-start snap-always justify-start overflow-hidden pt-[calc(3.5rem+env(safe-area-inset-top,0px))] pb-8 sm:justify-center sm:py-16 lg:py-20;
+    padding-top: var(--header-height);
+    scroll-margin-top: 0;
+    @apply relative box-border snap-start snap-always justify-start overflow-hidden pb-8 sm:justify-center sm:pb-16 lg:pb-20;
     scroll-snap-stop: always;
     background-color: #1a1a1a;
   }
 
   .snap-section-hero::before {
     content: "";
-    @apply pointer-events-none absolute inset-x-0 bottom-0 top-[calc(-3.5rem-env(safe-area-inset-top,0px))] -z-0;
+    @apply pointer-events-none absolute inset-x-0 bottom-0 -z-0;
+    top: calc(-1 * var(--header-height));
     background:
       radial-gradient(ellipse 130% 90% at 50% -15%, rgba(198, 161, 91, 0.16), transparent 58%),
       radial-gradient(ellipse 80% 55% at 85% 105%, rgba(198, 161, 91, 0.07), transparent 52%);
@@ -262,10 +267,6 @@
 
   .display-num {
     @apply text-6xl font-bold leading-none sm:text-7xl lg:text-8xl;
-  }
-
-  .display-text {
-    @apply text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.85] tracking-tight;
   }
 
   .pill-tag {
@@ -303,8 +304,8 @@
   }
 
   .snap-section-full {
-    height: var(--app-vh, 100dvh);
-    @apply justify-stretch overflow-hidden p-0!;
+    height: var(--app-content-vh);
+    @apply box-border justify-stretch overflow-hidden p-0!;
   }
 }
 

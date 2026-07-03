@@ -141,15 +141,16 @@ export default function StylesCatalog() {
       </div>
 
       <div
-        className={`relative z-20 flex h-full flex-col px-4 pb-16 pt-24 sm:px-6 lg:px-8 ${
+        className={`relative z-20 flex h-full min-h-0 flex-col px-4 pb-16 pt-8 sm:px-6 lg:px-8 ${
           isDarkTheme ? "text-gray-900" : "text-white"
         }`}
       >
         <div className="mx-auto w-full max-w-3xl">
           <SectionLabel
-            number={chapter.number}
             label={chapter.label}
-            className={isDarkTheme ? "text-gray-900" : ""}
+            shape={chapter.shape}
+            labelClassName={isDarkTheme ? "text-gray-900" : undefined}
+            markerStrokeClassName={isDarkTheme ? "stroke-gray-900/30 fill-gray-900/15" : undefined}
           />
         </div>
         <h2 className="mb-10 text-center text-3xl font-bold sm:text-4xl lg:text-5xl xl:text-6xl">
