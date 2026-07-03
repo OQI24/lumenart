@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-pages
     permissions:
       contents: read
       pages: write
@@ -35,7 +36,9 @@ jobs:
         run: npm ci
 
       - name: Build static site
-        run: npm run build
+        run: |
+          echo "DEPLOY_TYPE=${DEPLOY_TYPE:-<not set, fallback dev>}"
+          npm run build
         env:
           DEPLOY_TYPE: ${{ vars.DEPLOY_TYPE }}
           NEXT_PUBLIC_BASE_PATH: ""
