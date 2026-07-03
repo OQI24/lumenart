@@ -1,11 +1,12 @@
 export const SITE = {
   name: "LumenArt",
-  phone: "+7 (999) 000-00-00",
-  phoneRaw: "+79990000000",
-  email: "info@lumenart.ru",
+  phone: "+7 (930) 777-96-90",
+  phoneRaw: "+79307779690",
+  email: "lyumen.art@yandex.ru",
   address: "г. Москва, ул. Примерная, 1",
   social: {
-    telegram: "#",
+    telegram: "https://t.me/lyumen_art",
+    telegramHandle: "@lyumen_art",
     vk: "#",
     instagram: "#",
   },

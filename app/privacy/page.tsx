@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Политика конфиденциальности — LumenArt",
@@ -59,8 +60,8 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold text-white">5. Контакты</h2>
           <p>
             По вопросам обработки персональных данных обращайтесь по адресу:{" "}
-            <a href="mailto:info@lumenart.ru" className="text-gold hover:underline">
-              info@lumenart.ru
+            <a href={`mailto:${SITE.email}`} className="text-gold hover:underline">
+              {SITE.email}
             </a>
           </p>
 
