@@ -37,6 +37,7 @@ jobs:
       - name: Build static site
         run: npm run build
         env:
+          DEPLOY_TYPE: ${{ vars.DEPLOY_TYPE }}
           NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: https://lumenart.pro
           NEXT_PUBLIC_WEBHOOK_URL: ${{ secrets.NEXT_PUBLIC_WEBHOOK_URL }}
