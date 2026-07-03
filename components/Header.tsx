@@ -12,6 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import Logo from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -86,10 +87,12 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
         <div className="container-main flex h-14 items-center justify-between sm:h-16">
           <a
             href="#hero"
-            className="text-lg font-bold tracking-wide text-gold"
+            className="text-gold"
             onClick={(e) => handleNavClick(e, "hero")}
+            aria-label="LumenArt — на главную"
           >
-            LumenArt
+            <Logo variant="icon" height={28} className="sm:hidden" />
+            <Logo variant="horizontal" height={32} className="hidden sm:block" />
           </a>
 
           <nav className="hidden items-center gap-5 lg:flex" aria-label="Основная навигация">
@@ -124,7 +127,9 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
           aria-label="Мобильная навигация"
         >
           <SheetHeader className="border-b border-white/5 p-6 pb-4">
-            <SheetTitle className="text-left text-lg font-bold text-gold">LumenArt</SheetTitle>
+            <SheetTitle className="text-left text-gold">
+              <Logo variant="horizontal" height={28} />
+            </SheetTitle>
           </SheetHeader>
           <nav className="flex flex-col gap-1 p-4" aria-label="Мобильная навигация">
             {sections.map(({ id, label }) => (
