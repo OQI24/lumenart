@@ -35,6 +35,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate form provider
+        run: node scripts/validate-form-env.mjs
+        env:
+          FORM_PROVIDER: formsubmit
+          FORM_EMAIL: ${{ vars.FORM_EMAIL }}
+
       - name: Build static site
         run: |
           echo "DEPLOY_TYPE=${DEPLOY_TYPE:-<not set, fallback dev>}"
@@ -43,7 +49,7 @@ jobs:
           DEPLOY_TYPE: ${{ vars.DEPLOY_TYPE }}
           NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: https://lumenart.pro
-          FORM_EMAIL: ${{ secrets.FORM_EMAIL }}
+          FORM_EMAIL: ${{ vars.FORM_EMAIL }}
 
       - name: Add GitHub Pages files
         run: |
