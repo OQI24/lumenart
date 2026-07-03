@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import SocialLinks from "@/components/ui/SocialLinks";
+import SectionLabel from "@/components/ui/SectionLabel";
+import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import { SITE } from "@/lib/constants";
 import { formatPhoneInput, validatePhone, PHONE_PLACEHOLDER } from "@/lib/validation";
 import { cn } from "@/lib/utils";
@@ -35,6 +37,7 @@ export default function ContactForm() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const year = new Date().getFullYear();
+  const chapter = SECTION_CHAPTERS.contacts!;
 
   const {
     register,
@@ -78,7 +81,9 @@ export default function ContactForm() {
 
   return (
     <>
-      <div className="container-main">
+      <div className="container-main relative">
+        <SectionLabel number={chapter.number} label={chapter.label} />
+
         <div className="relative mx-auto max-w-2xl">
           <div
             className="absolute -right-2 -top-4 z-20 sm:-right-4 sm:-top-6"
@@ -95,11 +100,11 @@ export default function ContactForm() {
             </div>
           </div>
 
-          <div className="form-card relative overflow-hidden rounded-2xl bg-background-card p-6 sm:p-10">
-            <h2 className="mb-2 pr-16 text-2xl font-bold text-foreground sm:text-3xl">
+          <div className="form-card relative overflow-hidden rounded-[2rem] bg-background-card p-7 sm:p-10 lg:p-12">
+            <h2 className="mb-3 pr-16 text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
               Получите расчёт за 1 день и сэкономьте 5%
             </h2>
-            <p className="mb-8 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            <p className="mb-10 text-base leading-relaxed text-muted-foreground sm:text-lg">
               Заполните форму — мы подготовим смету с учётом всех ваших пожеланий. При
               старте проекта скидка 5% автоматически заморозится.
             </p>
@@ -214,7 +219,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 max-w-2xl border-t border-white/5 pt-10">
+        <div className="relative mx-auto mt-16 max-w-2xl border-t border-white/5 pt-12">
           <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between">
             <div className="text-center sm:text-left">
               <p className="mb-3 text-lg font-bold text-gold">LumenArt</p>
@@ -240,6 +245,13 @@ export default function ContactForm() {
             </Link>
           </div>
         </div>
+
+        <p
+          className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 select-none whitespace-nowrap text-[clamp(4rem,20vw,14rem)] font-bold leading-none text-foreground/[0.03]"
+          aria-hidden="true"
+        >
+          LUMENART
+        </p>
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

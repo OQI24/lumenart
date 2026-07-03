@@ -31,9 +31,20 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
       e.preventDefault();
       closeMenu();
       scrollToSection(id, scrollContainerId);
+      const url = id === "hero" ? window.location.pathname : `#${id}`;
+      window.history.replaceState(null, "", url);
     },
     [closeMenu, scrollContainerId]
   );
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash || !sections.some(({ id }) => id === hash)) return;
+
+    requestAnimationFrame(() => {
+      scrollToSection(hash, scrollContainerId);
+    });
+  }, [scrollContainerId]);
 
   useEffect(() => {
     const heroEl = document.getElementById("hero");
@@ -59,7 +70,7 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
         ([entry]) => {
           if (entry.isIntersecting) setActiveSection(id);
         },
-        { threshold: 0.4, root }
+        { threshold: 0.55, root }
       );
       observer.observe(el);
       observers.push(observer);

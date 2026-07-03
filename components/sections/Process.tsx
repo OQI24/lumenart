@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
 import { TIMELINE_STEPS } from "@/lib/constants";
+import { SECTION_CHAPTERS } from "@/config/section-chapters";
+import Counter from "@/components/ui/Counter";
+import FadeUp from "@/components/ui/FadeUp";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 type Step = (typeof TIMELINE_STEPS)[number];
@@ -49,26 +52,26 @@ function StepCard({
 }) {
   return (
     <article
-      className={`flex h-full flex-col rounded-3xl ${
+      className={`flex h-full flex-col rounded-[1.75rem] sm:rounded-[2rem] ${
         horizontal
-          ? "min-h-[320px] p-7 xl:min-h-[365px] xl:p-8 2xl:min-h-[390px] 2xl:p-9"
-          : "p-6 sm:p-8"
+          ? "min-h-[340px] p-8 xl:min-h-[380px] xl:p-9"
+          : "p-7 sm:p-9"
       } ${
         step.highlight
           ? "bg-gradient-gold text-background shadow-xl shadow-gold/30"
-          : "bento-card"
+          : "bento-card hover:scale-[1.01]"
       }`}
     >
-      <div className={`mb-4 flex items-center gap-3 ${horizontal ? "xl:mb-5" : ""}`}>
+      <div className={`mb-5 flex items-center gap-3 ${horizontal ? "xl:mb-6" : ""}`}>
         <div
-          className={`flex items-center justify-center rounded-xl ${
-            horizontal ? "h-12 w-12 xl:h-14 xl:w-14" : "h-10 w-10"
+          className={`flex items-center justify-center rounded-2xl ${
+            horizontal ? "h-14 w-14" : "h-12 w-12"
           } ${step.highlight ? "bg-background/20 text-background" : "bg-gold/10 text-gold"}`}
         >
           <StepIcon type={step.icon} size={horizontal ? 28 : 24} />
         </div>
         <span
-          className={`text-sm font-medium uppercase tracking-wider xl:text-base ${
+          className={`text-sm font-medium uppercase tracking-[0.2em] xl:text-base ${
             step.highlight ? "text-background/70" : "text-gold"
           }`}
         >
@@ -79,18 +82,18 @@ function StepCard({
         className={`mb-3 font-bold ${
           step.highlight
             ? horizontal
-              ? "text-lg xl:text-xl 2xl:text-2xl"
+              ? "text-xl xl:text-2xl"
               : "text-2xl sm:text-3xl"
             : horizontal
-              ? "text-base text-foreground xl:text-lg 2xl:text-xl"
-              : "text-xl text-foreground"
+              ? "text-lg text-foreground xl:text-xl"
+              : "text-xl text-foreground sm:text-2xl"
         }`}
       >
         {step.title}
       </h3>
       <p
         className={`flex-1 leading-relaxed ${
-          horizontal ? "text-sm xl:text-base 2xl:text-lg" : "text-base"
+          horizontal ? "text-base xl:text-lg" : "text-base sm:text-lg"
         } ${step.highlight ? "text-background/80" : "text-muted-foreground"}`}
       >
         {step.description}
@@ -106,7 +109,7 @@ function ProcessVertical() {
         className="absolute bottom-0 left-6 top-0 w-px bg-gradient-to-b from-gold/0 via-gold/40 to-gold/0 md:left-1/2 md:-translate-x-px"
         aria-hidden="true"
       />
-      <ol className="space-y-6 lg:space-y-8">
+      <ol className="space-y-7 lg:space-y-9">
         {TIMELINE_STEPS.map((step, index) => {
           const isLeft = index % 2 === 0;
           return (
@@ -116,9 +119,9 @@ function ProcessVertical() {
                 isLeft ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
-              <div className="absolute left-6 top-6 z-10 -translate-x-1/2 md:left-1/2">
+              <div className="absolute left-6 top-8 z-10 -translate-x-1/2 md:left-1/2">
                 <div
-                  className={`h-3 w-3 rounded-full border-2 ${
+                  className={`h-3.5 w-3.5 rounded-full border-2 ${
                     step.highlight
                       ? "border-gold bg-gold shadow-lg shadow-gold/50"
                       : "border-gold/60 bg-background"
@@ -127,7 +130,9 @@ function ProcessVertical() {
               </div>
               <div className="hidden md:block md:w-1/2" />
               <div className={`ml-12 md:ml-0 md:w-1/2 ${isLeft ? "md:pr-10" : "md:pl-10"}`}>
-                <StepCard step={step} />
+                <FadeUp delay={index * 0.06}>
+                  <StepCard step={step} />
+                </FadeUp>
               </div>
             </li>
           );
@@ -141,22 +146,22 @@ function ProcessHorizontal() {
   return (
     <div className="relative hidden lg:block">
       <div
-        className="absolute left-0 right-0 top-8 h-px bg-gradient-to-r from-gold/0 via-gold/40 to-gold/0 xl:top-9"
+        className="absolute left-0 right-0 top-10 h-px bg-gradient-to-r from-gold/0 via-gold/40 to-gold/0"
         aria-hidden="true"
       />
-      <ol className="grid grid-cols-5 items-stretch gap-4 xl:gap-7 2xl:gap-8">
-        {TIMELINE_STEPS.map((step) => (
-          <li key={step.id} className="relative flex flex-col items-center pt-5 xl:pt-6">
+      <ol className="grid grid-cols-5 items-stretch gap-5 xl:gap-7">
+        {TIMELINE_STEPS.map((step, index) => (
+          <li key={step.id} className="relative flex flex-col items-center pt-6 xl:pt-8">
             <div
-              className={`relative z-10 mb-6 h-5 w-5 shrink-0 rounded-full border-2 xl:mb-8 xl:h-5 xl:w-5 ${
+              className={`relative z-10 mb-7 h-5 w-5 shrink-0 rounded-full border-2 xl:mb-9 ${
                 step.highlight
                   ? "border-gold bg-gold shadow-lg shadow-gold/50"
                   : "border-gold/60 bg-background"
               }`}
             />
-            <div className="w-full flex-1">
+            <FadeUp delay={index * 0.06} className="w-full flex-1">
               <StepCard step={step} horizontal />
-            </div>
+            </FadeUp>
           </li>
         ))}
       </ol>
@@ -164,13 +169,25 @@ function ProcessHorizontal() {
   );
 }
 
+const chapter = SECTION_CHAPTERS.process!;
+
 export default function Process() {
   return (
     <div className="container-main">
       <SectionHeading
         title="Этапы работы"
         subtitle="От идеи до монтажа — полный цикл под ключ"
+        sectionNumber={chapter.number}
+        sectionLabel={chapter.label}
+        align="left"
       />
+
+      <FadeUp className="mb-12">
+        <p className="text-5xl font-bold text-gold sm:text-6xl lg:text-7xl">
+          <Counter to={TIMELINE_STEPS.length} suffix=" этапов" />
+        </p>
+      </FadeUp>
+
       <div className="lg:hidden">
         <ProcessVertical />
       </div>

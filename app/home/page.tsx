@@ -42,7 +42,7 @@ export default function HomePage() {
             <section
               key={id}
               id={id}
-              className={`snap-section ${id === "hero" ? "snap-section-hero" : ""} ${id === "styles" ? "overflow-hidden p-0! justify-stretch!" : ""}`}
+              className={`snap-section ${id === "hero" ? "snap-section-hero" : ""} ${id === "styles" ? "snap-section-full" : ""}`}
             >
               <Component />
             </section>

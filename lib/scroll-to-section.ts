@@ -8,10 +8,8 @@ export function scrollToSection(
   if (!section) return;
 
   if (container) {
-    const containerTop = container.getBoundingClientRect().top;
-    const sectionTop = section.getBoundingClientRect().top;
-    const targetScroll = container.scrollTop + (sectionTop - containerTop);
-    container.scrollTo({ top: targetScroll, behavior: "smooth" });
+    const top = section.offsetTop;
+    container.scrollTo({ top, behavior: "smooth" });
     return;
   }
 

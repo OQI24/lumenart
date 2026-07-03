@@ -3,6 +3,8 @@
 import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { STYLE_CATALOG } from "@/lib/constants";
+import { SECTION_CHAPTERS } from "@/config/section-chapters";
+import SectionLabel from "@/components/ui/SectionLabel";
 
 type StyleItem = (typeof STYLE_CATALOG)[number];
 
@@ -68,10 +70,10 @@ function StyleCard({
   return (
     <button
       type="button"
-      className={`rounded-2xl border p-5 text-left backdrop-blur-sm transition-all duration-300 sm:p-6 ${glassBase} ${
+      className={`rounded-[1.75rem] border p-6 text-left backdrop-blur-sm transition-all duration-500 sm:rounded-[2rem] sm:p-7 ${glassBase} ${
         isActive
-          ? "scale-105 border-gold shadow-lg shadow-gold/20"
-          : "hover:border-gold/60"
+          ? "scale-[1.03] border-gold shadow-xl shadow-gold/25"
+          : "hover:border-gold/60 hover:scale-[1.01]"
       }`}
       onMouseEnter={onActivate}
       onClick={onActivate}
@@ -96,6 +98,7 @@ export default function StylesCatalog() {
 
   const activeStyle = STYLE_CATALOG.find((s) => s.id === activeId) ?? STYLE_CATALOG[0];
   const isDarkTheme = activeStyle.textTheme === "dark";
+  const chapter = SECTION_CHAPTERS.styles!;
 
   const activateStyle = useCallback(
     (id: string) => {
@@ -142,7 +145,14 @@ export default function StylesCatalog() {
           isDarkTheme ? "text-gray-900" : "text-white"
         }`}
       >
-        <h2 className="mb-8 text-center text-2xl font-bold sm:text-3xl lg:text-4xl">
+        <div className="mx-auto w-full max-w-3xl">
+          <SectionLabel
+            number={chapter.number}
+            label={chapter.label}
+            className={isDarkTheme ? "text-gray-900" : ""}
+          />
+        </div>
+        <h2 className="mb-10 text-center text-3xl font-bold sm:text-4xl lg:text-5xl xl:text-6xl">
           Выберите свой стиль
         </h2>
 

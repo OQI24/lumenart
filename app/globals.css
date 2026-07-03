@@ -37,6 +37,16 @@
   --animate-pulse-gold: pulse-gold 2s ease-in-out infinite;
   --animate-fade-in: fade-in 0.3s ease-out forwards;
   --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
   @keyframes pulse-gold {
     0%,
@@ -200,14 +210,23 @@
     @apply h-dvh h-screen overflow-y-auto overflow-x-hidden bg-background;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    scroll-padding-top: calc(3.5rem + env(safe-area-inset-top, 0px));
+  }
+
+  @media (min-width: 640px) {
+    .snap-container {
+      scroll-padding-top: calc(4rem + env(safe-area-inset-top, 0px));
+    }
   }
 
   .snap-section {
-    @apply flex min-h-dvh min-h-screen snap-start snap-always flex-col justify-center py-20 lg:py-24;
+    @apply relative flex min-h-dvh min-h-screen snap-start snap-always flex-col justify-center py-16 lg:py-20;
+    scroll-snap-stop: always;
   }
 
   .snap-section-hero {
-    @apply relative justify-start overflow-hidden pt-[calc(3.5rem+env(safe-area-inset-top,0px))] pb-6 sm:justify-center sm:py-20 lg:py-24;
+    @apply relative min-h-dvh min-h-screen snap-start snap-always justify-start overflow-hidden pt-[calc(3.5rem+env(safe-area-inset-top,0px))] pb-8 sm:justify-center sm:py-16 lg:py-20;
+    scroll-snap-stop: always;
     background-color: #1a1a1a;
   }
 
@@ -230,7 +249,39 @@
   }
 
   .bento-card {
-    @apply rounded-2xl bg-background-card p-6 transition-all duration-300 hover:bg-[#2a2a2a] sm:p-8;
+    @apply rounded-[1.75rem] bg-background-card p-7 transition-all duration-500 hover:bg-[#2a2a2a] hover:scale-[1.01] sm:rounded-[2rem] sm:p-9 lg:p-10;
+  }
+
+  .cloud-card {
+    @apply rounded-[1.75rem] bg-background-card transition-all duration-500 hover:scale-[1.02] sm:rounded-[2rem];
+  }
+
+  .display-num {
+    @apply text-6xl font-bold leading-none sm:text-7xl lg:text-8xl;
+  }
+
+  .display-text {
+    @apply text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.85] tracking-tight;
+  }
+
+  .pill-tag {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground;
+  }
+
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .marquee-track {
+    animation: marquee 45s linear infinite;
+  }
+
+  .marquee-track-slow {
+    animation: marquee 60s linear infinite;
+  }
+
+  .marquee-track-fast {
+    animation: marquee 30s linear infinite;
   }
 
   .dashed-placeholder {
