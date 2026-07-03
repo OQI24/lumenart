@@ -9,21 +9,21 @@ export default function SocialLinks() {
       <a
         href={SITE.social.telegram}
         aria-label="Telegram"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-gold/40 hover:text-gold"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-gold/40 hover:text-gold"
       >
         <TelegramIcon />
       </a>
       <a
         href={SITE.social.vk}
         aria-label="VKontakte"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-gold/40 hover:text-gold"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-gold/40 hover:text-gold"
       >
         <VkIcon />
       </a>
       <a
         href={SITE.social.instagram}
         aria-label="Instagram"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-gold/40 hover:text-gold"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-gold/40 hover:text-gold"
       >
         <InstagramIcon />
       </a>

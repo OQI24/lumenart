@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Exo_2 } from "next/font/google";
+import ThemeProvider from "@/components/ThemeProvider";
 import ViewportHeightSync from "@/components/ViewportHeightSync";
 import { SITE, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
-import { cn } from "@/lib/utils";
 import "./globals.css";
 
 /** Запасной гротеск, пока не добавлены woff2 Magistral в public/fonts/ */
@@ -70,8 +70,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={cn("dark", exo2.variable)}>
+    <html lang="ru" className={exo2.variable} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var d=window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.add(d?"dark":"light")})();`,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){var h=window.visualViewport&&window.visualViewport.height||window.innerHeight;var id="app-layout-vars";var el=document.getElementById(id);if(!el){el=document.createElement("style");el.id=id;document.head.appendChild(el)}el.textContent=":root{--app-vh:"+h+"px}"})();`,
@@ -83,8 +88,10 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans">
-        <ViewportHeightSync />
-        {children}
+        <ThemeProvider>
+          <ViewportHeightSync />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

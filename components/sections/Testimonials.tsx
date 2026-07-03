@@ -40,7 +40,7 @@ export default function Testimonials() {
                   {item.quote}
                 </p>
               </div>
-              <footer className="mt-10 border-t border-white/5 pt-7 lg:mt-12 lg:pt-8">
+              <footer className="mt-10 border-t border-border pt-7 lg:mt-12 lg:pt-8">
                 <cite className="not-italic">
                   <span className="block text-xl font-semibold text-foreground lg:text-2xl">
                     {item.author}

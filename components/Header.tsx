@@ -92,7 +92,7 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
           "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
           isHeroVisible
             ? "border-transparent bg-transparent"
-            : "border-b border-white/5 bg-background/90 backdrop-blur-md"
+            : "border-b border-border bg-background/90 backdrop-blur-md"
         )}
       >
         <div className="container-main flex h-14 items-center justify-between sm:h-16">
@@ -122,7 +122,7 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
           <Button
             variant="outline"
             size="icon"
-            className="border-white/10 text-foreground lg:hidden"
+            className="border-border text-foreground lg:hidden"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Открыть меню"
           >
@@ -134,10 +134,10 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
         <SheetContent
           side="right"
-          className="w-72 border-white/10 bg-background p-0 sm:max-w-xs"
+          className="w-72 border-border bg-background p-0 sm:max-w-xs"
           aria-label="Мобильная навигация"
         >
-          <SheetHeader className="border-b border-white/5 p-6 pb-4">
+          <SheetHeader className="border-b border-border p-6 pb-4">
             <SheetTitle className="text-left text-gold">
               <Logo variant="horizontal" height={28} />
             </SheetTitle>

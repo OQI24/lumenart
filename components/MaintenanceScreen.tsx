@@ -135,7 +135,7 @@ export default function MaintenanceScreen() {
 
         <motion.h1
           variants={item}
-          className="mb-4 text-3xl font-bold text-white sm:text-4xl"
+          className="mb-4 text-3xl font-bold text-foreground sm:text-4xl"
         >
           Сайт на обслуживании
         </motion.h1>
@@ -152,7 +152,7 @@ export default function MaintenanceScreen() {
               href={contact.href}
               target={contact.label === "Telegram" ? "_blank" : undefined}
               rel={contact.label === "Telegram" ? "noopener noreferrer" : undefined}
-              className="group flex items-center gap-4 rounded-2xl border border-white/8 bg-background-card/60 px-5 py-4 text-left backdrop-blur-sm transition-colors hover:border-gold/35 hover:bg-background-card"
+              className="group flex items-center gap-4 rounded-2xl border border-border bg-background-card/60 px-5 py-4 text-left backdrop-blur-sm transition-colors hover:border-gold/35 hover:bg-background-card"
               whileHover={{ scale: 1.02, x: 4 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -163,7 +163,7 @@ export default function MaintenanceScreen() {
                 <span className="block text-xs uppercase tracking-wider text-muted-foreground">
                   {contact.label}
                 </span>
-                <span className="block truncate text-sm font-medium text-white sm:text-base">
+                <span className="block truncate text-sm font-medium text-foreground sm:text-base">
                   {contact.value}
                 </span>
               </span>

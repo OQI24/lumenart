@@ -359,28 +359,41 @@ export type MarkerWireframe = {
   accentLines?: LineSegment[];
 };
 
+function stabilizeCoord(value: number): number {
+  return Math.round(value * 10_000) / 10_000;
+}
+
+function stabilizeLines(lines: LineSegment[]): LineSegment[] {
+  return lines.map(([x1, y1, x2, y2]) => [
+    stabilizeCoord(x1),
+    stabilizeCoord(y1),
+    stabilizeCoord(x2),
+    stabilizeCoord(y2),
+  ]);
+}
+
 export function getMarkerWireframeByType(type: WireframeType): MarkerWireframe {
   switch (type) {
     case "icosahedron":
-      return { lines: icosahedronWireframe() };
+      return { lines: stabilizeLines(icosahedronWireframe()) };
     case "octahedron":
-      return { lines: octahedronWireframe() };
+      return { lines: stabilizeLines(octahedronWireframe()) };
     case "tetrahedron":
-      return { lines: tetrahedronWireframe() };
+      return { lines: stabilizeLines(tetrahedronWireframe()) };
     case "torus":
-      return { lines: torusWireframe() };
+      return { lines: stabilizeLines(torusWireframe()) };
     case "tesseract":
-      return { lines: tesseractWireframe() };
+      return { lines: stabilizeLines(tesseractWireframe()) };
     case "helix":
-      return { lines: helixWireframe() };
+      return { lines: stabilizeLines(helixWireframe()) };
     case "stellated":
-      return { lines: stellatedWireframe() };
+      return { lines: stabilizeLines(stellatedWireframe()) };
     case "cell24":
-      return { lines: cell24Wireframe() };
+      return { lines: stabilizeLines(cell24Wireframe()) };
     case "hopf":
-      return { lines: hopfRingsWireframe() };
+      return { lines: stabilizeLines(hopfRingsWireframe()) };
     default:
-      return { lines: tesseractWireframe() };
+      return { lines: stabilizeLines(tesseractWireframe()) };
   }
 }
 

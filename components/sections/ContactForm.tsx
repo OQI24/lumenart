@@ -224,7 +224,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="relative mx-auto mt-16 max-w-2xl border-t border-white/5 pt-12">
+        <div className="relative mx-auto mt-16 max-w-2xl border-t border-border pt-12">
           <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between">
             <div className="text-center sm:text-left">
               <p className="mb-3 text-lg font-bold text-gold">LumenArt</p>
