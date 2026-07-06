@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import FadeUp from "@/components/ui/FadeUp";
 import SocialLinks from "@/components/ui/SocialLinks";
 import SectionBackdropText from "@/components/ui/SectionBackdropText";
 import SectionFrame from "@/components/ui/SectionFrame";
@@ -79,29 +80,17 @@ export default function ContactForm() {
         <SectionLabel label={chapter.label} shape={chapter.shape} />
 
         <div className="relative mx-auto max-w-2xl">
-          <div
-            className="absolute -right-2 -top-4 z-20 sm:-right-4 sm:-top-6"
-            aria-label="Скидка 5% на первый заказ"
-          >
-            <div className="animate-pulse-gold flex h-20 w-20 rotate-45 items-center justify-center rounded-lg bg-gradient-gold shadow-lg sm:h-24 sm:w-24">
-              <span className="-rotate-45 text-center text-[10px] font-bold leading-tight text-background sm:text-xs">
-                -5%
-                <br />
-                на первый
-                <br />
-                заказ
-              </span>
-            </div>
-          </div>
-
-          <div className="form-card relative overflow-hidden rounded-[2rem] bg-background-card p-7 sm:p-10 lg:p-12">
-            <h2 className="mb-3 pr-16 text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
-              Получите расчёт за 1 день и сэкономьте 5%
-            </h2>
-            <p className="mb-10 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Заполните форму — мы подготовим смету с учётом всех ваших пожеланий. При
-              старте проекта скидка 5% автоматически заморозится.
-            </p>
+          <div className="relative overflow-hidden rounded-[2rem] border border-gold/10 bg-background-card p-7 sm:p-10 lg:p-12">
+            <FadeUp>
+              <h2 className="mb-3 text-3xl font-bold leading-[1.02] text-foreground sm:text-4xl lg:text-5xl">
+                Получите расчёт сегодня
+              </h2>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <p className="mb-10 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Заполните форму — мы подготовим смету с учётом всех ваших пожеланий.
+              </p>
+            </FadeUp>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
               <input

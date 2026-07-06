@@ -3,6 +3,8 @@ import { TIMELINE_STEPS } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import Counter from "@/components/ui/Counter";
 import FadeUp from "@/components/ui/FadeUp";
+import ProcessTimelineFill from "@/components/ui/ProcessTimelineFill";
+import ProcessTimelineFillHorizontal from "@/components/ui/ProcessTimelineFillHorizontal";
 import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
 
@@ -53,14 +55,14 @@ function StepCard({
 }) {
   return (
     <article
-      className={`flex h-full flex-col rounded-[1.75rem] sm:rounded-[2rem] ${
+      className={`interactive-card flex h-full flex-col rounded-[1.75rem] sm:rounded-[2rem] ${
         horizontal
           ? "min-h-[340px] p-8 xl:min-h-[380px] xl:p-9"
           : "p-7 sm:p-9"
       } ${
         step.highlight
-          ? "bg-gradient-gold text-background shadow-xl shadow-gold/30"
-          : "bento-card hover:scale-[1.01]"
+          ? "bg-gradient-gold text-background shadow-xl shadow-gold/30 ring-1 ring-gold/20"
+          : "bento-card border-white/5"
       }`}
     >
       <div className={`mb-5 flex items-center gap-3 ${horizontal ? "xl:mb-6" : ""}`}>
@@ -107,9 +109,10 @@ function ProcessVertical() {
   return (
     <div className="relative mx-auto max-w-2xl">
       <div
-        className="absolute bottom-0 left-6 top-0 w-px bg-gradient-to-b from-gold/0 via-gold/40 to-gold/0 md:left-1/2 md:-translate-x-px"
+        className="absolute bottom-0 left-6 top-0 w-px bg-gold/10 md:left-1/2 md:-translate-x-px"
         aria-hidden="true"
       />
+      <ProcessTimelineFill />
       <ol className="space-y-7 lg:space-y-9">
         {TIMELINE_STEPS.map((step, index) => {
           const isLeft = index % 2 === 0;
@@ -146,10 +149,8 @@ function ProcessVertical() {
 function ProcessHorizontal() {
   return (
     <div className="relative hidden lg:block">
-      <div
-        className="absolute left-0 right-0 top-10 h-px bg-gradient-to-r from-gold/0 via-gold/40 to-gold/0"
-        aria-hidden="true"
-      />
+      <div className="absolute left-0 right-0 top-10 h-px bg-gold/10" aria-hidden="true" />
+      <ProcessTimelineFillHorizontal />
       <ol className="grid grid-cols-5 items-stretch gap-5 xl:gap-7">
         {TIMELINE_STEPS.map((step, index) => (
           <li key={step.id} className="relative flex flex-col items-center pt-6 xl:pt-8">

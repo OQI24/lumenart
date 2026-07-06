@@ -1,189 +1,159 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import Image from "next/image";
 import { STYLE_CATALOG } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
-import SectionLabel from "@/components/ui/SectionLabel";
+import FadeUp from "@/components/ui/FadeUp";
+import SectionHeading from "@/components/ui/SectionHeading";
+import { cn } from "@/lib/utils";
 
-type StyleItem = (typeof STYLE_CATALOG)[number];
-
-const TRANSITION = { duration: 0.7, ease: "easeInOut" as const };
-
-function getStyleIndex(id: string) {
-  return STYLE_CATALOG.findIndex((s) => s.id === id);
-}
-
-function CurtainBackground({
-  style,
-  direction,
-  isExiting,
-  onExitComplete,
-  skipEnterAnimation,
-}: {
-  style: StyleItem;
-  direction: number;
-  isExiting: boolean;
-  onExitComplete?: () => void;
-  skipEnterAnimation?: boolean;
-}) {
-  const enterFrom = direction > 0 ? "inset(0 0% 0 100%)" : "inset(0 100% 0 0%)";
-  const exitTo = direction > 0 ? "inset(0 100% 0 0%)" : "inset(0 0% 0 100%)";
-
-  return (
-    <motion.div
-      className={`absolute inset-0 ${style.bgClass} ${isExiting ? "z-10" : "z-0"}`}
-      initial={
-        isExiting
-          ? { clipPath: "inset(0 0% 0 0%)" }
-          : skipEnterAnimation
-            ? { clipPath: "inset(0 0% 0 0%)" }
-            : { clipPath: enterFrom }
-      }
-      animate={{ clipPath: isExiting ? exitTo : "inset(0 0% 0 0%)" }}
-      transition={TRANSITION}
-      onAnimationComplete={() => {
-        if (isExiting) onExitComplete?.();
-      }}
-      aria-hidden="true"
-    >
-      {/* TODO: replace bgClass with next/image fill when photos ready */}
-    </motion.div>
-  );
-}
-
-function StyleCard({
-  style,
-  isActive,
-  isDarkTheme,
-  onActivate,
-}: {
-  style: StyleItem;
-  isActive: boolean;
-  isDarkTheme: boolean;
-  onActivate: () => void;
-}) {
-  const glassBase = isDarkTheme
-    ? "bg-black/10 border-black/20 text-gray-900"
-    : "bg-white/10 border-white/20 text-white";
-
-  return (
-    <button
-      type="button"
-      className={`rounded-[1.75rem] border p-6 text-left backdrop-blur-sm transition-all duration-500 sm:rounded-[2rem] sm:p-7 ${glassBase} ${
-        isActive
-          ? "scale-[1.03] border-gold shadow-xl shadow-gold/25"
-          : "hover:border-gold/60 hover:scale-[1.01]"
-      }`}
-      onMouseEnter={onActivate}
-      onClick={onActivate}
-      aria-pressed={isActive}
-    >
-      <span className="mb-3 block text-2xl" aria-hidden="true">
-        {style.icon}
-      </span>
-      <h3 className="mb-1 text-lg font-bold sm:text-xl">{style.title}</h3>
-      <p className={`text-sm ${isDarkTheme ? "text-gray-700" : "text-white/80"}`}>
-        {style.description}
-      </p>
-    </button>
-  );
-}
+const chapter = SECTION_CHAPTERS.styles!;
 
 export default function StylesCatalog() {
   const [activeId, setActiveId] = useState<string>(STYLE_CATALOG[0].id);
-  const [direction, setDirection] = useState(1);
-  const [exitingStyle, setExitingStyle] = useState<StyleItem | null>(null);
-  const isAnimating = useRef(false);
+  const [hoverId, setHoverId] = useState<string | null>(null);
 
-  const activeStyle = STYLE_CATALOG.find((s) => s.id === activeId) ?? STYLE_CATALOG[0];
-  const isDarkTheme = activeStyle.textTheme === "dark";
-  const chapter = SECTION_CHAPTERS.styles!;
-
-  const activateStyle = useCallback(
-    (id: string) => {
-      if (id === activeId || isAnimating.current) return;
-
-      const prevIndex = getStyleIndex(activeId);
-      const nextIndex = getStyleIndex(id);
-      const prevStyle = STYLE_CATALOG[prevIndex];
-
-      setDirection(nextIndex > prevIndex ? 1 : -1);
-      setExitingStyle(prevStyle);
-      setActiveId(id);
-      isAnimating.current = true;
-    },
-    [activeId]
-  );
-
-  const handleExitComplete = useCallback(() => {
-    setExitingStyle(null);
-    isAnimating.current = false;
-  }, []);
+  const expandedId = hoverId ?? activeId;
 
   return (
-    <div className="relative flex min-h-0 flex-1 w-full overflow-hidden">
-      <div className="absolute inset-0">
-        <CurtainBackground
-          style={activeStyle}
-          direction={direction}
-          isExiting={false}
-          skipEnterAnimation={!exitingStyle}
-        />
-        {exitingStyle && (
-          <CurtainBackground
-            style={exitingStyle}
-            direction={direction}
-            isExiting
-            onExitComplete={handleExitComplete}
-          />
-        )}
-      </div>
+    <div className="relative flex min-h-0 w-full flex-1 flex-col justify-center overflow-hidden">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        {STYLE_CATALOG.map((style) => {
+          const isVisible = expandedId === style.id;
 
-      <div
-        className={`relative z-20 flex h-full min-h-0 flex-col px-4 pb-16 pt-8 sm:px-6 lg:px-8 ${
-          isDarkTheme ? "text-gray-900" : "text-white"
-        }`}
-      >
-        <div className="mx-auto w-full max-w-3xl">
-          <SectionLabel
-            label={chapter.label}
-            shape={chapter.shape}
-            labelClassName={isDarkTheme ? "text-gray-900" : undefined}
-            markerStrokeClassName={isDarkTheme ? "stroke-gray-900/30 fill-gray-900/15" : undefined}
-          />
-        </div>
-        <h2 className="mb-10 text-center text-3xl font-bold sm:text-4xl lg:text-5xl xl:text-6xl">
-          Выберите свой стиль
-        </h2>
-
-        <div className="mx-auto grid w-full max-w-3xl flex-1 grid-cols-1 content-center gap-4 sm:grid-cols-2">
-          {STYLE_CATALOG.map((style) => (
-            <StyleCard
+          return (
+            <div
               key={style.id}
-              style={style}
-              isActive={activeId === style.id}
-              isDarkTheme={isDarkTheme}
-              onActivate={() => activateStyle(style.id)}
-            />
-          ))}
-        </div>
+              className={cn("style-gallery-ambient", isVisible ? "opacity-100" : "opacity-0")}
+            >
+              <Image
+                src={style.image}
+                alt=""
+                fill
+                className="style-gallery-ambient-image"
+                sizes="100vw"
+                priority={style.id === STYLE_CATALOG[0].id}
+              />
+              <div className="style-gallery-ambient-scrim" />
+              <div className="style-gallery-ambient-vignette" />
+            </div>
+          );
+        })}
       </div>
 
-      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-        {STYLE_CATALOG.map((style) => (
-          <button
-            key={style.id}
-            type="button"
-            aria-label={`Стиль: ${style.title}`}
-            onClick={() => activateStyle(style.id)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              activeId === style.id
-                ? "w-6 bg-gold"
-                : `w-2 ${isDarkTheme ? "bg-gray-900/40" : "bg-white/40"}`
-            }`}
-          />
-        ))}
+      <div className="container-main relative z-10">
+      <SectionHeading
+        title="Выберите свой стиль"
+        subtitle="Наведите на панель — увидите характер света для каждого направления"
+        sectionLabel={chapter.label}
+        sectionShape={chapter.shape}
+        align="left"
+      />
+
+      <FadeUp>
+        <div
+          className="style-gallery hidden h-[28rem] gap-2 md:flex lg:h-[34rem] lg:gap-2.5"
+          onMouseLeave={() => setHoverId(null)}
+        >
+          {STYLE_CATALOG.map((style, index) => {
+            const isExpanded = expandedId === style.id;
+
+            return (
+              <button
+                key={style.id}
+                type="button"
+                aria-pressed={activeId === style.id}
+                aria-label={`Стиль: ${style.title}`}
+                className={cn("style-gallery-panel group/panel", isExpanded && "is-expanded")}
+                onMouseEnter={() => setHoverId(style.id)}
+                onFocus={() => setHoverId(style.id)}
+                onBlur={() => setHoverId(null)}
+                onClick={() => setActiveId(style.id)}
+              >
+                <Image
+                  src={style.image}
+                  alt={style.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover/panel:scale-105"
+                  sizes="25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/10" />
+                <div
+                  className={cn(
+                    "absolute inset-0 bg-gold/10 opacity-0 transition-opacity duration-500",
+                    isExpanded && "opacity-100",
+                  )}
+                />
+
+                <span
+                  className={cn(
+                    "absolute left-4 top-1/2 -translate-y-1/2 text-xs font-medium uppercase tracking-[0.35em] text-white/50 [writing-mode:vertical-rl] transition-opacity duration-200",
+                    isExpanded ? "pointer-events-none opacity-0" : "opacity-100",
+                  )}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <p
+                  className={cn(
+                    "absolute bottom-8 right-4 text-sm font-semibold uppercase tracking-[0.3em] text-white/80 [writing-mode:vertical-rl] transition-opacity duration-200",
+                    isExpanded ? "pointer-events-none opacity-0" : "opacity-100",
+                  )}
+                >
+                  {style.title}
+                </p>
+
+                <div
+                  className={cn(
+                    "absolute inset-x-0 bottom-0 p-6 text-left lg:p-8",
+                    isExpanded
+                      ? "pointer-events-auto translate-y-0 opacity-100 transition-[opacity,transform] duration-500 delay-100 ease-out"
+                      : "pointer-events-none translate-y-3 opacity-0 transition-[opacity,transform] duration-200 ease-in",
+                  )}
+                >
+                  <p className="mb-2 text-xs font-medium uppercase tracking-[0.25em] text-gold">
+                    {String(index + 1).padStart(2, "0")} — направление
+                  </p>
+                  <h3 className="text-2xl font-bold text-white lg:text-4xl">{style.title}</h3>
+                  <p className="mt-2 max-w-md text-sm leading-relaxed text-white/80 lg:text-base">
+                    {style.description}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="style-gallery-mobile -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 md:hidden">
+          {STYLE_CATALOG.map((style, index) => {
+            const isActive = activeId === style.id;
+
+            return (
+              <button
+                key={style.id}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActiveId(style.id)}
+                className={cn(
+                  "relative h-[22rem] w-[78vw] shrink-0 snap-center overflow-hidden rounded-[1.75rem] border transition-colors",
+                  isActive ? "border-gold" : "border-white/10",
+                )}
+              >
+                <Image src={style.image} alt={style.title} fill className="object-cover" sizes="80vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-left">
+                  <p className="mb-1 text-xs uppercase tracking-[0.25em] text-gold">
+                    {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="text-2xl font-bold text-white">{style.title}</h3>
+                  <p className="mt-2 text-sm text-white/80">{style.description}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </FadeUp>
       </div>
     </div>
   );

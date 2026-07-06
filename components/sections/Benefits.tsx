@@ -54,15 +54,16 @@ export default function Benefits() {
       />
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:grid-rows-2 md:gap-6 lg:gap-7">
         <FadeUp delay={0.05}>
-          <BenefitCard benefit={card1} className="md:col-span-2 md:row-span-1" />
+          <BenefitCard benefit={card1} index={1} className="md:col-span-2 md:row-span-1" />
         </FadeUp>
         <FadeUp delay={0.12}>
-          <BenefitCard benefit={card2} className="md:col-span-1 md:row-span-1" />
+          <BenefitCard benefit={card2} index={2} className="md:col-span-1 md:row-span-1" />
         </FadeUp>
         <FadeUp delay={0.18}>
           <BenefitCard
             benefit={card3}
-            className="md:col-span-3 ring-2 ring-gold/50 ring-offset-2 ring-offset-background"
+            index={3}
+            className="md:col-span-3 ring-1 ring-gold/30 ring-offset-2 ring-offset-background"
           />
         </FadeUp>
       </div>
@@ -72,14 +73,22 @@ export default function Benefits() {
 
 function BenefitCard({
   benefit,
+  index,
   className = "",
 }: {
   benefit: (typeof BENEFITS)[number];
+  index: number;
   className?: string;
 }) {
   const Icon = ICONS[benefit.icon];
   return (
-    <article className={`bento-card group h-full ${className}`}>
+    <article className={`bento-card interactive-card group h-full ${className}`}>
+      <span
+        className="pointer-events-none absolute -right-1 -top-2 select-none text-5xl font-bold leading-none text-foreground/[0.04] sm:text-6xl"
+        aria-hidden="true"
+      >
+        {String(index).padStart(2, "0")}
+      </span>
       <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 transition-colors duration-500 group-hover:bg-gold/20">
         <Icon />
       </div>

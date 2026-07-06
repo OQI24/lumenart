@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { TECHNOLOGIES } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
+import Counter from "@/components/ui/Counter";
 import FadeUp from "@/components/ui/FadeUp";
 import Marquee from "@/components/ui/Marquee";
 import SectionFrame from "@/components/ui/SectionFrame";
@@ -48,7 +49,14 @@ export default function Technologies() {
         align="left"
       />
 
-      <FadeUp className="mb-10">
+      <FadeUp className="mb-8 flex flex-wrap items-baseline gap-3">
+        <span className="display-num text-gold">
+          <Counter to={TECHNOLOGIES.length} suffix="+" />
+        </span>
+        <span className="text-lg text-muted-foreground sm:text-xl">направления в производстве</span>
+      </FadeUp>
+
+      <FadeUp className="mb-10" delay={0.06}>
         <Marquee
           items={TECHNOLOGIES.map((t) => t.title)}
           itemClassName="text-gold/40"
@@ -58,12 +66,15 @@ export default function Technologies() {
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-7">
         {TECHNOLOGIES.map((tech, index) => (
-          <FadeUp key={tech.id} delay={index * 0.08}>
-            <article className="bento-card group flex h-full gap-6">
+          <FadeUp key={tech.id} delay={0.08 + index * 0.06}>
+            <article className="bento-card interactive-card group flex h-full gap-6">
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gold/10 text-gold transition-colors duration-500 group-hover:bg-gold/20">
                 <TechIcon type={tech.icon} />
               </div>
               <div>
+                <p className="mb-1 text-xs font-medium uppercase tracking-[0.2em] text-gold/70">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
                 <h3 className="mb-2 text-xl font-bold text-foreground sm:text-2xl">{tech.title}</h3>
                 <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">{tech.description}</p>
               </div>

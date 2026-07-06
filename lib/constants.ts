@@ -3,7 +3,7 @@ export const SITE = {
   phone: "+7 (930) 777-96-90",
   phoneRaw: "+79307779690",
   email: "lyumen.art@yandex.ru",
-  address: "г. Москва, ул. Примерная, 1",
+  address: "Москва и Московская область",
   social: {
     telegram: "https://t.me/lyumen_art",
     telegramHandle: "@lyumen_art",
@@ -54,11 +54,11 @@ export const STYLE_CATALOG = [
   {
     id: "art-deco",
     title: "Ар-деко",
-    description: "Геометрия, роскошь, симметрия",
+    description: "Геометрия, латунь и симметрия — роскошь в каждой детали света",
     icon: "✨",
     bgClass: "bg-gradient-to-br from-gray-900 via-indigo-900 to-amber-700",
+    image: "/images/stock/style-artdeco.jpg",
     textTheme: "light" as const,
-    // imageSrc: "/styles/art-deco.jpg" — для будущей замены на next/image
   },
   {
     id: "minimalism",
@@ -66,22 +66,25 @@ export const STYLE_CATALOG = [
     description: "Лаконичность, чистота линий",
     icon: "◻️",
     bgClass: "bg-gradient-to-br from-gray-300 via-gray-100 to-amber-100",
+    image: "/images/stock/style-minimal.jpg",
     textTheme: "dark" as const,
   },
   {
     id: "industrial",
     title: "Индастриал",
-    description: "Брутальность, открытые конструкции",
+    description: "Бетон, металл и подвесной свет — грубая фактура, открытые конструкции",
     icon: "🏗️",
     bgClass: "bg-gradient-to-br from-gray-800 via-stone-700 to-orange-900",
+    image: "/images/stock/style-industrial.jpg",
     textTheme: "light" as const,
   },
   {
     id: "classic",
     title: "Классика",
-    description: "Элегантность, проверенные формы",
+    description: "Люстры, латунь и тёплый рассеянный свет — симметрия и проверенные формы",
     icon: "🏛️",
     bgClass: "bg-gradient-to-br from-stone-200 via-amber-50 to-yellow-200",
+    image: "/images/stock/style-classic.jpg",
     textTheme: "dark" as const,
   },
 ] as const;
@@ -152,10 +155,70 @@ export const TIMELINE_STEPS = [
 ] as const;
 
 export const PORTFOLIO_ITEMS = [
-  { id: 1, title: "Проект #1", size: "large" as const },
-  { id: 2, title: "Проект #2", size: "small" as const },
-  { id: 3, title: "Проект #3", size: "small" as const },
-  { id: 4, title: "Проект #4", size: "medium" as const },
+  {
+    id: 1,
+    title: "Ресторан",
+    category: "HoReCa",
+    subtitle: "Акцентный свет над зоной гостей",
+    image: "/images/stock/restaurant.jpg",
+    size: "large" as const,
+  },
+  {
+    id: 2,
+    title: "Офис",
+    category: "Коммерция",
+    subtitle: "Линейные светильники open space",
+    image: "/images/stock/office.jpg",
+    size: "small" as const,
+  },
+  {
+    id: 3,
+    title: "Частный дом",
+    category: "Residential",
+    subtitle: "Подсветка лестницы и гостиной",
+    image: "/images/stock/home.jpg",
+    size: "small" as const,
+  },
+  {
+    id: 4,
+    title: "Шоурум",
+    category: "Retail",
+    subtitle: "Трековые системы и акценты",
+    image: "/images/stock/showroom.jpg",
+    size: "medium" as const,
+  },
+  {
+    id: 5,
+    title: "Лобби",
+    category: "Public",
+    subtitle: "Подвесной светильник-арт-объект",
+    image: "/images/stock/lobby.jpg",
+    size: "small" as const,
+  },
+  {
+    id: 6,
+    title: "Кафе",
+    category: "HoReCa",
+    subtitle: "Тёплый сценарий вечернего света",
+    image: "/images/stock/cafe.jpg",
+    size: "small" as const,
+  },
+  {
+    id: 7,
+    title: "Отель",
+    category: "Hospitality",
+    subtitle: "Декоративный свет в зоне ресепшен",
+    image: "/images/stock/hotel.jpg",
+    size: "small" as const,
+  },
+  {
+    id: 8,
+    title: "Квартира",
+    category: "Residential",
+    subtitle: "Сценарное освещение гостиной и спальни",
+    image: "/images/stock/apartment.jpg",
+    size: "small" as const,
+  },
 ] as const;
 
 export const TESTIMONIALS = [

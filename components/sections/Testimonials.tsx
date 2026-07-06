@@ -1,5 +1,6 @@
 import { TESTIMONIALS } from "@/lib/constants";
 import { SECTION_CHAPTERS } from "@/config/section-chapters";
+import Counter from "@/components/ui/Counter";
 import FadeUp from "@/components/ui/FadeUp";
 import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -17,6 +18,13 @@ export default function Testimonials() {
         align="left"
       />
 
+      <FadeUp className="mb-10 flex flex-wrap items-baseline gap-3">
+        <span className="display-num text-gold">
+          <Counter to={TESTIMONIALS.length} suffix="+" />
+        </span>
+        <span className="text-lg text-muted-foreground sm:text-xl">отзыва от клиентов</span>
+      </FadeUp>
+
       <div className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:gap-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-7 lg:overflow-visible lg:px-0 lg:pb-0">
         {TESTIMONIALS.map((item, index) => (
           <FadeUp
@@ -24,10 +32,10 @@ export default function Testimonials() {
             delay={index * 0.1}
             className="w-[85vw] shrink-0 snap-center sm:w-[70vw] lg:w-auto"
           >
-            <blockquote className="bento-card flex h-full min-h-[380px] flex-col justify-between rounded-[2rem] p-9 sm:min-h-[400px] sm:p-10 lg:min-h-[440px] lg:p-12">
+            <blockquote className="bento-card interactive-card group flex h-full min-h-[380px] flex-col justify-between rounded-[2rem] border-l-2 border-l-gold/0 p-9 transition-colors hover:border-l-gold/60 sm:min-h-[400px] sm:p-10 lg:min-h-[440px] lg:p-12">
               <div>
                 <svg
-                  className="mb-8 text-gold/35 lg:mb-10"
+                  className="mb-8 text-gold/35 transition-colors duration-500 group-hover:text-gold/55 lg:mb-10"
                   width="56"
                   height="42"
                   viewBox="0 0 32 24"

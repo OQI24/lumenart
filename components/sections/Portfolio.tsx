@@ -4,18 +4,8 @@ import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import { BLUR_DATA_URL } from "@/lib/blur-data";
 import Counter from "@/components/ui/Counter";
 import FadeUp from "@/components/ui/FadeUp";
-import Marquee from "@/components/ui/Marquee";
 import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
-
-function ComingSoonIcon() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M12 7v5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 const GRID_CLASSES: Record<string, string> = {
   large: "md:col-span-2 md:row-span-2 min-h-[280px] md:min-h-[420px]",
@@ -30,7 +20,7 @@ export default function Portfolio() {
     <SectionFrame>
       <SectionHeading
         title="Портфолио"
-        subtitle="Примеры реализованных проектов — скоро здесь появятся фотографии"
+        subtitle="Реализованные сценарии освещения для разных типов пространств"
         sectionLabel={chapter.label}
         sectionShape={chapter.shape}
         align="left"
@@ -40,41 +30,35 @@ export default function Portfolio() {
         <span className="display-num text-gold">
           <Counter to={PORTFOLIO_ITEMS.length} suffix="+" />
         </span>
-        <span className="text-lg text-muted-foreground sm:text-xl">проектов в работе</span>
+        <span className="text-lg text-muted-foreground sm:text-xl">направлений</span>
       </FadeUp>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-2 md:gap-6 lg:gap-7">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-3 md:gap-6 lg:gap-7">
         {PORTFOLIO_ITEMS.map((item, index) => (
           <FadeUp key={item.id} delay={index * 0.06} className={GRID_CLASSES[item.size]}>
-            <article
-              className="cloud-card group relative h-full min-h-[inherit] overflow-hidden border border-dashed border-gold/25 bg-gradient-card"
-            >
+            <article className="portfolio-card group relative h-full min-h-[inherit] overflow-hidden rounded-[2rem] border border-white/5">
               <Image
-                src="/portfolio-placeholder.svg"
-                alt={`${item.title} — фото скоро будет загружено`}
+                src={item.image}
+                alt={item.title}
                 fill
-                className="object-cover opacity-25 transition-transform duration-700 group-hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
                 placeholder="blur"
                 blurDataURL={BLUR_DATA_URL}
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 100vw, 25vw"
               />
-              <div className="absolute inset-x-0 bottom-0 z-10 overflow-hidden bg-gold/90 py-2">
-                <Marquee
-                  items={[item.title, item.title, "Скоро"]}
-                  itemClassName="text-background/90 text-xs"
-                  speed="fast"
-                />
-              </div>
-              <div className="relative z-10 flex h-full flex-col items-center justify-center gap-4 p-8">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/15 text-gold transition-transform duration-500 group-hover:scale-110">
-                  <ComingSoonIcon />
-                </div>
-                <span className="pill-tag border-gold/30 bg-background/40 text-gold/80">
-                  Скоро загрузится
+              <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/50 to-background/10" />
+
+              <div className="relative z-10 flex h-full flex-col justify-between p-7 sm:p-8 lg:p-9">
+                <span className="pill-tag w-fit border-gold/25 bg-background/60 text-gold backdrop-blur-sm">
+                  {item.category}
                 </span>
-                <h3 className="text-center text-xl font-bold text-foreground sm:text-2xl lg:text-3xl">
-                  {item.title}
-                </h3>
+
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground transition-transform duration-500 group-hover:-translate-y-0.5 sm:text-3xl lg:text-4xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground sm:text-base">{item.subtitle}</p>
+                </div>
               </div>
             </article>
           </FadeUp>

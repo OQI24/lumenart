@@ -57,7 +57,7 @@ const jsonLd = {
   address: {
     "@type": "PostalAddress",
     addressLocality: "Москва",
-    streetAddress: "ул. Примерная, 1",
+    addressRegion: "Московская область",
     addressCountry: "RU",
   },
   priceRange: "$$",

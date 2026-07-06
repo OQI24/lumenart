@@ -1,5 +1,8 @@
-import type { SectionShapeId } from "@/config/section-shapes";
+"use client";
+
 import SectionLabel from "@/components/ui/SectionLabel";
+import FadeUp from "@/components/ui/FadeUp";
+import type { SectionShapeId } from "@/config/section-shapes";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
@@ -22,25 +25,31 @@ export default function SectionHeading({
   return (
     <div className={cn("mb-12 md:mb-16 lg:mb-20", isCenter ? "text-center" : "text-left")}>
       {sectionLabel && (
-        <SectionLabel
-          label={sectionLabel}
-          shape={sectionShape}
-          align={isCenter ? "center" : "left"}
-          className={isCenter ? "mx-auto" : undefined}
-        />
+        <FadeUp>
+          <SectionLabel
+            label={sectionLabel}
+            shape={sectionShape}
+            align={isCenter ? "center" : "left"}
+            className={isCenter ? "mx-auto" : undefined}
+          />
+        </FadeUp>
       )}
-      <h2 className="mb-4 text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
-        {title}
-      </h2>
+      <FadeUp delay={0.06}>
+        <h2 className="mb-4 text-3xl font-bold leading-[1.02] text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
+          {title}
+        </h2>
+      </FadeUp>
       {subtitle && (
-        <p
-          className={cn(
-            "max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl",
-            isCenter && "mx-auto"
-          )}
-        >
-          {subtitle}
-        </p>
+        <FadeUp delay={0.12}>
+          <p
+            className={cn(
+              "max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl",
+              isCenter && "mx-auto",
+            )}
+          >
+            {subtitle}
+          </p>
+        </FadeUp>
       )}
     </div>
   );
