@@ -2,12 +2,16 @@ import CtaButton from "@/components/ui/CtaButton";
 import FadeUp from "@/components/ui/FadeUp";
 import HeroFixture from "@/components/ui/HeroFixture";
 import HeroRotatingText from "@/components/ui/HeroRotatingText";
+import KpiStat from "@/components/ui/KpiStat";
 import Marquee from "@/components/ui/Marquee";
 import SectionBackdropText from "@/components/ui/SectionBackdropText";
+import SpotlightGrid from "@/components/ui/SpotlightGrid";
+import { HERO_KPIS } from "@/lib/constants";
 
 export default function Hero() {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col">
+      <SpotlightGrid className="opacity-[0.55] dark:opacity-[0.65]" />
       <SectionBackdropText>СВЕТ</SectionBackdropText>
 
       <div className="container-main relative z-10 flex min-h-0 flex-1 flex-col justify-center">
@@ -20,10 +24,13 @@ export default function Hero() {
             </FadeUp>
             <FadeUp delay={0.08}>
               <h1 className="mb-5 max-w-xl text-[2rem] font-bold leading-[1.02] text-foreground sm:mb-7 sm:text-5xl lg:text-6xl xl:text-7xl">
-                Индивидуальный
+                <span className="hero-tagline-emphasis">Индивидуальный</span>
                 <br />
-                свет.{" "}
-                <span className="text-gold">Без компромиссов.</span>
+                <span className="font-bold">свет.</span>{" "}
+                <span className="text-gold">
+                  <span className="hero-tagline-emphasis">Без</span>{" "}
+                  <span className="font-bold">компромиссов.</span>
+                </span>
               </h1>
             </FadeUp>
             <FadeUp delay={0.16}>
@@ -42,10 +49,27 @@ export default function Hero() {
                 Получить расчёт со скидкой 5%
               </CtaButton>
             </FadeUp>
+            <FadeUp delay={0.36}>
+              <div className="mt-8 grid grid-cols-3 gap-4 border-t border-border/60 pt-8 sm:gap-6 lg:mt-10 lg:pt-10 xl:hidden">
+                {HERO_KPIS.map((kpi) => (
+                  <KpiStat key={kpi.label} value={kpi.value} label={kpi.label} />
+                ))}
+              </div>
+            </FadeUp>
           </div>
-          <FadeUp delay={0.2}>
-            <HeroFixture />
-          </FadeUp>
+
+          <div className="flex flex-col gap-8 lg:gap-10">
+            <FadeUp delay={0.2}>
+              <HeroFixture />
+            </FadeUp>
+            <FadeUp delay={0.38} className="hidden xl:block">
+              <div className="grid grid-cols-3 gap-6 rounded-[1.75rem] border border-white/10 bg-background-card/60 p-6 backdrop-blur-sm">
+                {HERO_KPIS.map((kpi) => (
+                  <KpiStat key={kpi.label} value={kpi.value} label={kpi.label} />
+                ))}
+              </div>
+            </FadeUp>
+          </div>
         </div>
       </div>
 

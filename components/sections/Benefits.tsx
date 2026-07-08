@@ -3,97 +3,164 @@ import { SECTION_CHAPTERS } from "@/config/section-chapters";
 import FadeUp from "@/components/ui/FadeUp";
 import SectionFrame from "@/components/ui/SectionFrame";
 import SectionHeading from "@/components/ui/SectionHeading";
-
-const GOLD = "#C6A15B";
-
-function RocketIcon() {
-  return (
-    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <path d="M16 4C16 4 8 12 8 20C8 22 9 24 11 25L13 28H19L21 25C23 24 24 22 24 20C24 12 16 4 16 4Z" stroke={GOLD} strokeWidth="1.5" strokeLinejoin="round" />
-      <circle cx="16" cy="18" r="3" stroke={GOLD} strokeWidth="1.5" />
-      <path d="M11 28L9 30M21 28L23 30" stroke={GOLD} strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function CalendarIcon() {
-  return (
-    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <rect x="5" y="7" width="22" height="20" rx="2" stroke={GOLD} strokeWidth="1.5" />
-      <path d="M5 13h22M11 5v4M21 5v4" stroke={GOLD} strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M12 19l3 3 6-6" stroke={GOLD} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function KeyIcon() {
-  return (
-    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <circle cx="12" cy="20" r="6" stroke={GOLD} strokeWidth="1.5" />
-      <path d="M17 15l10-4-2 6 4 2-4 4" stroke={GOLD} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="12" cy="20" r="2" fill={GOLD} />
-    </svg>
-  );
-}
-
-const ICONS = { rocket: RocketIcon, calendar: CalendarIcon, key: KeyIcon };
+import { cn } from "@/lib/utils";
 
 const chapter = SECTION_CHAPTERS.benefits!;
 
-export default function Benefits() {
-  const [card1, card2, card3] = BENEFITS;
+type BenefitVisualId = (typeof BENEFITS)[number]["visual"];
 
+function BenefitVisual({ visual, className }: { visual: BenefitVisualId; className?: string }) {
   return (
-    <SectionFrame>
-      <SectionHeading
-        title="Почему LumenArt"
-        subtitle="Три ключевых преимущества, которые отличают нас от конкурентов"
-        sectionLabel={chapter.label}
-        sectionShape={chapter.shape}
-        align="left"
-      />
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:grid-rows-2 md:gap-6 lg:gap-7">
-        <FadeUp delay={0.05}>
-          <BenefitCard benefit={card1} index={1} className="md:col-span-2 md:row-span-1" />
-        </FadeUp>
-        <FadeUp delay={0.12}>
-          <BenefitCard benefit={card2} index={2} className="md:col-span-1 md:row-span-1" />
-        </FadeUp>
-        <FadeUp delay={0.18}>
-          <BenefitCard
-            benefit={card3}
-            index={3}
-            className="md:col-span-3 ring-1 ring-gold/30 ring-offset-2 ring-offset-background"
+    <div className={cn("benefit-visual", className)} aria-hidden="true">
+      {visual === "beams" && (
+        <svg viewBox="0 0 160 120" className="h-full w-full" fill="none">
+          <defs>
+            <linearGradient id="benefit-beam" x1="0.5" y1="0" x2="0.5" y2="1">
+              <stop offset="0%" stopColor="var(--color-gold)" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path d="M80 8 L80 112" stroke="var(--color-gold)" strokeOpacity="0.2" strokeWidth="0.5" />
+          <path d="M28 18 L72 108" stroke="url(#benefit-beam)" strokeWidth="1.2" strokeLinecap="round" />
+          <path d="M80 12 L80 108" stroke="url(#benefit-beam)" strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M132 18 L88 108" stroke="url(#benefit-beam)" strokeWidth="1.2" strokeLinecap="round" />
+          <ellipse cx="80" cy="108" rx="36" ry="4" fill="var(--color-gold)" fillOpacity="0.12" />
+        </svg>
+      )}
+      {visual === "arc" && (
+        <svg viewBox="0 0 160 120" className="h-full w-full" fill="none">
+          <path
+            d="M24 88 A56 56 0 0 1 136 88"
+            stroke="var(--color-gold)"
+            strokeOpacity="0.25"
+            strokeWidth="1"
+            strokeDasharray="4 6"
           />
-        </FadeUp>
-      </div>
-    </SectionFrame>
+          <path
+            d="M32 88 A48 48 0 0 1 128 88"
+            stroke="var(--color-gold)"
+            strokeOpacity="0.55"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <circle cx="128" cy="88" r="4" fill="var(--color-gold)" fillOpacity="0.9" />
+          <line x1="80" y1="36" x2="80" y2="52" stroke="var(--color-gold)" strokeOpacity="0.35" />
+          <line x1="80" y1="52" x2="80" y2="88" stroke="var(--color-gold)" strokeOpacity="0.2" strokeDasharray="2 4" />
+        </svg>
+      )}
+      {visual === "grid" && (
+        <svg viewBox="0 0 160 120" className="h-full w-full" fill="none">
+          {Array.from({ length: 5 }, (_, i) => (
+            <line
+              key={`h-${i}`}
+              x1="20"
+              y1={24 + i * 18}
+              x2="140"
+              y2={24 + i * 18}
+              stroke="var(--color-gold)"
+              strokeOpacity="0.12"
+              strokeWidth="0.5"
+            />
+          ))}
+          {Array.from({ length: 5 }, (_, i) => (
+            <line
+              key={`v-${i}`}
+              x1={32 + i * 22}
+              y1="24"
+              x2={32 + i * 22}
+              y2="96"
+              stroke="var(--color-gold)"
+              strokeOpacity="0.12"
+              strokeWidth="0.5"
+            />
+          ))}
+          <circle cx="98" cy="60" r="14" stroke="var(--color-gold)" strokeOpacity="0.35" strokeWidth="1" />
+          <circle cx="98" cy="60" r="5" fill="var(--color-gold)" fillOpacity="0.85" />
+          <path
+            d="M98 46 L98 28 M98 74 L98 92 M84 60 L66 60 M112 60 L130 60"
+            stroke="var(--color-gold)"
+            strokeOpacity="0.25"
+            strokeWidth="0.75"
+            strokeLinecap="round"
+          />
+        </svg>
+      )}
+    </div>
   );
 }
 
-function BenefitCard({
+export default function Benefits() {
+  return (
+    <div className="relative flex min-h-0 w-full flex-1 flex-col justify-center">
+      <div className="benefit-grid-overlay pointer-events-none absolute inset-0" aria-hidden="true" />
+
+      <SectionFrame>
+        <SectionHeading
+          title="Почему LumenArt"
+          subtitle="Три опоры, на которых держится каждый наш проект"
+          sectionLabel={chapter.label}
+          sectionShape={chapter.shape}
+          align="left"
+        />
+
+        <div className="benefit-pillars relative">
+          <div className="benefit-timeline hidden lg:block" aria-hidden="true">
+            {BENEFITS.map((_, index) => (
+              <div key={index} className="benefit-timeline-step">
+                <span className="benefit-timeline-dot" />
+                <span className="benefit-timeline-num">{String(index + 1).padStart(2, "0")}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="benefit-pillars-grid">
+            {BENEFITS.map((benefit, index) => (
+              <FadeUp key={benefit.id} delay={0.06 + index * 0.08} className="h-full">
+                <BenefitPillar benefit={benefit} index={index + 1} />
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </SectionFrame>
+    </div>
+  );
+}
+
+function BenefitPillar({
   benefit,
   index,
-  className = "",
 }: {
   benefit: (typeof BENEFITS)[number];
   index: number;
-  className?: string;
 }) {
-  const Icon = ICONS[benefit.icon];
+  const step = String(index).padStart(2, "0");
+
   return (
-    <article className={`bento-card interactive-card group h-full ${className}`}>
-      <span
-        className="pointer-events-none absolute -right-1 -top-2 select-none text-5xl font-bold leading-none text-foreground/[0.04] sm:text-6xl"
-        aria-hidden="true"
-      >
-        {String(index).padStart(2, "0")}
-      </span>
-      <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 transition-colors duration-500 group-hover:bg-gold/20">
-        <Icon />
+    <article className="benefit-pillar group">
+      <div className="benefit-pillar-grid" aria-hidden="true" />
+
+      <div className="benefit-pillar-header">
+        <span className="benefit-pillar-step lg:hidden">{step}</span>
+        <BenefitVisual visual={benefit.visual} className="benefit-pillar-visual" />
       </div>
-      <h3 className="mb-3 text-xl font-bold text-foreground sm:text-2xl lg:text-3xl">{benefit.title}</h3>
-      <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">{benefit.description}</p>
+
+      <div className="benefit-pillar-body">
+        <h3 className="benefit-pillar-title">{benefit.title}</h3>
+        <p className="benefit-pillar-desc">{benefit.description}</p>
+        <p className="benefit-pillar-highlight">{benefit.highlight}</p>
+      </div>
+
+      <div className="benefit-pillar-metric">
+        <span className="benefit-pillar-metric-value">
+          {benefit.metric.value}
+          <span className="benefit-pillar-metric-suffix">{benefit.metric.suffix}</span>
+        </span>
+        <span className="benefit-pillar-metric-label">{benefit.metric.label}</span>
+      </div>
+
+      <p className="benefit-pillar-keyword font-display-serif" aria-hidden="true">
+        {benefit.keyword}
+      </p>
     </article>
   );
 }

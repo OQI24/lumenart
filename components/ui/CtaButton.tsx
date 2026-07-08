@@ -10,11 +10,14 @@ import { Button, buttonVariants } from "@/components/ui/Button";
 import type { VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
+type CtaVariant = "gold" | "ghost-bracket";
+
 type CtaButtonProps = {
   href?: string;
   children: ReactNode;
   scrollContainerId?: string;
   className?: string;
+  variant?: CtaVariant;
 } & Omit<VariantProps<typeof buttonVariants>, "variant" | "size">;
 
 export default function CtaButton({
@@ -22,9 +25,13 @@ export default function CtaButton({
   children,
   scrollContainerId = "snap-container",
   className,
+  variant = "gold",
   ...props
 }: CtaButtonProps) {
-  const classes = cn(buttonVariants({ variant: "gold", size: "cta" }), className);
+  const classes = cn(
+    buttonVariants({ variant, size: "cta" }),
+    className
+  );
 
   const handleAnchorClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (!href || !isSectionHash(href)) return;
@@ -41,7 +48,7 @@ export default function CtaButton({
   }
 
   return (
-    <Button variant="gold" size="cta" className={className} {...props}>
+    <Button variant={variant} size="cta" className={className} {...props}>
       {children}
     </Button>
   );

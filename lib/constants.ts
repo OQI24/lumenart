@@ -18,6 +18,33 @@ export const SITE_URL =
 export const SITE_DESCRIPTION =
   "Разработка, производство и монтаж индивидуального дизайнерского освещения. Соблюдение сроков, гарантия качества. Рассчитайте проект со скидкой 5%.";
 
+export const HERO_KPIS = [
+  { value: "150+", label: "реализованных проектов" },
+  { value: "12", label: "лет на рынке" },
+  { value: "14", label: "дней — средний срок" },
+] as const;
+
+export const AUDIENCE_SEGMENTS = [
+  {
+    id: "designers",
+    title: "Для дизайнеров интерьера",
+    description:
+      "Работаем как партнёры студии: 3D-модели, образцы материалов, согласование с заказчиком и монтаж на объекте",
+    image: "/images/stock/showroom.jpg",
+    href: "#contacts",
+    cta: "Подробнее →",
+  },
+  {
+    id: "developers",
+    title: "Для девелоперов и архитекторов",
+    description:
+      "Серийные и уникальные решения для лобби, общественных зон и типовых планировок — с контролем сроков и бюджета",
+    image: "/images/stock/lobby.jpg",
+    href: "#contacts",
+    cta: "Подробнее →",
+  },
+] as const;
+
 export const ABOUT_PARAGRAPHS = [
   "Мы — команда профессионалов, объединённая желанием делать сложный свет простым и доступным. Нас не интересуют типовые решения — мы создаём индивидуальные световые сценарии, которые подчёркивают уникальность каждого пространства.",
   "Каждый проект проходит через полный цикл личного контроля: от первой идеи до финального монтажа. Мы не передаём задачи сторонним подрядчикам — мы сами проектируем, рассчитываем, контролируем качество и лично выезжаем на установку. Это позволяет нам быть гибкими, быстрыми и нести полную ответственность за результат.",
@@ -27,26 +54,33 @@ export const ABOUT_PARAGRAPHS = [
 export const BENEFITS = [
   {
     id: "speed-quality",
-    title: "Скорость + Качество",
+    keyword: "Скорость",
+    title: "Скорость и качество",
     description:
-      "Сокращаем сроки за счёт собственного производства, тройной контроль качества. Готово через 14 дней",
-    icon: "rocket" as const,
-    size: "large" as const,
+      "Собственное производство и тройной контроль на каждом этапе — без типовых задержек и посредников.",
+    highlight: "Готово через 14 дней",
+    metric: { value: "14", suffix: "дней", label: "средний срок" },
+    visual: "beams" as const,
   },
   {
     id: "deadline",
+    keyword: "Срок",
     title: "Гарантия сроков",
-    description: "Мы отвечаем за обещанные даты. Срыв дедлайна исключён",
-    icon: "calendar" as const,
-    size: "small" as const,
+    description:
+      "Фиксируем даты в договоре и отвечаем за них лично — срыв дедлайна для нас исключён.",
+    highlight: "100% соблюдение",
+    metric: { value: "100", suffix: "%", label: "в срок" },
+    visual: "arc" as const,
   },
   {
     id: "install",
+    keyword: "Монтаж",
     title: "Монтаж под ключ",
     description:
-      "Не ищите электриков. Наши бригады выезжают, устанавливают, подключают и обучают управлению светом",
-    icon: "key" as const,
-    size: "medium" as const,
+      "Собственные бригады: установка, подключение, настройка сценариев и обучение управлению светом.",
+    highlight: "Без сторонних электриков",
+    metric: { value: "1", suffix: "команда", label: "от проекта до включения" },
+    visual: "grid" as const,
   },
 ] as const;
 
@@ -59,6 +93,7 @@ export const STYLE_CATALOG = [
     bgClass: "bg-gradient-to-br from-gray-900 via-indigo-900 to-amber-700",
     image: "/images/stock/style-artdeco.jpg",
     textTheme: "light" as const,
+    accentClass: "style-accent-warm",
   },
   {
     id: "minimalism",
@@ -68,6 +103,7 @@ export const STYLE_CATALOG = [
     bgClass: "bg-gradient-to-br from-gray-300 via-gray-100 to-amber-100",
     image: "/images/stock/style-minimal.jpg",
     textTheme: "dark" as const,
+    accentClass: "style-accent-cool",
   },
   {
     id: "industrial",
@@ -77,6 +113,7 @@ export const STYLE_CATALOG = [
     bgClass: "bg-gradient-to-br from-gray-800 via-stone-700 to-orange-900",
     image: "/images/stock/style-industrial.jpg",
     textTheme: "light" as const,
+    accentClass: "style-accent-bronze",
   },
   {
     id: "classic",
@@ -86,6 +123,7 @@ export const STYLE_CATALOG = [
     bgClass: "bg-gradient-to-br from-stone-200 via-amber-50 to-yellow-200",
     image: "/images/stock/style-classic.jpg",
     textTheme: "dark" as const,
+    accentClass: "style-accent-classic",
   },
 ] as const;
 

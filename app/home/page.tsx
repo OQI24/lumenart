@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
+import AudienceSplit from "@/components/sections/AudienceSplit";
 import Benefits from "@/components/sections/Benefits";
 import StylesCatalog from "@/components/sections/StylesCatalog";
 import Technologies from "@/components/sections/Technologies";
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
 const sectionComponents: Record<SectionId, React.ComponentType> = {
   hero: Hero,
   about: About,
+  audience: AudienceSplit,
   benefits: Benefits,
   styles: StylesCatalog,
   technologies: Technologies,
@@ -42,7 +44,7 @@ export default function HomePage() {
             <section
               key={id}
               id={id}
-              className={`snap-section ${id === "hero" ? "snap-section-hero" : ""}`}
+              className={`snap-section ${id === "hero" ? "snap-section-hero" : ""} ${id === "styles" ? "snap-section-styles" : ""}`}
             >
               <Component />
             </section>

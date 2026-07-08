@@ -1,6 +1,7 @@
 export const sections = [
   { id: "hero", label: "Главная" },
   { id: "about", label: "О нас" },
+  { id: "audience", label: "Клиенты" },
   { id: "benefits", label: "Преимущества" },
   { id: "styles", label: "Стили" },
   { id: "technologies", label: "Технологии" },
