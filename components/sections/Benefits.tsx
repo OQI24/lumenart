@@ -103,16 +103,7 @@ export default function Benefits() {
           align="left"
         />
 
-        <div className="benefit-pillars relative">
-          <div className="benefit-timeline hidden lg:block" aria-hidden="true">
-            {BENEFITS.map((_, index) => (
-              <div key={index} className="benefit-timeline-step">
-                <span className="benefit-timeline-dot" />
-                <span className="benefit-timeline-num">{String(index + 1).padStart(2, "0")}</span>
-              </div>
-            ))}
-          </div>
-
+        <div className="benefit-pillars">
           <div className="benefit-pillars-grid">
             {BENEFITS.map((benefit, index) => (
               <FadeUp key={benefit.id} delay={0.06 + index * 0.08} className="h-full">
@@ -140,7 +131,7 @@ function BenefitPillar({
       <div className="benefit-pillar-grid" aria-hidden="true" />
 
       <div className="benefit-pillar-header">
-        <span className="benefit-pillar-step lg:hidden">{step}</span>
+        <span className="benefit-pillar-step">{step}</span>
         <BenefitVisual visual={benefit.visual} className="benefit-pillar-visual" />
       </div>
 

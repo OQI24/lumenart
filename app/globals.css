@@ -414,28 +414,7 @@
   }
 
   .benefit-pillars {
-    @apply relative flex gap-0 lg:gap-10;
-  }
-
-  .benefit-timeline {
-    @apply relative flex w-12 shrink-0 flex-col justify-between py-4;
-  }
-
-  .benefit-timeline::before {
-    content: "";
-    @apply absolute left-[0.4375rem] top-6 bottom-6 w-px bg-gold/20;
-  }
-
-  .benefit-timeline-step {
-    @apply relative flex items-center gap-3;
-  }
-
-  .benefit-timeline-dot {
-    @apply relative z-10 size-2 rounded-full border border-gold/50 bg-background;
-  }
-
-  .benefit-timeline-num {
-    @apply text-[0.65rem] font-medium tabular-nums tracking-[0.2em] text-gold/60;
+    @apply relative;
   }
 
   .benefit-pillars-grid {
@@ -464,7 +443,7 @@
   }
 
   .benefit-pillar-step {
-    @apply text-xs font-bold tabular-nums tracking-[0.35em] text-gold/70;
+    @apply inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-gold/35 bg-gold/10 text-[0.7rem] font-bold tabular-nums tracking-wider text-gold;
   }
 
   .benefit-visual {
