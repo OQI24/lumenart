@@ -121,6 +121,8 @@ export default function StylesCatalog() {
   });
 
   useEffect(() => {
+    if (document.documentElement.dataset.programmaticScroll) return;
+
     const container = mobileGalleryRef.current;
     if (!container || !isSectionVisible) return;
 
@@ -128,10 +130,14 @@ export default function StylesCatalog() {
     if (!target) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    target.scrollIntoView({
+    const targetLeft = target.offsetLeft;
+    const targetWidth = target.offsetWidth;
+    const containerWidth = container.clientWidth;
+    const scrollLeft = targetLeft - (containerWidth - targetWidth) / 2;
+
+    container.scrollTo({
+      left: Math.max(0, scrollLeft),
       behavior: prefersReducedMotion ? "auto" : "smooth",
-      inline: "center",
-      block: "nearest",
     });
   }, [activeId, isSectionVisible]);
 
