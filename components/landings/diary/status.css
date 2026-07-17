@@ -1,0 +1,368 @@
+/* Status screens for /diary/404 and /diary/maintenance */
+
+.s12-status {
+  position: relative;
+  display: flex;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 4vw 4rem;
+  overflow: hidden;
+}
+
+.s12-status-sheet {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 36rem);
+  padding: 2.25rem 1.75rem 2rem;
+  background: var(--landing-paper);
+  border: 2px solid color-mix(in srgb, var(--landing-ink) 55%, var(--landing-border));
+  box-shadow:
+    0 1px 0 var(--landing-sticker-hi),
+    0 18px 36px var(--landing-shadow),
+    3px 4px 0 color-mix(in srgb, var(--landing-kraft) 70%, transparent);
+  transform: rotate(-0.8deg);
+}
+
+.s12-status-sheet.is-maint {
+  transform: rotate(0.9deg);
+}
+
+.s12-status-tape {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 5.5rem;
+  height: 1.15rem;
+  background: var(--landing-tape);
+  border: 1px solid color-mix(in srgb, var(--landing-accent) 35%, transparent);
+  opacity: 0.88;
+  transform: translateX(-50%) rotate(-2deg);
+  box-shadow: 0 1px 2px #0001;
+  pointer-events: none;
+}
+
+.s12-status-kicker {
+  margin: 0 0 0.35rem;
+}
+
+.s12-status-code {
+  position: relative;
+  margin: 0.4rem 0 0.85rem;
+  font-family: var(--landing-font-display);
+  font-size: clamp(4.5rem, 18vw, 7rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--landing-ink);
+}
+
+.s12-status-code-strike {
+  position: absolute;
+  left: -4%;
+  top: 52%;
+  width: 108%;
+  height: 0.18em;
+  background: color-mix(in srgb, var(--landing-accent) 75%, transparent);
+  transform: rotate(-8deg);
+  transform-origin: left center;
+  animation: s12-strike 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.s12-status h1 {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.7rem, 4vw, 2.35rem);
+  line-height: 1.15;
+}
+
+.s12-status-lead {
+  margin: 0 0 1.5rem;
+  color: var(--landing-muted);
+  font-size: var(--s12-body);
+  line-height: var(--s12-body-lh);
+}
+
+.s12-status-note {
+  margin: 0 0 1.5rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--landing-accent);
+  background: color-mix(in srgb, var(--landing-kraft) 45%, var(--landing-paper));
+  color: var(--landing-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.s12-status-note .s12-hand {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.s12-status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+
+.s12-status-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.6rem;
+  padding: 0.35rem 0.15rem;
+  border-bottom: 1.5px dashed var(--landing-accent);
+  color: var(--landing-accent);
+  font-family: var(--landing-font-hand);
+  font-size: var(--s12-hand-sm);
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.s12-status-link:hover {
+  color: var(--landing-ink);
+  border-bottom-color: var(--landing-ink);
+}
+
+.s12-status-contacts {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.5rem;
+}
+
+.s12-status-contacts a {
+  color: var(--landing-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  font-size: 0.98rem;
+}
+
+.s12-status-contacts a:hover {
+  color: var(--landing-accent);
+}
+
+.s12-status-empty {
+  position: relative;
+  margin: 0 0 1.5rem;
+  aspect-ratio: 16 / 10;
+  border: 2px dashed color-mix(in srgb, var(--landing-accent) 55%, var(--landing-border));
+  background:
+    repeating-linear-gradient(
+      -12deg,
+      transparent,
+      transparent 10px,
+      color-mix(in srgb, var(--landing-border) 35%, transparent) 10px,
+      color-mix(in srgb, var(--landing-border) 35%, transparent) 11px
+    );
+  overflow: hidden;
+}
+
+.s12-status-empty-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%) rotate(-6deg);
+  white-space: nowrap;
+}
+
+.s12-status-crumbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.s12-status-crumb {
+  position: absolute;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--landing-accent) 58%, transparent);
+  opacity: 0.4;
+  animation-name: s12-crumb;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.s12-status-crumb:nth-child(3n) {
+  background: color-mix(in srgb, var(--landing-ink) 28%, transparent);
+}
+
+.s12-status-crumb:nth-child(4n) {
+  background: color-mix(in srgb, var(--landing-accent) 40%, var(--landing-kraft));
+  border-radius: 40% 60% 55% 45%;
+}
+
+.s12-status-crumb:nth-child(5n) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--landing-accent) 25%, transparent);
+}
+
+/* Maintenance: writing desk animation */
+.s12-status-desk {
+  position: relative;
+  margin: 0 0 1.5rem;
+  padding: 1.1rem 1rem 1.25rem;
+  border: 1px solid var(--landing-border);
+  background: color-mix(in srgb, var(--landing-kraft) 35%, var(--landing-paper));
+  overflow: hidden;
+}
+
+.s12-status-lines {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.s12-status-line {
+  height: 2px;
+  width: 100%;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--landing-ink) 18%, transparent);
+  transform-origin: left center;
+  animation: s12-write 3.6s ease-in-out infinite;
+}
+
+.s12-status-line:nth-child(1) { width: 92%; animation-delay: 0s; }
+.s12-status-line:nth-child(2) { width: 78%; animation-delay: 0.35s; }
+.s12-status-line:nth-child(3) { width: 86%; animation-delay: 0.7s; }
+.s12-status-line:nth-child(4) { width: 64%; animation-delay: 1.05s; }
+
+.s12-status-pen {
+  position: absolute;
+  right: 8%;
+  bottom: 18%;
+  width: 3.4rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--landing-accent) 0%,
+    var(--landing-accent) 72%,
+    color-mix(in srgb, var(--landing-ink) 70%, var(--landing-accent)) 72%,
+    color-mix(in srgb, var(--landing-ink) 70%, var(--landing-accent)) 100%
+  );
+  transform: rotate(-18deg);
+  transform-origin: left center;
+  animation: s12-pen 3.6s ease-in-out infinite;
+  box-shadow: 0 2px 6px var(--landing-shadow);
+}
+
+.s12-status-pen::after {
+  content: "";
+  position: absolute;
+  left: -0.35rem;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--landing-accent) 70%, white);
+  transform: translateY(-50%);
+  opacity: 0.85;
+  animation: s12-ink 3.6s ease-in-out infinite;
+}
+
+.s12-status-blot {
+  position: absolute;
+  left: 14%;
+  bottom: 10%;
+  width: 1.1rem;
+  height: 0.85rem;
+  border-radius: 60% 40% 55% 45%;
+  background: color-mix(in srgb, var(--landing-accent) 35%, transparent);
+  animation: s12-blot 4.8s ease-in-out infinite;
+}
+
+.s12-status-brand {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  z-index: 0;
+  margin: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: clamp(3.5rem, 16vw, 9rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--landing-ink) 5%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes s12-strike {
+  from { transform: rotate(-8deg) scaleX(0); opacity: 0; }
+  to { transform: rotate(-8deg) scaleX(1); opacity: 1; }
+}
+
+@keyframes s12-crumb {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.22;
+  }
+  25% {
+    transform: translate3d(10px, -14px, 0) scale(1.2);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(-8px, -22px, 0) scale(0.9);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translate3d(12px, -8px, 0) scale(1.15);
+    opacity: 0.4;
+  }
+}
+
+@keyframes s12-write {
+  0%, 12% { transform: scaleX(0); opacity: 0.2; }
+  35%, 62% { transform: scaleX(1); opacity: 0.85; }
+  78%, 100% { transform: scaleX(0.15); opacity: 0.2; }
+}
+
+@keyframes s12-pen {
+  0%, 12% { transform: translate(18%, 8%) rotate(-28deg); }
+  35% { transform: translate(-42%, -6%) rotate(-12deg); }
+  62% { transform: translate(-8%, 4%) rotate(-20deg); }
+  78%, 100% { transform: translate(18%, 8%) rotate(-28deg); }
+}
+
+@keyframes s12-ink {
+  0%, 20%, 100% { opacity: 0.2; transform: translateY(-50%) scale(0.6); }
+  40%, 55% { opacity: 0.9; transform: translateY(-50%) scale(1); }
+}
+
+@keyframes s12-blot {
+  0%, 100% { transform: scale(0.85) rotate(0deg); opacity: 0.35; }
+  50% { transform: scale(1.15) rotate(8deg); opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s12-status-code-strike,
+  .s12-status-crumb,
+  .s12-status-line,
+  .s12-status-pen,
+  .s12-status-pen::after,
+  .s12-status-blot {
+    animation: none;
+  }
+
+  .s12-status-code-strike {
+    transform: rotate(-8deg) scaleX(1);
+    opacity: 1;
+  }
+
+  .s12-status-line {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+
+  .s12-status-pen {
+    transform: rotate(-18deg);
+  }
+}
+
+@media (min-width: 768px) {
+  .s12-status-sheet {
+    padding: 2.75rem 2.5rem 2.4rem;
+  }
+}

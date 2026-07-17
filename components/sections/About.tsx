@@ -18,7 +18,7 @@ export default function About() {
             </FadeUp>
             <FadeUp delay={0.08}>
               <h2 className="mb-10 text-3xl font-bold leading-[1.02] text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
-                Мы — <span className="text-gold">LumenArt</span>
+                Это <span className="text-gold">LumenArt</span>
               </h2>
             </FadeUp>
             <div className="space-y-6">

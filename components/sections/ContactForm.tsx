@@ -88,7 +88,7 @@ export default function ContactForm() {
             </FadeUp>
             <FadeUp delay={0.1}>
               <p className="mb-10 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Заполните форму — мы подготовим смету с учётом всех ваших пожеланий.
+                Оставьте заявку. Подготовим смету под ваши задачи и бюджет.
               </p>
             </FadeUp>
 

@@ -100,7 +100,7 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
             href="#hero"
             className="text-gold"
             onClick={(e) => handleNavClick(e, "hero")}
-            aria-label="LumenArt — на главную"
+            aria-label="LumenArt: на главную"
           >
             <Logo variant="icon" height={28} className="sm:hidden" />
             <Logo variant="horizontal" height={32} className="hidden sm:block" />

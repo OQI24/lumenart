@@ -418,11 +418,23 @@
   }
 
   .benefit-pillars-grid {
-    @apply grid flex-1 grid-cols-1 items-stretch gap-4 md:grid-cols-3 md:gap-5 lg:gap-6;
+    @apply grid flex-1 grid-cols-1 items-stretch gap-4 md:grid-cols-12 md:gap-5 lg:gap-6;
+  }
+
+  .benefit-pillars-grid > *:nth-child(1) {
+    @apply md:col-span-5;
+  }
+
+  .benefit-pillars-grid > *:nth-child(2) {
+    @apply md:col-span-4;
+  }
+
+  .benefit-pillars-grid > *:nth-child(3) {
+    @apply md:col-span-3;
   }
 
   .benefit-pillar {
-    @apply relative flex h-full min-h-[19rem] flex-col overflow-hidden rounded-[1.75rem] border border-white/8 bg-background-card/80 p-6 backdrop-blur-sm transition-all duration-500 sm:rounded-[2rem] sm:p-7 lg:p-8;
+    @apply relative flex h-full min-h-[19rem] flex-col overflow-hidden rounded-2xl border border-white/8 bg-background-card p-6 transition-all duration-500 sm:p-7 lg:p-8;
   }
 
   .benefit-pillar:hover {
@@ -443,7 +455,7 @@
   }
 
   .benefit-pillar-step {
-    @apply inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-gold/35 bg-gold/10 text-[0.7rem] font-bold tabular-nums tracking-wider text-gold;
+    @apply text-[0.7rem] font-bold tabular-nums tracking-[0.2em] text-gold/70;
   }
 
   .benefit-visual {
@@ -463,7 +475,7 @@
   }
 
   .benefit-pillar-highlight {
-    @apply mt-auto inline-flex w-fit rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-medium tracking-wide text-gold sm:text-sm;
+    @apply mt-auto text-xs font-medium tracking-wide text-gold sm:text-sm;
   }
 
   .benefit-pillar-metric {

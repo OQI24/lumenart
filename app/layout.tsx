@@ -12,7 +12,8 @@ const exo2 = Exo_2({
   display: "swap",
 });
 
-const title = "LumenArt — индивидуальный дизайнерский свет, изготовление и монтаж";
+const title =
+  "LumenArt: индивидуальный дизайнерский свет, изготовление и монтаж";
 
 export const metadata: Metadata = {
   title,
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "LumenArt — индивидуальный дизайнерский свет",
+        alt: "LumenArt: индивидуальный дизайнерский свет",
       },
     ],
   },

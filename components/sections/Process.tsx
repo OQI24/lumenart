@@ -178,7 +178,7 @@ export default function Process() {
     <SectionFrame>
       <SectionHeading
         title="Этапы работы"
-        subtitle="От идеи до монтажа — полный цикл под ключ"
+        subtitle="От идеи до монтажа. Полный цикл под ключ."
         sectionLabel={chapter.label}
         sectionShape={chapter.shape}
         align="left"

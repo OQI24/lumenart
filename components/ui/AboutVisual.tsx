@@ -46,7 +46,7 @@ export default function AboutVisual() {
           Производство и монтаж
         </p>
         <p className="mt-2 text-sm leading-relaxed text-foreground/80">
-          Полный цикл — от эскиза до включения световых сценариев
+          Полный цикл: от эскиза до включения световых сценариев
         </p>
       </div>
     </div>

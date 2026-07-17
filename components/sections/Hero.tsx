@@ -19,7 +19,7 @@ export default function Hero() {
           <div>
             <FadeUp>
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-gold sm:mb-6 sm:text-sm">
-                LumenArt — дизайнерский свет
+                LumenArt · дизайнерский свет
               </p>
             </FadeUp>
             <FadeUp delay={0.08}>
@@ -40,8 +40,8 @@ export default function Hero() {
             </FadeUp>
             <FadeUp delay={0.22}>
               <p className="mb-8 max-w-lg text-base leading-relaxed text-muted-foreground sm:mb-10 sm:text-lg lg:text-xl">
-                Разработка, изготовление и монтаж дизайнерского освещения любой
-                сложности. Быстро, качественно, в срок.
+                Проектируем, делаем и ставим дизайнерский свет любой сложности.
+                В среднем за 14 дней.
               </p>
             </FadeUp>
             <FadeUp delay={0.3}>
@@ -63,7 +63,7 @@ export default function Hero() {
               <HeroFixture />
             </FadeUp>
             <FadeUp delay={0.38} className="hidden xl:block">
-              <div className="grid grid-cols-3 gap-6 rounded-[1.75rem] border border-white/10 bg-background-card/60 p-6 backdrop-blur-sm">
+              <div className="grid grid-cols-3 gap-6 border-t border-border/60 pt-8">
                 {HERO_KPIS.map((kpi) => (
                   <KpiStat key={kpi.label} value={kpi.value} label={kpi.label} />
                 ))}
@@ -75,7 +75,7 @@ export default function Hero() {
 
       <FadeUp delay={0.4} className="mt-10 sm:mt-14">
         <Marquee
-          items={["LED", "Латунь", "Алюминий", "Умный свет", "DALI", "Монтаж под ключ", "14 дней"]}
+          items={["LED", "Латунь", "Алюминий", "DALI", "KNX", "Zigbee", "14 дней"]}
           itemClassName="text-gold/50"
           speed="slow"
         />

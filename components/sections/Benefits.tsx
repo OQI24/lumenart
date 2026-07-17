@@ -97,7 +97,7 @@ export default function Benefits() {
       <SectionFrame>
         <SectionHeading
           title="Почему LumenArt"
-          subtitle="Три опоры, на которых держится каждый наш проект"
+          subtitle="Срок, производство и монтаж в одних руках"
           sectionLabel={chapter.label}
           sectionShape={chapter.shape}
           align="left"

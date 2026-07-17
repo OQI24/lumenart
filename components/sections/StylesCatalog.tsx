@@ -184,7 +184,7 @@ export default function StylesCatalog() {
       <div className="container-main relative z-10">
       <SectionHeading
         title="Выберите свой стиль"
-        subtitle="Наведите на панель — увидите характер света для каждого направления"
+        subtitle="Наведите на панель: увидите характер света для каждого направления"
         sectionLabel={chapter.label}
         sectionShape={chapter.shape}
         align="left"
@@ -262,7 +262,7 @@ export default function StylesCatalog() {
                   )}
                 >
                   <p className="mb-2 text-xs font-medium uppercase tracking-[0.25em] text-gold">
-                    {String(index + 1).padStart(2, "0")} — направление
+                    {String(index + 1).padStart(2, "0")} · направление
                   </p>
                   <h3 className="text-2xl font-bold text-white lg:text-4xl">{style.title}</h3>
                   <p className="mt-2 max-w-md text-sm leading-relaxed text-white/80 lg:text-base">

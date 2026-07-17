@@ -10,13 +10,13 @@ export default function AudienceSplit() {
     <SectionFrame>
       <SectionHeading
         title="С кем мы работаем"
-        subtitle="Два формата сотрудничества — одинаково высокий стандарт исполнения"
+        subtitle="Два формата работы. Один стандарт исполнения."
         align="left"
       />
       <div className="grid gap-5 md:grid-cols-2 md:gap-6 lg:gap-8">
         {AUDIENCE_SEGMENTS.map((segment, index) => (
           <FadeUp key={segment.id} delay={0.08 + index * 0.08}>
-            <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-background-card transition-all duration-500 hover:-translate-y-1 hover:border-gold/30 hover:shadow-[0_24px_48px_-24px_rgba(198,161,91,0.35)] sm:rounded-[2rem]">
+            <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-background-card transition-all duration-500 hover:-translate-y-1 hover:border-gold/30 hover:shadow-[0_24px_48px_-24px_rgba(198,161,91,0.35)]">
               <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[5/3]">
                 <div className="audience-blob-mask absolute inset-0">
                   <Image
