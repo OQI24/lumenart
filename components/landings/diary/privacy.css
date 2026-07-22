@@ -1,0 +1,117 @@
+/* Privacy policy for /diary/privacy/ */
+
+.s12-privacy {
+  position: relative;
+  min-height: 100dvh;
+  padding: 4.5rem 4vw 3.5rem;
+  overflow-x: hidden;
+}
+
+.s12-privacy-brand {
+  position: absolute;
+  top: 1.25rem;
+  left: 4vw;
+  z-index: 0;
+  margin: 0;
+  font-family: var(--diary-brand-font);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--landing-ink) 12%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+
+.s12-privacy-sheet {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 42rem);
+  margin: 0 auto;
+  padding: 2.5rem 1.75rem 2.25rem;
+  background: var(--landing-paper);
+  border: 2px solid color-mix(in srgb, var(--landing-ink) 55%, var(--landing-border));
+  box-shadow:
+    0 1px 0 var(--landing-sticker-hi),
+    0 18px 36px var(--landing-shadow),
+    3px 4px 0 color-mix(in srgb, var(--landing-kraft) 70%, transparent);
+}
+
+.s12-privacy-tape {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 5.5rem;
+  height: 1.15rem;
+  background: var(--landing-tape);
+  border: 1px solid color-mix(in srgb, var(--landing-accent) 35%, transparent);
+  opacity: 0.88;
+  transform: translateX(-50%) rotate(-1.5deg);
+  box-shadow: 0 1px 2px #0001;
+  pointer-events: none;
+}
+
+.s12-privacy-back {
+  display: inline-block;
+  margin: 0 0 1.25rem;
+  font-family: var(--landing-font-hand);
+  font-size: var(--s12-hand-sm);
+  line-height: 1.2;
+  color: var(--landing-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.s12-privacy-back:hover {
+  color: var(--landing-hand-deep);
+  border-bottom-color: color-mix(in srgb, var(--landing-accent) 50%, transparent);
+}
+
+.s12-privacy-kicker {
+  margin: 0 0 0.35rem;
+}
+
+.s12-privacy h1 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.85rem, 4.2vw, 2.5rem);
+  line-height: 1.15;
+}
+
+.s12-privacy-body {
+  color: var(--landing-muted);
+  font-size: var(--s12-body);
+  line-height: var(--s12-body-lh);
+}
+
+.s12-privacy-body p {
+  margin: 0 0 1.15rem;
+}
+
+.s12-privacy-body h2 {
+  margin: 1.75rem 0 0.65rem;
+  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+  line-height: 1.25;
+  color: var(--landing-ink);
+}
+
+.s12-privacy-body a {
+  color: var(--landing-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.s12-privacy-body a:hover {
+  color: var(--landing-hand-deep);
+}
+
+.s12-privacy-updated {
+  margin-top: 1.75rem !important;
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--landing-muted) 75%, transparent);
+}
+
+@media (min-width: 640px) {
+  .s12-privacy-sheet {
+    padding: 2.75rem 2.5rem 2.5rem;
+  }
+}

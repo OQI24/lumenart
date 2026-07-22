@@ -1,0 +1,21 @@
+#!/bin/sh
+# Wipe local tmp/ scratch (screenshots, browser-act dumps) and block staging it.
+set -e
+ROOT="$(git rev-parse --show-toplevel)"
+TMP="$ROOT/tmp"
+
+if [ -e "$TMP" ]; then
+  # Remove contents but keep the directory if present
+  find "$TMP" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+fi
+
+# Drop any staged paths under tmp/
+STAGED_TMP="$(git diff --cached --name-only -- tmp 2>/dev/null || true)"
+if [ -n "$STAGED_TMP" ]; then
+  printf '%s\n' "$STAGED_TMP" | while IFS= read -r f; do
+    [ -n "$f" ] && git reset -q HEAD -- "$f" || true
+  done
+  echo "pre-commit: unstaged and wiped tmp/ (do not commit scratch files)" >&2
+fi
+
+exit 0

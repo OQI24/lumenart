@@ -1,5 +1,9 @@
 import { LandingImage, LandingForm } from "@/components/landings/shared";
 import { LANDING_CONTACTS } from "@/lib/landings/contacts";
+import EntryDate from "@/components/landings/diary/EntryDate";
+import HeaderNav from "@/components/landings/diary/HeaderNav";
+import HeroStickers from "@/components/landings/diary/HeroStickers";
+import ScrapbookPages from "@/components/landings/diary/ScrapbookPages";
 import VoicesCarousel from "@/components/landings/diary/VoicesCarousel";
 import "./theme.css";
 
@@ -11,6 +15,16 @@ const TOC = [
   { href: "#scrapbook", label: "Другие проекты" },
   { href: "#materials", label: "Материалы" },
   { href: "#voices", label: "Голоса" },
+] as const;
+
+const MOBILE_NAV = [
+  { href: "#studio", label: "Кто ведёт" },
+  { href: "#why", label: "Почему так" },
+  { href: "#scrapbook", label: "Скрапбук" },
+  { href: "#styles", label: "Характеры света" },
+  { href: "#voices", label: "Голоса" },
+  { href: "#last", label: "Новая запись" },
+  { href: "/diary/privacy/", label: "Конфиденциальность" },
 ] as const;
 
 const ENTRIES = [
@@ -225,46 +239,25 @@ export default function DiaryLanding() {
           <b>LumenArt</b>
           <span>Дневник светового проекта</span>
         </div>
-        <nav className="s12-toc" aria-label="Содержание тетради">
-          {TOC.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <a className="s12-header-cta" href="#last">
-          К чистой странице
-        </a>
+        <HeaderNav toc={TOC} menu={MOBILE_NAV} />
       </header>
 
       <section className="s12-hero" id="opening">
         <div className="s12-hero-copy">
-          <p className="s12-hand s12-hand-ink">Запись от 17 июля</p>
-          <p className="s12-kicker">Тетрадь №47 · Москва</p>
-          <h1>Как идея света становится частью дома</h1>
+          <EntryDate />
+          <p className="s12-kicker">Тетрадь №42 · Москва</p>
+          <h1>Как свет становится частью дома</h1>
           <p className="s12-lead">
-            Хронология одного проекта: от разговора за столом до вечера, когда всё включилось.
-            Без общих фраз. Только дни, решения и то, что сделали по факту.
+            Хронология одного проекта: от разговора за столом до вечера, когда всё задуманное сбылось.
+            Только дни, конкретные этапы и что сделали по факту.
           </p>
           <div className="s12-hero-meta">
-            <span>8 ключевых дней</span>
+            <span>5 ключевых этапов</span>
             <span>1 команда</span>
             <span>4 световых сценария</span>
           </div>
         </div>
-        <div className="s12-hero-media">
-          <div className="s12-hero-sticker">
-            <span className="s12-sticker-tape s12-hero-tape" aria-hidden="true" />
-            <span className="s12-sticker-tape s12-hero-tape-2" aria-hidden="true" />
-            <LandingImage
-              src="/images/stock/hero.jpg"
-              alt="Разворот дневника проекта LumenArt"
-              className="s12-heroimg"
-              priority
-            />
-          </div>
-          <p className="s12-hand s12-hand-deep s12-caption">вклеено с объекта</p>
-        </div>
+        <HeroStickers />
       </section>
 
       <section className="s12-note" id="studio">
@@ -297,7 +290,7 @@ export default function DiaryLanding() {
         </div>
       </section>
 
-      <section className="s12-why">
+      <section className="s12-why" id="why">
         <p className="s12-hand s12-hand-deep">Почему так ведём проекты</p>
         <h2>Четыре правила этой тетради</h2>
         <div className="s12-why-grid">
@@ -370,17 +363,7 @@ export default function DiaryLanding() {
           <h2>Страницы из других проектов</h2>
           <p>Не только этот дом. Короткие вклейки из других объектов.</p>
         </div>
-        <div className="s12-pages-grid">
-          {SCRAPBOOK.map((item, index) => (
-            <figure key={item.title} className={`s12-page-card r${index % 3}`}>
-              <LandingImage src={item.image} alt={item.title} className="s12-page" />
-              <figcaption>
-                <strong>{item.title}</strong>
-                <span>{item.caption}</span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        <ScrapbookPages items={SCRAPBOOK} />
       </section>
 
       <section className="s12-spec" id="materials">
@@ -399,7 +382,7 @@ export default function DiaryLanding() {
         </div>
       </section>
 
-      <section className="s12-styles">
+      <section className="s12-styles" id="styles">
         <div className="s12-styles-head">
           <p className="s12-hand s12-hand-ink">Ещё несколько почерков</p>
           <h2>Какие характеры света ведём чаще всего</h2>
@@ -434,25 +417,10 @@ export default function DiaryLanding() {
         <VoicesCarousel voices={VOICES} />
       </section>
 
-      <section className="s12-contact-strip">
-        <div>
-          <p className="s12-hand s12-hand-deep">Закладка</p>
-          <h2>Связь без лишней бумаги</h2>
-          <p>{LANDING_CONTACTS.address}</p>
-        </div>
-        <div className="s12-contact-links">
-          <a href={`tel:${LANDING_CONTACTS.phoneRaw}`}>{LANDING_CONTACTS.phone}</a>
-          <a href={`mailto:${LANDING_CONTACTS.email}`}>{LANDING_CONTACTS.email}</a>
-          <a href={LANDING_CONTACTS.telegram} target="_blank" rel="noopener noreferrer">
-            Telegram {LANDING_CONTACTS.telegramHandle}
-          </a>
-        </div>
-      </section>
-
       <section className="s12-last" id="last">
         <div>
           <p className="s12-hand s12-hand-ink">Последняя запись пока свободна</p>
-          <h2>С чего начнётся ваш проект</h2>
+          <h2>С чего начнётся ваш проект ?</h2>
           <p>
             Коротко опишите пространство, сроки и референсы. Ответим с первым ориентиром
             по решению, сроку и бюджету. В расчёте через форму скидка 5%.
@@ -461,7 +429,11 @@ export default function DiaryLanding() {
         <div className="s12-sticker">
           <span className="s12-sticker-tape" aria-hidden="true" />
           <p className="s12-hand s12-sticker-label">новая запись</p>
-          <LandingForm className="s12-form" submitLabel="Начать дневник проекта" />
+          <LandingForm
+            className="s12-form"
+            submitLabel="Начать дневник проекта"
+            privacyHref="/diary/privacy/"
+          />
         </div>
       </section>
 
@@ -470,19 +442,16 @@ export default function DiaryLanding() {
           LumenArt
         </p>
         <div className="s12-foot-inner">
-          <div>
-            <p className="s12-foot-brand">{LANDING_CONTACTS.name}</p>
-            <div className="s12-foot-contacts">
-              <a href={`tel:${LANDING_CONTACTS.phoneRaw}`}>{LANDING_CONTACTS.phone}</a>
-              <a href={`mailto:${LANDING_CONTACTS.email}`}>{LANDING_CONTACTS.email}</a>
-              <a href={LANDING_CONTACTS.telegram} target="_blank" rel="noopener noreferrer">
-                Telegram {LANDING_CONTACTS.telegramHandle}
-              </a>
-            </div>
+          <div className="s12-foot-contacts">
+            <a href={`tel:${LANDING_CONTACTS.phoneRaw}`}>{LANDING_CONTACTS.phone}</a>
+            <a href={`mailto:${LANDING_CONTACTS.email}`}>{LANDING_CONTACTS.email}</a>
+            <a href={LANDING_CONTACTS.telegram} target="_blank" rel="noopener noreferrer">
+              Telegram {LANDING_CONTACTS.telegramHandle}
+            </a>
           </div>
           <div className="s12-foot-meta">
             <p>{LANDING_CONTACTS.address}</p>
-            <a href="/privacy/">Политика конфиденциальности</a>
+            <a href="/diary/privacy/">Политика конфиденциальности</a>
             <p>© {new Date().getFullYear()} LumenArt</p>
           </div>
         </div>

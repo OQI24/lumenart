@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caveat, Literata, Manrope } from "next/font/google";
+import { Bebas_Neue, Caveat, Literata, Manrope } from "next/font/google";
 
 const hand = Caveat({
   subsets: ["latin", "cyrillic"],
@@ -16,14 +16,20 @@ const sans = Manrope({
   variable: "--font-diary-sans",
 });
 
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-diary-bebas-neue",
+});
+
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
 export default function DiaryLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={`${hand.variable} ${display.variable} ${sans.variable}`}>
-      {children}
-    </div>
+  const fontVars = [hand.variable, display.variable, sans.variable, bebasNeue.variable].join(
+    " ",
   );
+
+  return <div className={fontVars}>{children}</div>;
 }

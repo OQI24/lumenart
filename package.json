@@ -11,8 +11,9 @@
     "build": "next build",
     "postbuild": "next-sitemap && touch ./out/.nojekyll",
     "export": "next build",
-    "start": "next start",
-    "lint": "eslint ."
+    "start": "npx --yes serve@latest out -l 3000",
+    "lint": "eslint .",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

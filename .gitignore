@@ -15,6 +15,9 @@
 /.next/
 /out/
 
+# local agent / browser screenshots & scratch
+/tmp/
+
 # production
 /build
 

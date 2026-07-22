@@ -18,6 +18,8 @@ interface FormData {
 interface LandingFormProps {
   className?: string;
   submitLabel?: string;
+  /** URL политики (trailing slash). По умолчанию общий /privacy/. */
+  privacyHref?: string;
 }
 
 /**
@@ -27,6 +29,7 @@ interface LandingFormProps {
 export default function LandingForm({
   className,
   submitLabel = LANDING_COPY.contacts.formCta,
+  privacyHref = "/privacy/",
 }: LandingFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -105,7 +108,7 @@ export default function LandingForm({
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
+        className="pointer-events-none absolute left-0 top-0 h-px w-px overflow-hidden opacity-0"
       />
 
       <div className="space-y-2">
@@ -191,7 +194,7 @@ export default function LandingForm({
           >
             Согласен на{" "}
             <Link
-              href="/privacy/"
+              href={privacyHref}
               className="text-[var(--landing-accent)] underline underline-offset-2"
             >
               обработку персональных данных
