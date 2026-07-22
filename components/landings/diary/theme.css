@@ -1952,7 +1952,7 @@
   }
 
   .s12-header-brand b {
-    font-size: clamp(1.85rem, 7.2vw, 2.65rem);
+    font-size: clamp(1.48rem, 5.76vw, 2.12rem);
   }
 
   .s12-burger {
