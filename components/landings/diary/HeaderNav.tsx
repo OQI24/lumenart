@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
@@ -10,6 +10,9 @@ export type HeaderNavLink = {
 };
 
 type HeaderNavProps = {
+  brand: string;
+  tagline: string;
+  homeHref?: string;
   toc: readonly HeaderNavLink[];
   menu: readonly HeaderNavLink[];
   ctaHref?: string;
@@ -33,6 +36,9 @@ function MenuIcon({ open }: { open?: boolean }) {
 }
 
 export default function HeaderNav({
+  brand,
+  tagline,
+  homeHref = "#opening",
   toc,
   menu,
   ctaHref = "#last",
@@ -47,6 +53,26 @@ export default function HeaderNav({
   const duration = reduceMotion ? 0 : 0.36;
 
   const close = useCallback(() => setOpen(false), []);
+
+  const goHome = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      close();
+
+      const id = homeHref.startsWith("#") ? homeHref.slice(1) : "";
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
+      if (id) {
+        window.history.replaceState(null, "", `#${id}`);
+      }
+    },
+    [close, homeHref, reduceMotion]
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -177,6 +203,16 @@ export default function HeaderNav({
 
   return (
     <>
+      <a
+        className="s12-header-brand"
+        href={homeHref}
+        aria-label="К началу дневника"
+        onClick={goHome}
+      >
+        <b>{brand}</b>
+        <span>{tagline}</span>
+      </a>
+
       <nav className="s12-toc" aria-label="Содержание тетради">
         {toc.map((item) => (
           <a key={item.href} href={item.href}>

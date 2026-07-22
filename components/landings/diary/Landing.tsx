@@ -27,11 +27,12 @@ export default function DiaryLanding() {
     <DiaryPreload>
       <main>
         <header className="s12-header">
-          <div className="s12-header-brand">
-            <b>{copy.brand}</b>
-            <span>{copy.tagline}</span>
-          </div>
-          <HeaderNav toc={DIARY_TOC} menu={DIARY_MOBILE_NAV} />
+          <HeaderNav
+            brand={copy.brand}
+            tagline={copy.tagline}
+            toc={DIARY_TOC}
+            menu={DIARY_MOBILE_NAV}
+          />
         </header>
 
         <section className="s12-hero" id="opening">

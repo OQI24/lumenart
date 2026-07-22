@@ -417,9 +417,21 @@
   display: inline-flex;
   flex-direction: column;
   align-items: stretch;
+  flex-shrink: 0;
   width: max-content;
+  max-width: 100%;
   gap: 0.15rem;
-  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.s12-header-brand:focus-visible {
+  outline: 2px solid var(--landing-accent);
+  outline-offset: 3px;
 }
 
 .s12-header-brand b {
@@ -1937,6 +1949,10 @@
   .s12-header-brand span,
   .s12-header-cta {
     display: none;
+  }
+
+  .s12-header-brand b {
+    font-size: clamp(1.85rem, 7.2vw, 2.65rem);
   }
 
   .s12-burger {
