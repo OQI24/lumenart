@@ -59,14 +59,14 @@ const FOLD_SCROLL_VH = 0.05;
 const DESKTOP_FOLD_SPAN_VH = 0.18;
 const DESKTOP_FOLD_SPAN_PX = 120;
 
-/** Former fold bottom 0.37vh; start 10% earlier, end further for scrub room. */
+/** Former fold bottom 0.37vh; start 25% earlier (+15% vs prior), end shifted same way to keep ~25% scrub. */
 const MOBILE_FOLD_BOTTOM_VH = 0.37;
-const MOBILE_START_EARLIER_VH = 0.1;
-const MOBILE_END_LATER_VH = 0.15;
+const MOBILE_START_EARLIER_VH = 0.25;
+const MOBILE_END_LATER_VH = 0;
 /** Former fold top ratio 0.57; same ± shifts. */
 const MOBILE_FOLD_TOP_RATIO = 0.57;
-const MOBILE_START_EARLIER_TOP = 0.1;
-const MOBILE_END_LATER_TOP = 0.15;
+const MOBILE_START_EARLIER_TOP = 0.25;
+const MOBILE_END_LATER_TOP = 0;
 
 const MOBILE_BOTTOM_START = MOBILE_FOLD_BOTTOM_VH + MOBILE_START_EARLIER_VH;
 const MOBILE_BOTTOM_END = MOBILE_FOLD_BOTTOM_VH - MOBILE_END_LATER_VH;
