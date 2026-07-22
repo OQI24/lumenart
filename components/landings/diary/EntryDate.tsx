@@ -21,7 +21,7 @@ function formatEntryDate(date: Date): string {
   return `Запись от ${date.getDate()} ${MONTHS_GENITIVE[date.getMonth()]}`;
 }
 
-/** Client-only date label — avoids SSG/hydration mismatch on static export. */
+/** Client-only — avoids SSG/hydration mismatch on static export. */
 export default function EntryDate() {
   const [label, setLabel] = useState<string | null>(null);
 

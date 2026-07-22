@@ -8,6 +8,7 @@ interface LandingImageProps {
   imageClassName?: string;
   sizes?: string;
   priority?: boolean;
+  loading?: "lazy" | "eager";
   fill?: boolean;
   width?: number;
   height?: number;
@@ -21,10 +22,13 @@ export default function LandingImage({
   imageClassName,
   sizes = "(max-width: 768px) 100vw, 50vw",
   priority = false,
+  loading,
   fill = true,
   width,
   height,
 }: LandingImageProps) {
+  const loadingProp = priority ? undefined : loading;
+
   if (fill) {
     return (
       <div className={cn("relative overflow-hidden", className)}>
@@ -34,6 +38,7 @@ export default function LandingImage({
           fill
           sizes={sizes}
           priority={priority}
+          loading={loadingProp}
           className={cn("object-cover", imageClassName)}
         />
       </div>
@@ -48,6 +53,7 @@ export default function LandingImage({
       height={height ?? 800}
       sizes={sizes}
       priority={priority}
+      loading={loadingProp}
       className={cn(imageClassName, className)}
     />
   );

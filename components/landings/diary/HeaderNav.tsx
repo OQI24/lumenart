@@ -17,7 +17,6 @@ type HeaderNavProps = {
 };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-/** True desktop: TOC + CTA. Burger through tablet portrait (≤1099). */
 const DESKTOP_MQ = "(min-width: 1100px)";
 
 function MenuIcon({ open }: { open?: boolean }) {
@@ -146,7 +145,7 @@ export default function HeaderNav({
               transition={{ duration, ease: EASE }}
             >
               <div className="s12-nav-panel-head">
-                <p className="s12-hand s12-hand-ink">Содержание</p>
+                <p className="s12-hand s12-hand-ink">{"Содержание"}</p>
                 <button
                   type="button"
                   className="s12-nav-close"

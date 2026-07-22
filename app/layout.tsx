@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Exo_2 } from "next/font/google";
+import DocumentBootstrapScripts from "@/components/DocumentBootstrapScripts";
 import ThemeProvider from "@/components/ThemeProvider";
 import ViewportHeightSync from "@/components/ViewportHeightSync";
 import { SITE, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
@@ -73,19 +74,14 @@ export default function RootLayout({
   return (
     <html lang="ru" className={exo2.variable} suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var d=window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.add(d?"dark":"light")})();`,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var h=window.visualViewport&&window.visualViewport.height||window.innerHeight;var id="app-layout-vars";var el=document.getElementById(id);if(!el){el=document.createElement("style");el.id=id;document.head.appendChild(el)}el.textContent=":root{--app-vh:"+h+"px}"})();`,
-          }}
-        />
+        {/* Theme + --app-vh before paint; React 19–safe via DocumentBootstrapScripts */}
+        <DocumentBootstrapScripts />
+        {/* application/ld+json is a data block — no React 19 script warning */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
         />
       </head>
       <body className="font-sans">

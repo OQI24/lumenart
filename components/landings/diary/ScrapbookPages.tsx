@@ -10,16 +10,10 @@ type ScrapbookItem = {
   image: string;
 };
 
-/**
- * Spread when section.top < vh * SPREAD_TOP_VH.
- * Smaller / more negative = LATER (need more scroll). Larger = EARLIER.
- */
-/** Разлёт, когда верх секции пересекает ~45% vh сверху (раньше, у видимого блока). */
+/** Spread when section.top < vh * SPREAD_TOP_VH; fold on scroll-up past FOLD_TOP_VH. */
 const SPREAD_TOP_VH = 0.45;
-/** Сворачивание вверх: гистерезис выше enter-линии. */
 const FOLD_TOP_VH = 0.65;
 const DESKTOP_MQ = "(min-width: 1100px)";
-/** Soft ease-out — matches prior scrapbook timing. */
 const SPREAD_EASE = [0.33, 1, 0.32, 1] as const;
 const SPREAD_ROTATE = [0, 0.8, -1] as const;
 
@@ -32,17 +26,11 @@ type CardPose = {
   zIndex: number;
 };
 
-/**
- * Two side piles on one vertical band (mid of the 2-row grid).
- * Row pitch ≈ card height + 1.25rem gap → mid = ±(50% + 0.625rem).
- * Row-1 cards (0–2) translate down; row-2 (3–5) translate up to the same band.
- */
+/** Two side piles on mid band; row pitch ≈ card + 1.25rem gap. */
 const COL = "(100% + 1.25rem)";
-/** Shared mid-height band (relative to each card's box) + small fan deltas. */
 const MID = "50% + 0.625rem";
 
 const STACKED_POSES: readonly CardPose[] = [
-  // Left pile — cards 0–2 (grid row 1 → mid)
   { x: "0.15rem", y: `calc(${MID} - 0.4rem)`, rotate: -6, zIndex: 3 },
   {
     x: `calc(-1 * ${COL} + 0.45rem)`,
@@ -56,7 +44,6 @@ const STACKED_POSES: readonly CardPose[] = [
     rotate: 3,
     zIndex: 1,
   },
-  // Right pile — cards 3–5 (grid row 2 → mid, same Y band)
   {
     x: `calc(2 * ${COL} - 0.75rem)`,
     y: `calc(-1 * (${MID}) + 0.65rem)`,
@@ -92,12 +79,11 @@ export default function ScrapbookPages({
   items: readonly ScrapbookItem[];
 }) {
   const gridRef = useRef<HTMLDivElement>(null);
-  /** Safe default: never SSR/hydrate with desktop stack translates (mobile overflow). */
+  /** Default spread: avoid SSR desktop stack translates on mobile. */
   const modeRef = useRef<Mode>("is-spread");
   const lastScrollY = useRef(0);
   const reduceMotion = useReducedMotion();
   const [mode, setMode] = useState<Mode>("is-spread");
-  /** Stack poses only after desktop MQ confirmed — avoids ±200% translate on ≤1099px. */
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
@@ -129,7 +115,6 @@ export default function ScrapbookPages({
       const sectionTop = section.getBoundingClientRect().top;
 
       if (modeRef.current === "is-spread") {
-        // Fold only on scroll-up past foldLine (separate from late enterLine).
         if (scrollingUp && sectionTop > foldLine) {
           return "is-stacked";
         }
@@ -189,6 +174,7 @@ export default function ScrapbookPages({
               src={item.image}
               alt={item.title}
               className="s12-page"
+              loading="eager"
             />
             <figcaption>
               <strong>{item.title}</strong>

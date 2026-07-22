@@ -111,8 +111,290 @@
   cursor: not-allowed;
 }
 
+.s12-preload {
+  position: relative;
+  width: 100%;
+}
+
+.s12-preload-splash {
+  display: none;
+}
+
+.s12-preload-content {
+  opacity: 1;
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.s12-preload-brand {
+  margin: 0;
+  font-family: var(--diary-brand-font, var(--font-diary-bebas-neue));
+  font-size: clamp(2.4rem, 10vw, 3.4rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--landing-ink, #1d2b39);
+  text-transform: uppercase;
+}
+
+.s12-preload-line {
+  margin: 0.85rem 0 0.35rem !important;
+}
+
+.s12-preload-sub {
+  margin: 0;
+  font-family: var(--landing-font-sans, var(--font-diary-sans));
+  font-size: 0.95rem;
+  color: var(--landing-muted, #5f6b76);
+}
+
+.s12-preload-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: min(22rem, 88vw);
+  min-height: 14rem;
+  padding: 1.6rem 1.5rem 1.45rem;
+  background-color: var(--landing-paper, #f6efdf);
+  background-image: linear-gradient(var(--landing-rule, #7d91a912) 1px, transparent 1px);
+  background-size: 100% 28px;
+  border: 1px solid var(--landing-border, #cabb9f);
+  box-shadow:
+    0 1px 0 var(--landing-sticker-hi, #fff8),
+    0 10px 28px var(--landing-shadow, #634d3428),
+    3px 4px 0 color-mix(in srgb, var(--landing-kraft, #d4c29f) 70%, transparent);
+  transform: rotate(-0.6deg);
+}
+
+.s12-preload-flip {
+  position: relative;
+  width: 4.25rem;
+  height: 3.35rem;
+  margin: 0 0 1rem;
+  perspective: 420px;
+  transform-style: preserve-3d;
+}
+
+.s12-preload-page {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--landing-ink, #1d2b39) 28%, var(--landing-border, #cabb9f));
+  background-color: var(--landing-paper, #f6efdf);
+  background-image: linear-gradient(
+    var(--landing-rule, #7d91a912) 1px,
+    transparent 1px
+  );
+  background-size: 100% 9px;
+  box-shadow: 0 2px 6px var(--landing-shadow, #634d3428);
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+.s12-preload-page--back {
+  background-color: var(--landing-kraft, #d4c29f);
+  background-image: none;
+  transform: rotate(-4deg) translate(2px, 3px);
+  z-index: 0;
+}
+
+.s12-preload-page--mid {
+  transform: rotate(-1.5deg);
+  z-index: 1;
+  animation: s12-preload-flip-mid 2.4s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+}
+
+.s12-preload-page--front {
+  z-index: 2;
+  animation: s12-preload-flip-front 2.4s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+}
+
+.s12-preload-page--front::after,
+.s12-preload-page--mid::after {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  right: 0.35rem;
+  top: 0.45rem;
+  bottom: 0.45rem;
+  border-left: 1.5px solid color-mix(in srgb, var(--landing-accent, #9a6846) 35%, transparent);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.s12-preload-progress {
+  width: 100%;
+  margin-top: 1.15rem;
+}
+
+.s12-preload-progress-track {
+  height: 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--landing-kraft, #d4c29f) 55%, var(--landing-border, #cabb9f));
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--landing-ink, #1d2b39) 12%, transparent);
+}
+
+.s12-preload-progress-fill {
+  height: 100%;
+  width: var(--progress, 0%);
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--landing-accent, #9a6846) 75%, var(--landing-kraft, #d4c29f)),
+    var(--landing-accent, #9a6846)
+  );
+  transition: width 180ms ease-out;
+}
+
+.s12-preload-progress.is-indeterminate .s12-preload-progress-fill {
+  width: 36%;
+  transition: none;
+  animation: s12-preload-indeterminate 1.15s ease-in-out infinite;
+}
+
+@keyframes s12-preload-indeterminate {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.s12-preload-progress-rail {
+  position: relative;
+  height: 1.25rem;
+  margin-top: 0.35rem;
+}
+
+.s12-preload-progress-label {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  white-space: nowrap;
+  font-size: var(--s12-hand-sm) !important;
+  line-height: 1;
+}
+
+@keyframes s12-preload-flip-front {
+  0%,
+  12% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  38%,
+  50% {
+    transform: rotateY(-118deg);
+    opacity: 0.35;
+  }
+  62%,
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes s12-preload-flip-mid {
+  0%,
+  18% {
+    transform: rotate(-1.5deg) rotateY(0deg);
+  }
+  42%,
+  54% {
+    transform: rotate(-1.5deg) rotateY(-72deg);
+  }
+  68%,
+  100% {
+    transform: rotate(-1.5deg) rotateY(0deg);
+  }
+}
+
+@media (max-width: 1099px) {
+  .s12-preload:not(.is-ready) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .s12-preload:not(.is-ready) .s12-preload-content {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .s12-preload:not(.is-ready) .s12-preload-splash {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    padding: 1.5rem;
+    background-color: var(--landing-bg, #eee4cf);
+    background-image:
+      linear-gradient(var(--landing-rule, #7d91a912) 1px, transparent 1px),
+      radial-gradient(circle at 18% 12%, var(--landing-glow, #ffffff55), transparent 34%);
+    background-size: 100% 28px, auto;
+    color: var(--landing-fg, #23364a);
+  }
+
+  .s12-preload.is-ready .s12-preload-splash {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s12-preload-page--mid,
+  .s12-preload-page--front {
+    animation: none;
+  }
+
+  .s12-preload-page--mid {
+    transform: rotate(-1.5deg);
+  }
+
+  .s12-preload-page--front {
+    transform: none;
+    opacity: 1;
+  }
+
+  .s12-preload-progress.is-indeterminate .s12-preload-progress-fill {
+    animation: none;
+    width: 36%;
+    transform: none;
+  }
+
+  .s12-preload-progress-fill {
+    transition: none;
+  }
+}
+
+.dark .s12-preload-sheet {
+  background-color: var(--landing-paper);
+  border-color: var(--landing-border);
+  box-shadow:
+    0 1px 0 var(--landing-sticker-hi),
+    0 10px 28px var(--landing-shadow),
+    3px 4px 0 color-mix(in srgb, var(--landing-kraft) 55%, transparent);
+}
+
+.dark .s12-preload-brand {
+  color: var(--landing-ink);
+}
+
+.dark .s12-preload-sub {
+  color: var(--landing-muted);
+}
+
+.dark .s12-preload-page {
+  border-color: color-mix(in srgb, var(--landing-ink) 18%, var(--landing-border));
+}
+
+.dark .s12-preload-progress-track {
+  background: color-mix(in srgb, var(--landing-kraft) 70%, var(--landing-border));
+}
+
 .s12-header {
-  /* Desktop ≥1100: sticky is optional; mobile overrides to fixed below */
   position: sticky;
   top: 0;
   z-index: 20;
@@ -164,7 +446,6 @@
   font-size: 0.78rem;
 }
 
-/* Desktop TOC only (.s12-toc hidden <1100px; burger uses .s12-nav-list) */
 .s12-toc a {
   font-size: 0.9rem;
   letter-spacing: 0.03em;
@@ -270,7 +551,6 @@
 .s12-nav-host {
   position: fixed;
   inset: 0;
-  /* Above sticky/fixed header (z-index: 20) */
   z-index: 40;
   width: auto;
   max-width: none;
@@ -333,57 +613,71 @@
   font-size: 0.82rem;
 }
 
-/*
- * Hero stickers — three zones:
- * ≤1099: one sticker in flow (mobile / burger)
- * 1100–1399: absolute 2×2 + Motion fold/spread (desktop spirit, inset)
- * ≥1400: absolute 1×4 fan + Motion fold/spread
- */
 .s12-hero-media {
   position: relative;
   width: 100%;
   max-width: 34rem;
   margin-inline: auto;
-  padding: 0.65rem 0.85rem 0.85rem;
+  padding: 0.85rem 0.65rem 0.75rem;
   overflow: visible;
   box-sizing: border-box;
 }
 
 .s12-hero-stack {
   position: relative;
+  display: block;
   width: 100%;
   max-width: 100%;
-  aspect-ratio: auto;
+  margin-left: 0;
+  aspect-ratio: 1.05 / 1;
   overflow: visible;
   box-sizing: border-box;
 }
 
 .s12-hero-sticker {
+  position: absolute;
   box-sizing: border-box;
-  padding: 0.55rem;
+  width: 50%;
+  max-width: none;
+  padding: 0.28rem;
   background: var(--landing-paper);
   border: 2px solid color-mix(in srgb, var(--landing-ink) 55%, var(--landing-border));
   box-shadow:
     0 1px 0 var(--landing-sticker-hi),
     0 12px 24px var(--landing-shadow),
     2px 3px 0 color-mix(in srgb, var(--landing-kraft) 70%, transparent);
-  /* Pose (left/top/transform) animated by Framer Motion in HeroStickers */
   transition: box-shadow 0.4s ease;
 }
 
-.s12-hero-sticker.is-a,
-.s12-hero-sticker.is-b,
+/* SSR / no-JS spread fallback — sync GRID_SPREAD_POSES (≤1399) */
+.s12-hero-sticker.is-a {
+  left: 2%;
+  top: 6%;
+  transform: rotate(-2.2deg);
+  z-index: 2;
+}
+
+.s12-hero-sticker.is-b {
+  left: 50%;
+  top: 2%;
+  transform: rotate(2deg);
+  z-index: 2;
+}
+
 .s12-hero-sticker.is-c {
-  display: none;
+  left: 2%;
+  top: 48%;
+  transform: rotate(-1.6deg);
+  z-index: 2;
 }
 
 .s12-hero-sticker.is-front {
-  position: relative;
-  top: auto;
-  left: auto;
-  width: 100%;
-  max-width: 100%;
-  /* rotate straighten — Framer Motion (is-straight / touch) */
+  left: 50%;
+  top: 44%;
+  width: 50%;
+  max-width: none;
+  transform: rotate(1.4deg);
+  z-index: 3;
   touch-action: manipulation;
 }
 
@@ -403,7 +697,7 @@
 }
 
 .s12-heroimg {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1.12;
   width: 100%;
   display: block;
   border: 0;
@@ -420,7 +714,6 @@
   pointer-events: none;
 }
 
-/* Shared from tablet landscape up: show all four stickers */
 @media (min-width: 1100px) {
   .s12-hero-media {
     max-width: none;
@@ -430,25 +723,13 @@
     overflow: visible;
   }
 
-  .s12-hero-sticker.is-a,
-  .s12-hero-sticker.is-b,
-  .s12-hero-sticker.is-c {
-    display: block;
-  }
-
   .s12-caption {
     display: block;
   }
 }
 
-/*
- * Medium 1100–1399 (e.g. iPad Air landscape 1180×820):
- * Absolute 2×2 inset (<50% width) + Motion fold/spread.
- * Padding absorbs rotate/tape/shadow; overflow visible without scrollWidth blowout.
- */
 @media (min-width: 1100px) and (max-width: 1399px) {
   .s12-hero {
-    /* Shorter shell so 2×2 stickers fit short landscape viewports */
     padding-top: 2.75rem;
     padding-bottom: 2.5rem;
     gap: 2.5vw;
@@ -456,67 +737,20 @@
   }
 
   .s12-hero-media {
-    /* Room for caption (top) + rotate/tape/shadow; keep stack ≤100% wide */
     padding: 1.4rem 0.9rem 0.9rem;
     overflow: visible;
   }
 
-  .s12-hero-stack {
-    position: relative;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    aspect-ratio: 1.05 / 1;
-    overflow: visible;
-  }
-
   .s12-hero-sticker {
-    position: absolute;
-    /* Inset vs 50% cell — borders/shadow stay inside padded media */
     width: 42%;
-    max-width: none;
     padding: 0.32rem;
   }
 
-  /* SSR / no-JS spread fallback — sync MEDIUM_SPREAD_POSES */
-  .s12-hero-sticker.is-a {
-    left: 3%;
-    top: 16%;
-    transform: rotate(-2.2deg);
-    z-index: 2;
-  }
-
-  .s12-hero-sticker.is-b {
-    left: 55%;
-    top: 12%;
-    transform: rotate(2deg);
-    z-index: 2;
-  }
-
-  .s12-hero-sticker.is-c {
-    left: 3%;
-    top: 54%;
-    transform: rotate(-1.6deg);
-    z-index: 2;
-  }
-
   .s12-hero-sticker.is-front {
-    position: absolute;
-    left: 55%;
-    top: 50%;
     width: 42%;
-    max-width: none;
-    transform: rotate(1.4deg);
-    z-index: 3;
     touch-action: auto;
   }
 
-  .s12-heroimg {
-    aspect-ratio: 1 / 1.12;
-  }
-
-  /* Caption over right column (2×2) — mirror ≥1400 right bias */
   .s12-caption {
     position: absolute;
     margin: 0;
@@ -528,11 +762,6 @@
   }
 }
 
-/*
- * Full desktop ≥1400: 4-across absolute fan.
- * Wider than media so cards can be ~34% with only ~15% overlap:
- * 3 * 28.9% + 34% = 120.7% → stack 121%.
- */
 @media (min-width: 1400px) {
   .s12-hero-stack {
     width: 121%;
@@ -543,8 +772,6 @@
 
   .s12-hero-sticker {
     position: absolute;
-    /* 4 cards: width 34%, step 28.9% → overlap 15% of card */
-    /* Pose animated by Motion; CSS = SSR/no-JS spread fallback (no transition) */
     width: 34%;
     padding: 0.42rem;
   }
@@ -571,7 +798,7 @@
   }
 
   .s12-hero-sticker.is-front {
-    position: absolute; /* override base .is-front { position: relative } */
+    position: absolute;
     left: 86.7%;
     top: 8%;
     width: 34%;
@@ -581,7 +808,10 @@
     touch-action: auto;
   }
 
-  /* Spread: над front-карточкой (left 86.7%) — без сдвига при fold */
+  .s12-heroimg {
+    aspect-ratio: 4 / 5;
+  }
+
   .s12-caption {
     position: absolute;
     margin: 0;
@@ -660,11 +890,6 @@
   color: var(--landing-muted);
 }
 
-/*
- * Block hover for rules / partner / materials cards on dark lined paper.
- * Tokens (--s12-hover-*) are set per card type; no translate/scale.
- * Tuned to section bg — not a copy of .s12-voice-card hover.
- */
 .s12-block-hover,
 .s12-why-grid article,
 .s12-partner,
@@ -725,7 +950,6 @@
 }
 
 .s12-why-grid article {
-  /* Lined page: kraft lift + soft gold so surface reads above rule lines */
   --s12-hover-bg: color-mix(
     in srgb,
     color-mix(in srgb, var(--landing-paper) 74%, var(--landing-kraft)) 94%,
@@ -914,7 +1138,6 @@
 }
 
 .s12-partner {
-  /* Surface strip: warmer kraft lift, ink-leaning border vs. section surface */
   --s12-hover-bg: color-mix(in srgb, var(--landing-paper) 66%, var(--landing-kraft));
   --s12-hover-border: color-mix(
     in srgb,
@@ -967,7 +1190,6 @@
   background: var(--landing-paper);
   border: 1px solid var(--landing-border);
   padding: 0.7rem 0.7rem 1rem;
-  /* Transform driven by framer-motion (x/y/rotate) — no CSS transform thrash. */
   transition:
     background 0.35s ease,
     border-color 0.35s ease,
@@ -1071,7 +1293,6 @@
 }
 
 .s12-spec-grid article {
-  /* Kraft strip: soft gold tint — not paper→kraft (would wash into section) */
   --s12-hover-bg: color-mix(in srgb, var(--landing-paper) 88%, var(--landing-accent));
   --s12-hover-border: color-mix(in srgb, var(--landing-accent) 55%, var(--landing-border));
   --s12-hover-shadow: 0 2px 10px color-mix(in srgb, var(--landing-shadow) 72%, transparent);
@@ -1417,7 +1638,6 @@
     padding: 2.75rem;
   }
 
-  /* Tablet+: лёгкий сдвиг why ниже fold без пустоты в hero */
   .s12-why {
     margin-top: 2rem;
     padding-bottom: 5.5rem;
@@ -1486,7 +1706,6 @@
   }
 }
 
-/* From 1100: 2-col hero + TOC; scrapbook stack. Sticker 1×4 fan only ≥1400. */
 @media (min-width: 1100px) {
   .s12-toc {
     display: flex;
@@ -1497,7 +1716,6 @@
   }
 
   .s12-hero {
-    /* Wider media column so 34% stickers read larger vs copy */
     grid-template-columns: 0.65fr 1.55fr;
     gap: 3.5vw;
     padding-top: 4.5rem;
@@ -1505,10 +1723,7 @@
     align-items: start;
   }
 
-  /*
-    Scrapbook stack/spread — desktop only.
-    Poses (x/y/rotate) live in ScrapbookPages via framer-motion; CSS only shadows.
-  */
+  /* Scrapbook poses in ScrapbookPages (Motion); CSS = shadows only. */
   .s12-pages-grid.is-stacked .s12-page-card {
     box-shadow: 0 8px 20px var(--landing-shadow);
   }
@@ -1526,11 +1741,6 @@
   }
 }
 
-/*
- * Ultrawide / 4K+: cap content shells so grids
- * don't stretch edge-to-edge. Mobile/tablet (≤1099) and 1080/1440 unchanged.
- * Hero stickers keep desktop sizing (no .s12-hero-media max-width clamp).
- */
 @media (min-width: 1600px) {
   .s12-header,
   .s12-hero,
@@ -1670,7 +1880,6 @@
     padding-inline: 5rem;
   }
 
-  /* Keep the same content shell — only stop padding from growing with vw */
   .s12-hero,
   .s12-insert,
   .s12-pages,
@@ -1684,16 +1893,12 @@
 }
 
 @media (max-width: 1099px) {
-  /*
-   * overflow-x:hidden breaks position:sticky — use fixed header instead
-   * so logo + burger stay available while stickers can still overflow.
-   * :not(.s12-nav-host) — portal overlay also has .s12, must not get padding.
-   */
+  /* overflow-x:hidden breaks sticky; fixed header. Skip .s12-nav-host padding. */
   .s12 {
     overflow-x: hidden;
   }
 
-  .s12:not(.s12-nav-host) {
+  .s12:not(.s12-nav-host):not(.s12-privacy) {
     padding-top: var(--s12-header-h);
   }
 
@@ -1703,7 +1908,6 @@
     top: 0;
     z-index: 20;
     width: 100%;
-    /* Opaque lined paper — content must not read through */
     background-color: var(--landing-bg);
     background-image:
       linear-gradient(var(--landing-rule) 1px, transparent 1px),
@@ -1768,7 +1972,7 @@
     inset: 0;
     border: 0;
     padding: 0;
-    background: color-mix(in srgb, var(--landing-ink) 42%, transparent);
+    background: color-mix(in srgb, var(--landing-ink) 88%, transparent);
     cursor: pointer;
     pointer-events: auto;
   }
@@ -1786,18 +1990,10 @@
     box-sizing: border-box;
     border-left: 2px solid color-mix(in srgb, var(--landing-ink) 28%, var(--landing-border));
     background-color: var(--landing-paper);
-    background-image:
-      linear-gradient(var(--landing-rule) 1px, transparent 1px),
-      linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--landing-kraft) 70%, transparent) 0,
-        color-mix(in srgb, var(--landing-kraft) 70%, transparent) 0.55rem,
-        transparent 0.55rem
-      );
-    background-size: 100% 28px, 100% 100%;
     box-shadow: -10px 0 28px var(--landing-shadow);
     pointer-events: auto;
     will-change: transform;
+    isolation: isolate;
   }
 
   .s12-nav-panel-head {
@@ -1847,7 +2043,8 @@
   .s12-nav-list a {
     display: block;
     padding: 0.7rem 0.35rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--landing-border) 70%, transparent);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--landing-border) 72%, var(--landing-paper));
     color: var(--landing-ink);
     font-family: var(--landing-font-display);
     font-size: 1.15rem;
@@ -1876,14 +2073,19 @@
     outline-offset: 2px;
   }
 
-  /*
-   * Tablet/phone hero: reinforce single-column + in-flow sticker.
-   * Base styles already use this layout; keep overflow visible so tape/tilt
-   * are not clipped by .s12 { overflow-x: hidden }.
-   */
   .s12-hero {
     grid-template-columns: minmax(0, 1fr);
+    gap: 1.1rem;
+    padding: 2rem 4vw 2.75rem;
     overflow: visible;
+  }
+
+  .s12-hero h1 {
+    margin: 0.55rem 0 0.65rem;
+  }
+
+  .s12-hero-meta {
+    margin: 0.85rem 0 0.55rem;
   }
 
   .s12-hero-media,
@@ -1894,10 +2096,20 @@
     box-sizing: border-box;
   }
 
-  /*
-   * Short landscape tablets (iPad Mini 1024×768): keep single-col + in-flow
-   * sticker, but compact copy so the photo is meaningfully in the first screen.
-   */
+  .s12-hero-media {
+    margin-top: -0.35rem;
+    padding: 0.4rem 0.4rem 0.55rem;
+  }
+
+  .s12-hero-sticker {
+    width: 50%;
+    padding: 0.26rem;
+  }
+
+  .s12-hero-sticker.is-front {
+    width: 50%;
+  }
+
   @media (max-height: 820px) and (orientation: landscape) {
     .s12-hero {
       gap: 1.15rem;
@@ -1922,9 +2134,22 @@
     }
 
     .s12-hero-media {
-      max-width: min(20rem, 42vh);
+      max-width: min(28rem, 58vh);
       margin-inline: 0;
-      padding: 0.35rem 0.35rem 0.5rem;
+      padding: 0.45rem 0.4rem 0.5rem;
+    }
+
+    .s12-hero-stack {
+      aspect-ratio: 1.15 / 1;
+    }
+
+    .s12-hero-sticker {
+      width: 44%;
+      padding: 0.22rem;
+    }
+
+    .s12-hero-sticker.is-front {
+      width: 44%;
     }
   }
 
@@ -1966,13 +2191,11 @@
     overflow: hidden;
   }
 
-  /* Scrapbook: plain grid on mobile — kill any leftover stack transforms */
   .s12-pages-grid .s12-page-card {
     transform: none !important;
     box-shadow: none;
   }
 
-  /* Watermark visible on mobile; clipped so it can't inflate scrollWidth */
   .s12-foot {
     overflow: hidden;
   }

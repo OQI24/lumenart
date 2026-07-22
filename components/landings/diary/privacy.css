@@ -1,5 +1,3 @@
-/* Privacy policy for /diary/privacy/ */
-
 .s12-privacy {
   position: relative;
   min-height: 100dvh;
@@ -48,6 +46,10 @@
   transform: translateX(-50%) rotate(-1.5deg);
   box-shadow: 0 1px 2px #0001;
   pointer-events: none;
+}
+
+.s12-privacy-head {
+  flex-shrink: 0;
 }
 
 .s12-privacy-back {
@@ -110,7 +112,65 @@
   color: color-mix(in srgb, var(--landing-muted) 75%, transparent);
 }
 
-@media (min-width: 640px) {
+
+@media (max-width: 767px) {
+  .s12-privacy {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 0;
+    padding: 3.25rem 4vw 1.25rem;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .s12-privacy-brand {
+    top: 0.65rem;
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+
+  .s12-privacy-sheet {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    margin: 0;
+    padding: 2rem 1.25rem 0.85rem;
+    overflow: hidden;
+  }
+
+  .s12-privacy-head {
+    padding-bottom: 0.15rem;
+  }
+
+  .s12-privacy-back {
+    margin-bottom: 0.85rem;
+  }
+
+  .s12-privacy h1 {
+    margin-bottom: 0.85rem;
+    font-size: clamp(1.55rem, 7vw, 1.95rem);
+  }
+
+  .s12-privacy-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 0.2rem;
+    padding-bottom: 1.25rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .s12-privacy-body h2:first-of-type {
+    margin-top: 0.35rem;
+  }
+}
+
+@media (min-width: 768px) {
   .s12-privacy-sheet {
     padding: 2.75rem 2.5rem 2.5rem;
   }

@@ -1,5 +1,3 @@
-/* Status screens for /diary/404 and /diary/maintenance */
-
 .s12-status {
   position: relative;
   display: flex;
@@ -195,7 +193,6 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--landing-accent) 25%, transparent);
 }
 
-/* Maintenance: writing desk animation */
 .s12-status-desk {
   position: relative;
   margin: 0 0 1.5rem;

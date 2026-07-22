@@ -97,7 +97,9 @@ export default function VoicesCarousel({ voices }: { voices: readonly Voice[] })
         <ArrowIcon direction="prev" />
       </button>
       <p className="s12-hand s12-voices-page">
-        {page + 1} / {total}
+        {page + 1}
+        {" / "}
+        {total}
       </p>
       <button
         type="button"
@@ -127,7 +129,7 @@ export default function VoicesCarousel({ voices }: { voices: readonly Voice[] })
             >
               {pageVoices.map((voice) => (
                 <figure key={`${voice.name}-${voice.role}`} className="s12-voice-card">
-                  <blockquote>«{voice.quote}»</blockquote>
+                  <blockquote>{`«${voice.quote}»`}</blockquote>
                   <figcaption>
                     <cite>{voice.name}</cite>
                     <span>{voice.role}</span>
