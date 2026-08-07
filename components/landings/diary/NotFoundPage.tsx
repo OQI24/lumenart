@@ -1,25 +1,18 @@
 import Link from "next/link";
 import { LANDING_CONTACTS } from "@/lib/landings/contacts";
-import StatusParticles from "@/components/landings/diary/StatusParticles";
+import DiaryStatusBackdrop from "@/components/landings/diary/DiaryStatusBackdrop";
 import "@/components/landings/diary/theme.css";
 import "@/components/landings/diary/status.css";
 
 export default function DiaryNotFound() {
   return (
-    <main className="s12 s12-status">
-      <StatusParticles />
-
-      <p className="s12-status-brand" aria-hidden="true">
-        {"LumenArt"}
-      </p>
+    <main className="s12 s12-status s12-status-void">
+      <DiaryStatusBackdrop />
 
       <article className="s12-status-sheet">
         <span className="s12-sticker-tape s12-status-tape" aria-hidden="true" />
         <p className="s12-hand s12-hand-ink s12-status-kicker">{"запись не найдена"}</p>
-        <p className="s12-status-code">
-          {"404"}
-          <span className="s12-status-code-strike" aria-hidden="true" />
-        </p>
+        <p className="s12-status-code">{"404"}</p>
         <h1>{"Этой страницы нет в тетради"}</h1>
         <p className="s12-status-lead">
           {"Лист либо вырвали, либо его ещё не вклеили. Вернитесь к дневнику проекта "}

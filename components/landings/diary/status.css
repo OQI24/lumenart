@@ -2,18 +2,302 @@
   position: relative;
   display: flex;
   min-height: 100dvh;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 5rem 4vw 4rem;
   overflow: hidden;
 }
 
-.s12-status-sheet {
-  position: relative;
+/* 404 brand void: corner lantern + yellow crumbs + additive cursor beam */
+.s12-status-void {
+  background-color: #0b0a09;
+  background-image: none;
+  /* Lock to viewport so watermark stays in frame */
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  /* Sheet mid-upper; bottom pad clears centered LUMENART watermark */
+  padding: 5.5rem 4vw 12.5rem;
+}
+
+@media (min-width: 768px) {
+  .s12-status-void {
+    padding-top: 6.25rem;
+    padding-bottom: 13rem;
+  }
+}
+
+.s12-status-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #0b0a09;
+  --spot-x: 0%;
+  --spot-y: 0%;
+}
+
+.s12-status-backdrop-plane {
+  position: absolute;
+  inset: 0;
+  background:
+    /* Single UL lantern — pure radial, no beam / no satellite puddles */
+    radial-gradient(
+      ellipse 48% 44% at 0% 0%,
+      color-mix(in srgb, #fff8e8 68%, transparent) 0%,
+      color-mix(in srgb, #fff1d0 40%, transparent) 14%,
+      color-mix(in srgb, #f0d9a8 18%, transparent) 34%,
+      color-mix(in srgb, #c6a15b 7%, transparent) 54%,
+      transparent 76%
+    ),
+    #0b0a09;
+}
+
+/*
+ * Scrapbook notebook fields on the void (behind the 404 sheet).
+ * Light only — vertical margin rule + faint ruled horizontals.
+ * Dark void stays clean (no lines / no kraft margin).
+ */
+.s12-status-void-fields {
+  --s12-void-margin: clamp(2.75rem, 9vw, 5.75rem);
+  --s12-void-line-gap: 28px;
+  --s12-void-rule: color-mix(in srgb, #c24b3a 78%, var(--landing-accent, #9a6846));
+  --s12-void-line: color-mix(
+    in srgb,
+    var(--landing-rule, #7d91a912) 100%,
+    transparent
+  );
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    var(--s12-void-line) 1px,
+    transparent 1px
+  );
+  background-size: 100% var(--s12-void-line-gap);
+  background-position: 0 0.5rem;
+  opacity: 1;
+}
+
+.s12-status-void-fields::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: var(--s12-void-margin);
+  background: color-mix(
+    in srgb,
+    var(--landing-kraft, #d4c29f) 28%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.s12-status-void-fields::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--s12-void-margin);
+  width: 1.5px;
+  background: var(--s12-void-rule);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.s12-status-backdrop[data-skin="dark"] .s12-status-void-fields {
+  display: none;
+}
+
+/*
+ * Soft UL bloom only — no mid-screen radial blobs («лужи»).
+ */
+.s12-status-soft-ray {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 1;
+  background:
+    radial-gradient(
+      ellipse 42% 38% at 1% 2%,
+      color-mix(in srgb, #fff8e8 34%, transparent) 0%,
+      color-mix(in srgb, #fff1d0 16%, transparent) 40%,
+      transparent 74%
+    ),
+    /* Continuous faint falloff down-left — still radial, not a beam */
+    radial-gradient(
+      ellipse 32% 58% at 6% 14%,
+      color-mix(in srgb, #f0d9a8 9%, transparent) 0%,
+      color-mix(in srgb, #c6a15b 3.5%, transparent) 45%,
+      transparent 80%
+    );
+}
+
+/* Additive cursor beam on backdrop only (under sheet) — hidden until cursor enters */
+.s12-status-spot-core {
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  width: min(100%, 36rem);
-  padding: 2.25rem 1.75rem 2rem;
-  background: var(--landing-paper);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  background: radial-gradient(
+    circle 26vmax at var(--spot-x) var(--spot-y),
+    color-mix(in srgb, #fff8e8 58%, transparent) 0%,
+    color-mix(in srgb, #f0d9a8 36%, transparent) 18%,
+    color-mix(in srgb, #c6a15b 16%, transparent) 42%,
+    transparent 68%
+  );
+}
+
+.s12-status-backdrop[data-spotlight="on"][data-cursor="in"] .s12-status-spot-core {
+  opacity: 1;
+}
+
+.s12-status-backdrop[data-spotlight="static"] .s12-status-spot-core {
+  opacity: 1;
+  background: radial-gradient(
+    circle 24vmax at 8% 10%,
+    color-mix(in srgb, #fff8e8 42%, transparent) 0%,
+    color-mix(in srgb, #f0d9a8 22%, transparent) 22%,
+    color-mix(in srgb, #c6a15b 10%, transparent) 48%,
+    transparent 70%
+  );
+}
+
+/*
+ * Watermark: full-bleed flex box, bottom-centered.
+ * Dim / near-zero by default — bright only inside cursor spotlight radial.
+ */
+.s12-status-backdrop .s12-status-brand {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 3.25rem;
+  padding-left: 0;
+  transform: none;
+  font-size: clamp(3.75rem, 15vw, 9rem);
+  color: #fff8e8;
+  mix-blend-mode: screen;
+  opacity: 0;
+  text-shadow: none;
+  transition: opacity 0.28s ease;
+  -webkit-mask-image: radial-gradient(
+    circle 22vmax at var(--spot-x) var(--spot-y),
+    #000 0%,
+    #000 22%,
+    rgba(0, 0, 0, 0.45) 42%,
+    transparent 68%
+  );
+  mask-image: radial-gradient(
+    circle 22vmax at var(--spot-x) var(--spot-y),
+    #000 0%,
+    #000 22%,
+    rgba(0, 0, 0, 0.45) 42%,
+    transparent 68%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.s12-status-backdrop[data-spotlight="on"][data-cursor="in"] .s12-status-brand {
+  opacity: 0.9;
+}
+
+.s12-status-backdrop[data-spotlight="static"] .s12-status-brand {
+  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(
+    circle 24vmax at 8% 10%,
+    #000 0%,
+    #000 22%,
+    rgba(0, 0, 0, 0.4) 48%,
+    transparent 70%
+  );
+  mask-image: radial-gradient(
+    circle 24vmax at 8% 10%,
+    #000 0%,
+    #000 22%,
+    rgba(0, 0, 0, 0.4) 48%,
+    transparent 70%
+  );
+}
+
+/* ── Light skin: paper void + pencil hatch (no lantern / swarm) ── */
+html.light .s12-status-void,
+.s12-status-backdrop[data-skin="light"] {
+  background-color: var(--landing-bg, #eee4cf);
+}
+
+html.light .s12-status-void {
+  /* Ruled lines live on .s12-status-void-fields — void keeps only wash glow */
+  background-image: radial-gradient(
+    circle at 18% 12%,
+    color-mix(in srgb, var(--landing-glow, #fff8) 70%, transparent),
+    transparent 42%
+  );
+}
+
+.s12-status-backdrop[data-skin="light"] {
+  background: transparent;
+}
+
+.s12-status-backdrop[data-skin="light"] .s12-status-backdrop-plane {
+  background:
+    radial-gradient(
+      ellipse 55% 40% at 50% 100%,
+      color-mix(in srgb, var(--landing-kraft, #d4c29f) 35%, transparent) 0%,
+      transparent 70%
+    ),
+    transparent;
+}
+
+.s12-status-backdrop[data-skin="light"] .s12-status-soft-ray,
+.s12-status-backdrop[data-skin="light"] .s12-status-spot-core,
+.s12-status-backdrop[data-skin="light"] .s12-status-crumbs-void {
+  display: none;
+}
+
+.s12-status-hatch-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* DOM brand is a metrics/a11y anchor — canvas draws the graphite fill */
+.s12-status-backdrop[data-skin="light"] .s12-status-brand {
+  z-index: 1;
+  color: color-mix(in srgb, var(--landing-ink, #1d2b39) 18%, transparent);
+  mix-blend-mode: multiply;
+  opacity: 0;
+  text-shadow: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  transition: none;
+}
+
+.s12-status-sheet {
+  /* Plain scrapbook card — notebook fields are on the void backdrop only */
+  position: relative;
+  z-index: 4;
+  width: min(100%, 34rem);
+  padding: 1.65rem 1.55rem 1.45rem;
+  background-color: var(--landing-paper);
   border: 2px solid color-mix(in srgb, var(--landing-ink) 55%, var(--landing-border));
   box-shadow:
     0 1px 0 var(--landing-sticker-hi),
@@ -30,8 +314,8 @@
   position: absolute;
   top: -0.55rem;
   left: 50%;
-  width: 5.5rem;
-  height: 1.15rem;
+  width: 5.25rem;
+  height: 1.1rem;
   background: var(--landing-tape);
   border: 1px solid color-mix(in srgb, var(--landing-accent) 35%, transparent);
   opacity: 0.88;
@@ -41,52 +325,40 @@
 }
 
 .s12-status-kicker {
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.3rem;
 }
 
 .s12-status-code {
   position: relative;
-  margin: 0.4rem 0 0.85rem;
+  margin: 0.2rem 0 0.5rem;
   font-family: var(--landing-font-display);
-  font-size: clamp(4.5rem, 18vw, 7rem);
+  font-size: clamp(3.25rem, 12vw, 5.25rem);
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: var(--landing-ink);
 }
 
-.s12-status-code-strike {
-  position: absolute;
-  left: -4%;
-  top: 52%;
-  width: 108%;
-  height: 0.18em;
-  background: color-mix(in srgb, var(--landing-accent) 75%, transparent);
-  transform: rotate(-8deg);
-  transform-origin: left center;
-  animation: s12-strike 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
 .s12-status h1 {
-  margin: 0 0 0.85rem;
-  font-size: clamp(1.7rem, 4vw, 2.35rem);
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.4rem, 3.2vw, 1.9rem);
   line-height: 1.15;
 }
 
 .s12-status-lead {
-  margin: 0 0 1.5rem;
+  margin: 0 0 0.7rem;
   color: var(--landing-muted);
-  font-size: var(--s12-body);
-  line-height: var(--s12-body-lh);
+  font-size: var(--s12-body, 0.98rem);
+  line-height: var(--s12-body-lh, 1.55);
 }
 
 .s12-status-note {
-  margin: 0 0 1.5rem;
-  padding: 0.85rem 1rem;
+  margin: 0 0 0.85rem;
+  padding: 0.55rem 0.8rem;
   border-left: 3px solid var(--landing-accent);
   background: color-mix(in srgb, var(--landing-kraft) 45%, var(--landing-paper));
   color: var(--landing-muted);
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   line-height: 1.55;
 }
 
@@ -139,8 +411,14 @@
 
 .s12-status-empty {
   position: relative;
-  margin: 0 0 1.5rem;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0.05rem 0 0.85rem;
+  /* Full content width; clearly taller than the lead above */
   aspect-ratio: 16 / 10;
+  min-height: 11.5rem;
+  max-height: none;
   border: 2px dashed color-mix(in srgb, var(--landing-accent) 55%, var(--landing-border));
   background:
     repeating-linear-gradient(
@@ -170,8 +448,26 @@
   overflow: hidden;
 }
 
+.s12-status-crumb-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  --crumb-tx: 0px;
+  --crumb-ty: 0px;
+  --crumb-trail: 0;
+}
+
+.s12-status-crumbs-void .s12-status-crumb-wrap {
+  /* Flight position is transform translate3d from JS (GPU-friendly) */
+  will-change: transform;
+}
+
 .s12-status-crumb {
   position: absolute;
+  left: 0;
+  top: 0;
   border-radius: 50%;
   background: color-mix(in srgb, var(--landing-accent) 58%, transparent);
   opacity: 0.4;
@@ -180,17 +476,61 @@
   animation-iteration-count: infinite;
 }
 
-.s12-status-crumb:nth-child(3n) {
+.s12-status-crumb-wrap:nth-child(3n) .s12-status-crumb {
   background: color-mix(in srgb, var(--landing-ink) 28%, transparent);
 }
 
-.s12-status-crumb:nth-child(4n) {
+.s12-status-crumb-wrap:nth-child(4n) .s12-status-crumb {
   background: color-mix(in srgb, var(--landing-accent) 40%, var(--landing-kraft));
   border-radius: 40% 60% 55% 45%;
 }
 
-.s12-status-crumb:nth-child(5n) {
+.s12-status-crumb-wrap:nth-child(5n) .s12-status-crumb {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--landing-accent) 25%, transparent);
+}
+
+/* Void 404: gold embers around the lantern, not desk kraft crumbs */
+.s12-status-crumbs-void {
+  z-index: 2;
+  mix-blend-mode: screen;
+}
+
+/* Flight path is JS/rAF (transform translate3d). CSS pulses glow + velocity streak. */
+.s12-status-crumbs-void .s12-status-crumb {
+  background: #fff6df;
+  opacity: 0.92;
+  animation-name: s12-crumb-void-glow;
+  animation-timing-function: ease-in-out;
+  box-shadow:
+    calc(var(--crumb-tx, 0px) * 0.55) calc(var(--crumb-ty, 0px) * 0.55) 0
+      color-mix(in srgb, #fff1d0 calc(var(--crumb-trail, 0) * 70%), transparent),
+    calc(var(--crumb-tx, 0px) * 1.1) calc(var(--crumb-ty, 0px) * 1.1) 0
+      color-mix(in srgb, #c6a15b calc(var(--crumb-trail, 0) * 45%), transparent),
+    0 0 11px color-mix(in srgb, #fff1d0 85%, transparent),
+    0 0 25px color-mix(in srgb, #c6a15b 55%, transparent);
+}
+
+.s12-status-crumbs-void .s12-status-crumb-wrap[data-orbit="b"] .s12-status-crumb {
+  animation-duration: calc(var(--crumb-glow-dur, 3s) * 1.12);
+}
+
+.s12-status-crumbs-void .s12-status-crumb-wrap[data-orbit="c"] .s12-status-crumb {
+  animation-duration: calc(var(--crumb-glow-dur, 3s) * 0.88);
+}
+
+.s12-status-crumbs-void .s12-status-crumb-wrap:nth-child(3n) .s12-status-crumb {
+  background: color-mix(in srgb, #f0d9a8 58%, transparent);
+}
+
+.s12-status-crumbs-void .s12-status-crumb-wrap:nth-child(4n) .s12-status-crumb {
+  background: color-mix(in srgb, #c6a15b 55%, #e8c98a);
+  border-radius: 40% 60% 55% 45%;
+}
+
+.s12-status-crumbs-void .s12-status-crumb-wrap:nth-child(5n) .s12-status-crumb {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #f0d9a8 35%, transparent),
+    0 0 11px color-mix(in srgb, #c6a15b 40%, transparent);
 }
 
 .s12-status-desk {
@@ -285,11 +625,6 @@
   user-select: none;
 }
 
-@keyframes s12-strike {
-  from { transform: rotate(-8deg) scaleX(0); opacity: 0; }
-  to { transform: rotate(-8deg) scaleX(1); opacity: 1; }
-}
-
 @keyframes s12-crumb {
   0%,
   100% {
@@ -307,6 +642,27 @@
   75% {
     transform: translate3d(12px, -8px, 0) scale(1.15);
     opacity: 0.4;
+  }
+}
+
+/* Glow only — translation is absolute left/top on the wrap */
+@keyframes s12-crumb-void-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.78;
+  }
+  28% {
+    transform: scale(1.22);
+    opacity: 1;
+  }
+  52% {
+    transform: scale(0.88);
+    opacity: 0.7;
+  }
+  76% {
+    transform: scale(1.1);
+    opacity: 0.92;
   }
 }
 
@@ -334,18 +690,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .s12-status-code-strike,
   .s12-status-crumb,
+  .s12-status-crumbs-void .s12-status-crumb,
   .s12-status-line,
   .s12-status-pen,
   .s12-status-pen::after,
   .s12-status-blot {
     animation: none;
-  }
-
-  .s12-status-code-strike {
-    transform: rotate(-8deg) scaleX(1);
-    opacity: 1;
   }
 
   .s12-status-line {
@@ -360,6 +711,11 @@
 
 @media (min-width: 768px) {
   .s12-status-sheet {
-    padding: 2.75rem 2.5rem 2.4rem;
+    padding: 1.75rem 2rem 1.5rem;
+  }
+
+  .s12-status-empty {
+    aspect-ratio: 16 / 10;
+    min-height: 13rem;
   }
 }
