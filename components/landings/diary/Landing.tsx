@@ -13,6 +13,8 @@ import {
   DIARY_WHY,
 } from "@/lib/landings/diary-content";
 import DiaryPreload from "@/components/landings/diary/DiaryPreload";
+import DiaryMagnetic from "@/components/landings/diary/DiaryMagnetic";
+import DiaryStaggerTitle from "@/components/landings/diary/DiaryStaggerTitle";
 import EntryDate from "@/components/landings/diary/EntryDate";
 import HeaderNav from "@/components/landings/diary/HeaderNav";
 import HeroStickers from "@/components/landings/diary/HeroStickers";
@@ -53,7 +55,7 @@ export default function DiaryLanding() {
         <section className="s12-note" id="studio">
           <aside className="s12-hand s12-hand-ink">{copy.studio.aside}</aside>
           <div>
-            <h2>{copy.studio.title}</h2>
+            <DiaryStaggerTitle text={copy.studio.title} tag="h2" />
             {copy.studio.paragraphs.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
@@ -70,7 +72,7 @@ export default function DiaryLanding() {
 
         <section className="s12-why" id="why">
           <p className="s12-hand s12-hand-deep">{copy.why.hand}</p>
-          <h2>{copy.why.title}</h2>
+          <DiaryStaggerTitle text={copy.why.title} tag="h2" />
           <div className="s12-why-grid">
             {DIARY_WHY.map((item) => (
               <article key={item.title}>
@@ -84,7 +86,7 @@ export default function DiaryLanding() {
         <section className="s12-spine" id="spine">
           <div className="s12-spine-intro">
             <p className="s12-hand s12-hand-ink">{copy.spine.hand}</p>
-            <h2>{copy.spine.title}</h2>
+            <DiaryStaggerTitle text={copy.spine.title} tag="h2" />
             <p>{copy.spine.lead}</p>
           </div>
 
@@ -106,12 +108,14 @@ export default function DiaryLanding() {
                     <span className="s12-hand">{copy.spine.noteLabel}</span>
                     {entry.note}
                   </p>
-                  <LandingImage
-                    src={entry.image}
-                    alt={entry.title}
-                    className={`s12-photo s12-photo-${index % 4}`}
-                    loading={index < 2 ? "eager" : undefined}
-                  />
+                  <DiaryMagnetic className="s12-magnetic-photo" magnet={7}>
+                    <LandingImage
+                      src={entry.image}
+                      alt={entry.title}
+                      className={`s12-photo s12-photo-${index % 4}`}
+                      loading={index < 2 ? "eager" : undefined}
+                    />
+                  </DiaryMagnetic>
                 </div>
               </article>
             ))}
@@ -121,7 +125,7 @@ export default function DiaryLanding() {
         <section className="s12-insert" id="partners">
           <div className="s12-insert-head">
             <p className="s12-hand">{copy.partners.hand}</p>
-            <h2>{copy.partners.title}</h2>
+            <DiaryStaggerTitle text={copy.partners.title} tag="h2" />
           </div>
           <div className="s12-insert-grid">
             {DIARY_PARTNERS.map((partner) => (
@@ -136,7 +140,7 @@ export default function DiaryLanding() {
         <section className="s12-pages" id="scrapbook">
           <div className="s12-pages-head">
             <p className="s12-hand s12-hand-ink">{copy.scrapbook.hand}</p>
-            <h2>{copy.scrapbook.title}</h2>
+            <DiaryStaggerTitle text={copy.scrapbook.title} tag="h2" />
             <p>{copy.scrapbook.lead}</p>
           </div>
           <ScrapbookPages items={DIARY_SCRAPBOOK} />
@@ -145,7 +149,7 @@ export default function DiaryLanding() {
         <section className="s12-spec" id="materials">
           <div className="s12-spec-head">
             <p className="s12-hand s12-hand-deep">{copy.materials.hand}</p>
-            <h2>{copy.materials.title}</h2>
+            <DiaryStaggerTitle text={copy.materials.title} tag="h2" />
             <p>{copy.materials.lead}</p>
           </div>
           <div className="s12-spec-grid">
@@ -161,7 +165,7 @@ export default function DiaryLanding() {
         <section className="s12-styles" id="styles">
           <div className="s12-styles-head">
             <p className="s12-hand s12-hand-ink">{copy.styles.hand}</p>
-            <h2>{copy.styles.title}</h2>
+            <DiaryStaggerTitle text={copy.styles.title} tag="h2" />
           </div>
           <div className="s12-styles-grid">
             {DIARY_STYLES.map((style) => (
@@ -180,14 +184,14 @@ export default function DiaryLanding() {
 
         <section className="s12-review" id="voices">
           <p className="s12-hand">{copy.voices.hand}</p>
-          <h2>{copy.voices.title}</h2>
+          <DiaryStaggerTitle text={copy.voices.title} tag="h2" />
           <VoicesCarousel voices={DIARY_VOICES} />
         </section>
 
         <section className="s12-last" id="last">
           <div>
             <p className="s12-hand s12-hand-ink">{copy.cta.hand}</p>
-            <h2>{copy.cta.title}</h2>
+            <DiaryStaggerTitle text={copy.cta.title} tag="h2" />
             <p>{copy.cta.text}</p>
           </div>
           <div className="s12-sticker">
@@ -197,6 +201,7 @@ export default function DiaryLanding() {
               className="s12-form"
               submitLabel={copy.cta.submitLabel}
               privacyHref={copy.footer.privacyHref}
+              submitVariant="fill"
             />
           </div>
         </section>

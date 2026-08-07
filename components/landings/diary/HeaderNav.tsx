@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import MagneticButton from "@/components/originkit/ui/magnetic-hover-button";
 
 export type HeaderNavLink = {
   href: string;
@@ -191,9 +192,28 @@ export default function HeaderNav({
                   </a>
                 ))}
               </nav>
-              <a className="s12-nav-cta" href={ctaHref} onClick={close}>
-                {ctaLabel}
-              </a>
+              <div className="s12-nav-fill" onClick={close}>
+                <MagneticButton
+                  label={ctaLabel}
+                  link={ctaHref}
+                  magnet={0}
+                  fill="#f6efdf"
+                  textColor="#1d2b39"
+                  sweepColor="#9a6846"
+                  sweepTextColor="#fffaf2"
+                  radius={4}
+                  paddingX={28}
+                  paddingY={14}
+                  border
+                  borderOptions={{ color: "#1d2b39", width: 2 }}
+                  font={{
+                    fontFamily: "var(--landing-font-hand, cursive)",
+                    fontWeight: 500,
+                    fontSize: 20,
+                    letterSpacing: "0.01em",
+                  }}
+                />
+              </div>
             </motion.aside>
           ) : null}
         </AnimatePresence>
@@ -221,9 +241,28 @@ export default function HeaderNav({
         ))}
       </nav>
 
-      <a className="s12-header-cta" href={ctaHref}>
-        {ctaLabel}
-      </a>
+      <div className="s12-header-fill">
+        <MagneticButton
+          label={ctaLabel}
+          link={ctaHref}
+          magnet={0}
+          fill="#f6efdf"
+          textColor="#1d2b39"
+          sweepColor="#9a6846"
+          sweepTextColor="#fffaf2"
+          radius={4}
+          paddingX={22}
+          paddingY={12}
+          border
+          borderOptions={{ color: "#1d2b39", width: 1 }}
+          font={{
+            fontFamily: "var(--landing-font-hand, cursive)",
+            fontWeight: 500,
+            fontSize: 16,
+            letterSpacing: "0.01em",
+          }}
+        />
+      </div>
 
       <button
         ref={triggerRef}

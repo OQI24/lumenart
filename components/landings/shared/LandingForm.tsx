@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Link from "next/link";
+import MagneticButton from "@/components/originkit/ui/magnetic-hover-button";
 import { submitContactForm } from "@/lib/submit-contact-form";
 import { formatPhoneInput, validatePhone, PHONE_PLACEHOLDER } from "@/lib/validation";
 import { LANDING_COPY } from "@/lib/landings/copy";
@@ -20,6 +21,8 @@ interface LandingFormProps {
   submitLabel?: string;
   /** URL политики (trailing slash). По умолчанию общий /privacy/. */
   privacyHref?: string;
+  /** OriginKit fill wipe, no magnetic pull (diary). */
+  submitVariant?: "default" | "fill";
 }
 
 /**
@@ -30,7 +33,9 @@ export default function LandingForm({
   className,
   submitLabel = LANDING_COPY.contacts.formCta,
   privacyHref = "/privacy/",
+  submitVariant = "default",
 }: LandingFormProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [honeypot, setHoneypot] = useState("");
@@ -65,6 +70,12 @@ export default function LandingForm({
     setIsSuccess(true);
   };
 
+  const onFillClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+    formRef.current?.requestSubmit();
+  };
+
   if (isSuccess) {
     return (
       <div
@@ -96,6 +107,7 @@ export default function LandingForm({
 
   return (
     <form
+      ref={formRef}
       onSubmit={handleSubmit(onSubmit)}
       noValidate
       className={cn("space-y-5", className)}
@@ -113,7 +125,8 @@ export default function LandingForm({
 
       <div className="space-y-2">
         <label htmlFor="landing-name" className="block text-sm text-[var(--landing-fg)]">
-          Имя <span className="text-[var(--landing-accent)]">*</span>
+          {"Имя "}
+          <span className="text-[var(--landing-accent)]">{"*"}</span>
         </label>
         <input
           id="landing-name"
@@ -130,7 +143,8 @@ export default function LandingForm({
 
       <div className="space-y-2">
         <label htmlFor="landing-phone" className="block text-sm text-[var(--landing-fg)]">
-          Телефон <span className="text-[var(--landing-accent)]">*</span>
+          {"Телефон "}
+          <span className="text-[var(--landing-accent)]">{"*"}</span>
         </label>
         <Controller
           name="phone"
@@ -159,7 +173,7 @@ export default function LandingForm({
 
       <div className="space-y-2">
         <label htmlFor="landing-message" className="block text-sm text-[var(--landing-fg)]">
-          Кратко опишите задачу
+          {"Кратко опишите задачу"}
         </label>
         <textarea
           id="landing-message"
@@ -192,14 +206,14 @@ export default function LandingForm({
             htmlFor="landing-consent"
             className="text-xs leading-relaxed text-[var(--landing-muted)] sm:text-sm"
           >
-            Согласен на{" "}
+            {"Согласен на "}
             <Link
               href={privacyHref}
               className="text-[var(--landing-accent)] underline underline-offset-2"
             >
-              обработку персональных данных
+              {"обработку персональных данных"}
             </Link>{" "}
-            <span className="text-[var(--landing-accent)]">*</span>
+            <span className="text-[var(--landing-accent)]">{"*"}</span>
           </label>
         </div>
         {errors.consent && (
@@ -213,13 +227,46 @@ export default function LandingForm({
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="inline-flex min-h-14 w-full items-center justify-center bg-[var(--landing-accent)] px-6 text-sm font-medium tracking-wide text-[var(--landing-accent-fg,#fff)] transition-opacity hover:opacity-90 disabled:opacity-60"
-      >
-        {isSubmitting ? "Отправляем..." : submitLabel}
-      </button>
+      {submitVariant === "fill" ? (
+        <div
+          className={cn(
+            "s12-form-fill",
+            isSubmitting && "pointer-events-none opacity-60",
+          )}
+          onClick={onFillClick}
+        >
+          <MagneticButton
+            label={isSubmitting ? "Отправляем..." : submitLabel}
+            link="#submit"
+            magnet={0}
+            fill="#f6efdf"
+            textColor="#1d2b39"
+            sweepColor="#9a6846"
+            sweepTextColor="#fffaf2"
+            radius={4}
+            paddingX={36}
+            paddingY={18}
+            border
+            borderOptions={{ color: "#1d2b39", width: 2 }}
+            font={{
+              fontFamily: "var(--landing-font-hand, cursive)",
+              fontWeight: 500,
+              fontSize: 22,
+              letterSpacing: "0.01em",
+              lineHeight: "1.1em",
+            }}
+            style={{ width: "100%", justifyContent: "center" }}
+          />
+        </div>
+      ) : (
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex min-h-14 w-full items-center justify-center bg-[var(--landing-accent)] px-6 text-sm font-medium tracking-wide text-[var(--landing-accent-fg,#fff)] transition-opacity hover:opacity-90 disabled:opacity-60"
+        >
+          {isSubmitting ? "Отправляем..." : submitLabel}
+        </button>
+      )}
     </form>
   );
 }

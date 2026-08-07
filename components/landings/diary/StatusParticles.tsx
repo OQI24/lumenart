@@ -1,3 +1,5 @@
+import { forwardRef, type CSSProperties } from "react";
+
 const PARTICLES = [
   { left: "6%", top: "12%", size: 5, delay: 0, dur: 8.2 },
   { left: "14%", top: "28%", size: 3, delay: 1.1, dur: 6.4 },
@@ -29,23 +31,162 @@ const PARTICLES = [
   { left: "96%", top: "8%", size: 3, delay: 1.4, dur: 8.3 },
 ] as const;
 
-export default function StatusParticles() {
-  return (
-    <div className="s12-status-crumbs" aria-hidden="true">
-      {PARTICLES.map((p, i) => (
-        <span
-          key={i}
-          className="s12-status-crumb"
-          style={{
-            left: p.left,
-            top: p.top,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            animationDelay: `${p.delay}s`,
-            animationDuration: `${p.dur}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+/**
+ * Lantern swarm: homes fan along UL radial falloff — not a packed wall.
+ * Flight is JS/rAF in DiaryStatusBackdrop (transform translate3d).
+ * orbit a|b|c only varies glow tempo.
+ * Nest ~×1.55 vs light (8/10) so the dark swarm reads as a wide cloud.
+ */
+const VOID_SEED = [
+  { left: 0.5, top: 0.8, size: 6, delay: 0, dur: 3.4, orbit: "a" },
+  { left: 6.1, top: 3.5, size: 4, delay: 0.4, dur: 2.7, orbit: "b" },
+  { left: 13.3, top: 1.0, size: 5, delay: 0.85, dur: 3.9, orbit: "c" },
+  { left: 0.9, top: 11.9, size: 7, delay: 0.2, dur: 3.1, orbit: "b" },
+  { left: 9.9, top: 15.6, size: 4, delay: 1.15, dur: 2.5, orbit: "a" },
+  { left: 18.9, top: 9.1, size: 5, delay: 0.55, dur: 3.6, orbit: "c" },
+  { left: 3.7, top: 23.0, size: 4, delay: 0.95, dur: 2.3, orbit: "a" },
+  { left: 15.1, top: 21.2, size: 6, delay: 0.3, dur: 3.2, orbit: "b" },
+  { left: 24.7, top: 14.0, size: 4, delay: 1.35, dur: 2.9, orbit: "c" },
+  { left: 0.5, top: 17.8, size: 5, delay: 0.7, dur: 3.5, orbit: "a" },
+  { left: 8.0, top: 7.5, size: 4, delay: 1.5, dur: 2.4, orbit: "b" },
+  { left: 17.6, top: 27.1, size: 6, delay: 0.15, dur: 3.8, orbit: "c" },
+  { left: 28.9, top: 5.4, size: 3, delay: 1.05, dur: 2.6, orbit: "a" },
+  { left: 22.6, top: 20.5, size: 5, delay: 0.6, dur: 3.0, orbit: "b" },
+  { left: 1.8, top: 31.1, size: 4, delay: 1.25, dur: 2.8, orbit: "c" },
+  { left: 12.3, top: 31.7, size: 5, delay: 0.45, dur: 3.3, orbit: "a" },
+  { left: 31.6, top: 16.8, size: 4, delay: 0.9, dur: 2.2, orbit: "b" },
+  { left: 5.5, top: 19.3, size: 5, delay: 1.4, dur: 3.7, orbit: "c" },
+  { left: 26.0, top: 29.8, size: 3, delay: 0.25, dur: 2.5, orbit: "a" },
+  { left: 16.1, top: 11.6, size: 4, delay: 0.75, dur: 3.1, orbit: "b" },
+  { left: 35.9, top: 10.3, size: 3, delay: 1.1, dur: 2.9, orbit: "c" },
+  { left: 20.4, top: 35.4, size: 4, delay: 0.5, dur: 3.4, orbit: "a" },
+  { left: 30.3, top: 24.9, size: 3, delay: 1.6, dur: 2.6, orbit: "b" },
+  { left: 7.4, top: 26.7, size: 4, delay: 0.35, dur: 3.0, orbit: "c" },
+] as const;
+
+const ORBITS = ["a", "b", "c"] as const;
+
+/**
+ * Seed + jittered echo (~¾) + sparse outer ring (~⅓).
+ * 24 + 18 + 8 → ~50 without packing a wall.
+ */
+const VOID_SIZE_SCALE = 1.12;
+
+const VOID_PARTICLES = (() => {
+  const out: {
+    left: number;
+    top: number;
+    size: number;
+    delay: number;
+    dur: number;
+    orbit: (typeof ORBITS)[number];
+  }[] = [];
+
+  const sized = (n: number) => Math.round(n * VOID_SIZE_SCALE * 10) / 10;
+
+  for (let i = 0; i < VOID_SEED.length; i++) {
+    const p = VOID_SEED[i];
+    out.push({
+      left: p.left,
+      top: p.top,
+      size: sized(p.size),
+      delay: p.delay,
+      dur: p.dur,
+      orbit: p.orbit,
+    });
+  }
+
+  // Echo ~¾ seed farther along the light falloff
+  for (let i = 0; i < VOID_SEED.length; i++) {
+    if (i % 4 === 3) continue;
+    const p = VOID_SEED[i];
+    const jx = ((i * 7) % 17) * 0.34 - 1.2;
+    const jy = ((i * 5) % 19) * 0.31 - 0.9;
+    out.push({
+      left: Math.min(44, Math.max(0.8, p.left + 7.0 + jx)),
+      top: Math.min(50, Math.max(1.2, p.top + 5.0 + jy)),
+      size: sized(Math.max(3, p.size - 1)),
+      delay: p.delay + 0.55 + (i % 5) * 0.08,
+      dur: p.dur + 0.2,
+      orbit: ORBITS[(i + 1) % 3],
+    });
+  }
+
+  // Sparse outer ring (~⅓ seed) — still radial cloud, not a wall
+  for (let i = 0; i < VOID_SEED.length; i += 3) {
+    const p = VOID_SEED[i];
+    const jx = ((i * 11) % 13) * 0.43 - 1.4;
+    const jy = ((i * 3) % 15) * 0.37 - 1.1;
+    out.push({
+      left: Math.min(48, Math.max(1.0, p.left + 12.7 + jx)),
+      top: Math.min(54, Math.max(1.5, p.top + 9.9 + jy)),
+      size: sized(Math.max(2, p.size - 2)),
+      delay: p.delay + 1.05 + (i % 4) * 0.1,
+      dur: p.dur + 0.35,
+      orbit: ORBITS[(i + 2) % 3],
+    });
+  }
+
+  return out;
+})();
+
+type StatusParticlesProps = {
+  variant?: "desk" | "void";
+};
+
+const StatusParticles = forwardRef<HTMLDivElement, StatusParticlesProps>(
+  function StatusParticles({ variant = "desk" }, ref) {
+    return (
+      <div
+        ref={ref}
+        className={
+          variant === "void" ? "s12-status-crumbs s12-status-crumbs-void" : "s12-status-crumbs"
+        }
+        aria-hidden="true"
+      >
+        {variant === "void"
+          ? VOID_PARTICLES.map((p, i) => (
+              <span
+                key={i}
+                className="s12-status-crumb-wrap"
+                data-home-x={p.left}
+                data-home-y={p.top}
+                data-orbit={p.orbit}
+              >
+                <span
+                  className="s12-status-crumb"
+                  style={
+                    {
+                      width: `${p.size}px`,
+                      height: `${p.size}px`,
+                      animationDelay: `${p.delay}s`,
+                      animationDuration: `${p.dur}s`,
+                      "--crumb-glow-dur": `${p.dur}s`,
+                    } as CSSProperties
+                  }
+                />
+              </span>
+            ))
+          : PARTICLES.map((p, i) => (
+              <span
+                key={i}
+                className="s12-status-crumb-wrap"
+                style={{ left: p.left, top: p.top }}
+              >
+                <span
+                  className="s12-status-crumb"
+                  style={{
+                    width: `${p.size}px`,
+                    height: `${p.size}px`,
+                    animationDelay: `${p.delay}s`,
+                    animationDuration: `${p.dur}s`,
+                  }}
+                />
+              </span>
+            ))}
+      </div>
+    );
+  },
+);
+
+export default StatusParticles;
