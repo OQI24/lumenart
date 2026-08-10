@@ -258,13 +258,19 @@ export default function AtelierLanding() {
             <a href={`tel:${LANDING_CONTACTS.phoneRaw}`}>{LANDING_CONTACTS.phone}</a>
             <a href={`mailto:${LANDING_CONTACTS.email}`}>{LANDING_CONTACTS.email}</a>
             <a href={LANDING_CONTACTS.telegram} target="_blank" rel="noopener noreferrer">
-              {`Telegram ${LANDING_CONTACTS.telegramHandle}`}
+              {"Telegram "}
+              {LANDING_CONTACTS.telegramHandle}
             </a>
           </div>
           <div className="atelier-footer-meta">
-            <span>{LANDING_CONTACTS.address}</span>
-            <a href="/atelier/privacy/">{copy.footer.privacy}</a>
-            <small>{`© ${new Date().getFullYear()} ${copy.brand}`}</small>
+            <a href={copy.footer.privacyHref}>{copy.footer.privacy}</a>
+            <p>
+              {copy.footer.city}
+              {" "}
+              {new Date().getFullYear()}
+              {" "}
+              {copy.brand}
+            </p>
           </div>
         </div>
       </footer>

@@ -121,6 +121,8 @@ export const ATELIER_COPY = {
   },
   footer: {
     privacy: "Политика конфиденциальности",
+    privacyHref: "/atelier/privacy/",
+    city: "Москва",
     rights: "Все права защищены.",
     note: "Проектируем, производим и монтируем свет в Москве и области.",
   },
