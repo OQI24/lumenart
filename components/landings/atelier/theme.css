@@ -1087,8 +1087,9 @@
   position: relative;
   z-index: 1;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
   min-height: 11rem;
   max-width: 96rem;
   margin-inline: auto;
@@ -1101,8 +1102,8 @@
 }
 
 .atelier-footer-meta {
-  justify-items: start;
-  text-align: left;
+  justify-items: end;
+  text-align: right;
 }
 
 .atelier-footer-meta p {
@@ -1118,20 +1119,6 @@
 
 .atelier-footer a:hover {
   color: var(--landing-accent);
-}
-
-@media (min-width: 768px) {
-  .atelier-footer-inner {
-    flex-direction: row;
-    align-items: end;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-
-  .atelier-footer-meta {
-    justify-items: end;
-    text-align: right;
-  }
 }
 
 .atelier-status,
@@ -1473,10 +1460,22 @@
   }
 
   .atelier-footer-inner {
-    min-height: 10rem;
-    gap: 1.75rem;
-    font-size: 0.9rem;
-    line-height: 1.55;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 1.25rem 1.5rem;
+    min-height: 12rem;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .atelier-footer-meta {
+    justify-items: end;
+    text-align: right;
+  }
+
+  .atelier-footer-meta a {
+    max-width: 11.5rem;
   }
 
   .atelier-status h1,
