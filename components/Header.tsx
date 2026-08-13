@@ -81,7 +81,7 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
 
   const navLinkClass = (id: SectionId) =>
     cn(
-      "text-sm transition-colors",
+      "inline-flex min-h-12 min-w-12 items-center justify-center text-sm transition-colors",
       activeSection === id ? "text-gold" : "text-muted-foreground hover:text-foreground"
     );
 
@@ -98,7 +98,7 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
         <div className="container-main flex h-14 items-center justify-between sm:h-16">
           <a
             href="#hero"
-            className="text-gold"
+            className="inline-flex min-h-12 min-w-12 items-center text-gold"
             onClick={(e) => handleNavClick(e, "hero")}
             aria-label="LumenArt: на главную"
           >
@@ -106,12 +106,15 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
             <Logo variant="horizontal" height={32} className="hidden sm:block" />
           </a>
 
-          <nav className="hidden items-center gap-5 lg:flex" aria-label="Основная навигация">
+          <nav
+            className="hidden items-center gap-0.5 lg:flex xl:gap-1"
+            aria-label="Основная навигация"
+          >
             {sections.map(({ id, label }) => (
               <a
                 key={id}
                 href={`#${id}`}
-                className={navLinkClass(id)}
+                className={cn(navLinkClass(id), "px-2")}
                 onClick={(e) => handleNavClick(e, id)}
               >
                 {label}
@@ -122,7 +125,7 @@ export default function Header({ scrollContainerId = "snap-container" }: HeaderP
           <Button
             variant="outline"
             size="icon"
-            className="border-border text-foreground lg:hidden"
+            className="size-12 border-border text-foreground lg:hidden"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Открыть меню"
           >
