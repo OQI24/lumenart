@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { SITE_IMAGE_ALTS } from "@/lib/constants";
 
 export default function AboutVisual() {
   return (
     <div className="cloud-card relative aspect-[4/5] w-full overflow-hidden border border-gold/10 bg-background-card sm:aspect-square lg:aspect-[4/5]">
       <Image
         src="/images/stock/about.jpg"
-        alt=""
+        alt={SITE_IMAGE_ALTS.about}
         fill
         className="object-cover"
         sizes="(max-width: 1024px) 100vw, 50vw"

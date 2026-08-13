@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { SITE_IMAGE_ALTS } from "@/lib/constants";
 
 const RAY_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
 
@@ -10,7 +11,7 @@ export default function HeroFixture() {
     <div className="cloud-card relative aspect-[4/5] max-h-[28rem] w-full overflow-hidden border border-gold/10 bg-background-card sm:aspect-square lg:max-h-none lg:aspect-[4/5]">
       <Image
         src="/images/stock/hero.jpg"
-        alt=""
+        alt={SITE_IMAGE_ALTS.hero}
         fill
         className="object-cover"
         priority

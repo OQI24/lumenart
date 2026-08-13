@@ -166,7 +166,7 @@ export default function StylesCatalog() {
               >
                 <Image
                   src={style.image}
-                  alt=""
+                  alt={style.title}
                   fill
                   className="style-gallery-ambient-image"
                   sizes="100vw"

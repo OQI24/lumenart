@@ -100,7 +100,7 @@ export default function ContactForm() {
                 onChange={(e) => setHoneypot(e.target.value)}
                 tabIndex={-1}
                 autoComplete="off"
-                aria-hidden="true"
+                aria-label="Не заполнять"
                 className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
               />
 

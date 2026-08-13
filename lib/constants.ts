@@ -7,9 +7,15 @@ export const SITE = {
   social: {
     telegram: "https://t.me/lyumen_art",
     telegramHandle: "@lyumen_art",
-    vk: "#",
-    instagram: "#",
+    vk: "https://vk.com",
+    instagram: "https://instagram.com",
   },
+} as const;
+
+/** Alt для ключевых фото главной (SEO / a11y) */
+export const SITE_IMAGE_ALTS = {
+  hero: "Дизайнерский свет LumenArt в интерьере",
+  about: "Производство и сборка светильников LumenArt",
 } as const;
 
 export const SITE_URL =

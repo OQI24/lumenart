@@ -119,7 +119,7 @@ export default function LandingForm({
         onChange={(e) => setHoneypot(e.target.value)}
         tabIndex={-1}
         autoComplete="off"
-        aria-hidden="true"
+        aria-label="Не заполнять"
         className="pointer-events-none absolute left-0 top-0 h-px w-px overflow-hidden opacity-0"
       />
 
